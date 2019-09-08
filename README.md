@@ -19,3 +19,5 @@ spago build -- --codegen corefn && pskt  -o ../app/src/main/java/ps -f "../pskt-
 ```
 
 now you can build for android project in android studio
+
+![](./screenshot.png)
