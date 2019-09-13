@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Monad.Rec.Class
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   sealed class _Type_Step ()  {
     data class Loop (val value0 : Any) : _Type_Step() {};
@@ -123,7 +125,7 @@ object Module  {
                              })
                            .app({ f : Any ->
        object   {
-           val runIdentity = { v : Any -> when { else -> { val x = v; x; } }};
+           val runIdentity = { v : Any ->val x = v; x;};
          }
          .run({
           val runIdentity = this.runIdentity;
@@ -217,60 +219,47 @@ object Module  {
            }
            .run({
             val fromDone = this.fromDone;
-            PS.Control.Bind.Module.bind.app(PS.Effect.Module.bindEffect)
-              .app(PS.Control.Bind.Module.bindFlipped
-                     .app(PS.Effect.Module.bindEffect)
-                     .app(PS.Effect.Ref.Module.new)
-                     .app(f.app(a)))
-              .app({ v : Any ->
-                 when {
-                  else -> {
-                    val r = v;
-                    { _ : Any ->
-                      PS.Effect.Module.untilE
-                        .app(PS.Control.Bind.Module.bind
-                               .app(PS.Effect.Module.bindEffect)
-                               .app(PS.Effect.Ref.Module.read.app(r))
-                               .app({ v1 : Any ->
-                                 when {
-                                  (v1 is PS.Control.Monad.Rec.Class.Module._Type_Step
-                                           .Loop) -> {
-                                    val a_tick = v1.value0;
-                                    PS.Control.Bind.Module.bind
-                                      .app(PS.Effect.Module.bindEffect)
-                                      .app(f.app(a_tick))
-                                      .app({ v2 : Any ->
-                                         when {
-                                          else -> {
-                                            val e = v2;
-                                            PS.Control.Bind.Module.bind
-                                              .app(PS.Effect.Module.bindEffect)
-                                              .app(PS.Effect.Ref.Module.write
-                                                     .app(e)
-                                                     .app(r))
-                                              .app({ v3 : Any ->
-                                                 false
-                                              });
-                                          }
-                                        }
-                                      });
-                                  }
-                                  (v1 is PS.Control.Monad.Rec.Class.Module._Type_Step
-                                           .Done) -> {
-                                    val b = v1.value0;
-                                    true;
-                                  }
-                                  else -> (error("Error in Pattern Match"
-                                  ) as Any)
-                                }
-                              }))()
-                        PS.Data.Functor.Module.map
-                          .app(PS.Effect.Module.functorEffect)
-                          .app(fromDone)
-                          .app(PS.Effect.Ref.Module.read.app(r))};
-                  }
-                }
-              });
+            /* defer **/{
+              val v = PS.Control.Bind.Module.bindFlipped
+                        .app(PS.Effect.Module.bindEffect)
+                        .app(PS.Effect.Ref.Module.new)
+                        .app(f.app(a))
+                        .appRun();
+              val r = v;
+              while ((/* defer **/{
+                          val v1 = PS.Effect.Ref.Module.read.app(r).appRun();
+                          when {
+                              (v1 is PS.Control.Monad.Rec.Class.Module._Type_Step
+                                       .Loop) -> {
+                                val a_tick = v1.value0;
+                                /* defer **/{
+                                  val v2 = f.app(a_tick).appRun();
+                                  val e = v2;
+                                  val v3 = PS.Effect.Ref.Module.write.app(e)
+                                             .app(r)
+                                             .appRun();
+                                  false;
+                                };
+                              }
+                              (v1 is PS.Control.Monad.Rec.Class.Module._Type_Step
+                                       .Done) -> {
+                                val b = v1.value0;
+                                PS.Control.Applicative.Module.pure
+                                  .app(PS.Effect.Module.applicativeEffect)
+                                  .app(true);
+                              }
+                              else -> (error("Error in Pattern Match") as Any)
+                            }
+                            .appRun();
+                        }
+                        .appRun() as Boolean)
+                       .not()) {};
+              Unit;
+              PS.Data.Functor.Module.map.app(PS.Effect.Module.functorEffect)
+                .app(fromDone)
+                .app(PS.Effect.Ref.Module.read.app(r))
+                .appRun();
+            };
           })
       }
     });

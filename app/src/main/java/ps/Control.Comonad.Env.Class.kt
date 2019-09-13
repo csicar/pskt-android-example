@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Comonad.Env.Class
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField
   val ComonadAsk = { Comonad0 : Any ->
@@ -46,13 +48,8 @@ object Module  {
             PS.Control.Comonad.Env.Trans.Module.comonadEnvT.app(dictComonad)
          })
        .app({ v : Any ->
-         when {
-          else -> {
-            val x = v;
-            PS.Data.Tuple.Module.fst.app(x);
-          }
-        }
-      })
+        val x = v;
+          PS.Data.Tuple.Module.fst.app(x);})
   };
   @JvmField
   val comonadEnvEnvT = { dictComonad : Any ->
@@ -62,22 +59,17 @@ object Module  {
          })
        .app({ f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v;
-              PS.Control.Comonad.Env.Trans.Module.EnvT
-                .app(when {
-                  (x is PS.Data.Tuple.Module._Type_Tuple.Tuple) -> {
-                    val y = x.value0;
-                    val z = x.value1;
-                    PS.Data.Tuple.Module.Tuple.app(f1.app(y)).app(z);
-                  }
-                  else -> (error("Error in Pattern Match") as Any)
-                });
-            }
-          }
-        }
+          val f1 = f;
+            val x = v;
+            PS.Control.Comonad.Env.Trans.Module.EnvT
+              .app(when {
+                (x is PS.Data.Tuple.Module._Type_Tuple.Tuple) -> {
+                  val y = x.value0;
+                  val z = x.value1;
+                  PS.Data.Tuple.Module.Tuple.app(f1.app(y)).app(z);
+                }
+                else -> (error("Error in Pattern Match") as Any)
+              });}
       })
   };
   @JvmField val ask = { dict : Any -> (dict as Map<String, Any>)["ask"]!!};

@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.NonEmpty
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   sealed class _Type_NonEmpty ()  {
     data class NonEmpty (val value0 : Any,  val value1 : Any) : _Type_NonEmpty(

@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Map.Gen
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField
   val genMap = { dictMonadRec : Any ->
@@ -19,60 +21,53 @@ object Module  {
                           .app(0)
                           .app(size))
                    .app({ v : Any ->
-                     when {
-                      else -> {
-                        val newSize = v;
-                        PS.Data.Function.Module.apply
-                          .app(PS.Control.Monad.Gen.Class.Module.resize
-                                 .app(dictMonadGen)
-                                 .app(PS.Data.Function.Module._const
-                                        .app(newSize)))
-                          .app(PS.Data.Functor.Module.map
-                                 .app(
-                                   ((((dictMonadGen as Map<String, Any>)["Monad0"]!!
-                                        .app(Unit
-                                       ) as Map<String, Any>)["Bind1"]!!
-                                       .app(Unit
-                                      ) as Map<String, Any>)["Apply0"]!!
-                                      .app(Unit
-                                     ) as Map<String, Any>)["Functor0"]!!
-                                     .app(Unit))
-                                 .app(PS.Data.Map.Internal.Module.fromFoldable
-                                        .app(dictOrd)
-                                        .app(
-                                     PS.Data.List.Types.Module.foldableList))
-                                 .app(PS.Control.Monad.Gen.Module.unfoldable
-                                        .app(dictMonadRec)
-                                        .app(dictMonadGen)
-                                        .app(
-                                          PS.Data.List.Types.Module.unfoldableList
-                                        )
-                                        .app(PS.Control.Apply.Module.apply
-                                               .app(
-                                                 (((dictMonadGen as Map<String, Any>)["Monad0"]!!
-                                                     .app(Unit
-                                                    ) as Map<String, Any>)["Bind1"]!!
-                                                    .app(Unit
-                                                   ) as Map<String, Any>)["Apply0"]!!
-                                                   .app(Unit))
-                                               .app(PS.Data.Functor.Module.map
-                                                      .app(
-                                                        ((((dictMonadGen as Map<String, Any>)["Monad0"]!!
-                                                             .app(Unit
-                                                            ) as Map<String, Any>)["Bind1"]!!
-                                                            .app(Unit
-                                                           ) as Map<String, Any>)["Apply0"]!!
+                    val newSize = v;
+                      PS.Data.Function.Module.apply
+                        .app(PS.Control.Monad.Gen.Class.Module.resize
+                               .app(dictMonadGen)
+                               .app(PS.Data.Function.Module._const.app(newSize))
+                        )
+                        .app(PS.Data.Functor.Module.map
+                               .app(
+                                 ((((dictMonadGen as Map<String, Any>)["Monad0"]!!
+                                      .app(Unit) as Map<String, Any>)["Bind1"]!!
+                                     .app(Unit) as Map<String, Any>)["Apply0"]!!
+                                    .app(Unit
+                                   ) as Map<String, Any>)["Functor0"]!!
+                                   .app(Unit))
+                               .app(PS.Data.Map.Internal.Module.fromFoldable
+                                      .app(dictOrd)
+                                      .app(
+                                   PS.Data.List.Types.Module.foldableList))
+                               .app(PS.Control.Monad.Gen.Module.unfoldable
+                                      .app(dictMonadRec)
+                                      .app(dictMonadGen)
+                                      .app(
+                                        PS.Data.List.Types.Module.unfoldableList
+                                      )
+                                      .app(PS.Control.Apply.Module.apply
+                                             .app(
+                                               (((dictMonadGen as Map<String, Any>)["Monad0"]!!
+                                                   .app(Unit
+                                                  ) as Map<String, Any>)["Bind1"]!!
+                                                  .app(Unit
+                                                 ) as Map<String, Any>)["Apply0"]!!
+                                                 .app(Unit))
+                                             .app(PS.Data.Functor.Module.map
+                                                    .app(
+                                                      ((((dictMonadGen as Map<String, Any>)["Monad0"]!!
                                                            .app(Unit
-                                                          ) as Map<String, Any>)["Functor0"]!!
-                                                          .app(Unit))
-                                                      .app(
-                                                        PS.Data.Tuple.Module.Tuple
-                                                      )
-                                                      .app(genKey))
-                                               .app(genValue))));
-                      }
-                    }
-                  })
+                                                          ) as Map<String, Any>)["Bind1"]!!
+                                                          .app(Unit
+                                                         ) as Map<String, Any>)["Apply0"]!!
+                                                         .app(Unit
+                                                        ) as Map<String, Any>)["Functor0"]!!
+                                                        .app(Unit))
+                                                    .app(
+                                                      PS.Data.Tuple.Module.Tuple
+                                                    )
+                                                    .app(genKey))
+                                             .app(genValue))));})
               })
           }
         }

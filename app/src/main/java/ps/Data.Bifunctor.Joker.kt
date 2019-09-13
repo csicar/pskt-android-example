@@ -1,49 +1,35 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Bifunctor.Joker
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Joker = { x : Any -> x};
   @JvmField
   val showJoker = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val x = v;
-            (("(Joker " as String) + (((PS.Data.Show.Module.show.app(dictShow)
-                                          .app(x
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val x = v;
+          (("(Joker " as String) + (((PS.Data.Show.Module.show.app(dictShow)
+                                        .app(x
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField val ordJoker = { dictOrd : Any -> dictOrd};
   @JvmField
   val newtypeJoker = PS.Data.Newtype.Module.Newtype
                        .app({ n : Any ->
-                            when {
-                             else -> {
-                               val a = n;
-                               a;
-                             }
-                           }
-                         })
+                           val a = n;
+                             a;})
                        .app(PS.Data.Bifunctor.Joker.Module.Joker);
   @JvmField
   val functorJoker = { dictFunctor : Any ->
      PS.Data.Functor.Module.Functor
        .app({ g : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val g1 = g;
-              val a = v;
-              PS.Data.Bifunctor.Joker.Module.Joker
-                .app(PS.Data.Functor.Module.map.app(dictFunctor).app(g1).app(a)
-              );
-            }
-          }
-        }
+          val g1 = g;
+            val a = v;
+            PS.Data.Bifunctor.Joker.Module.Joker
+              .app(PS.Data.Functor.Module.map.app(dictFunctor).app(g1).app(a));}
       })
   };
   @JvmField val eqJoker = { dictEq : Any -> dictEq};
@@ -53,16 +39,11 @@ object Module  {
        .app({ v : Any ->
          { g : Any ->
            { v1 : Any ->
-             when {
-              else -> {
-                val g1 = g;
-                val a = v1;
-                PS.Data.Bifunctor.Joker.Module.Joker
-                  .app(PS.Data.Functor.Module.map.app(dictFunctor).app(g1)
-                         .app(a));
-              }
-            }
-          }
+            val g1 = g;
+              val a = v1;
+              PS.Data.Bifunctor.Joker.Module.Joker
+                .app(PS.Data.Functor.Module.map.app(dictFunctor).app(g1).app(a)
+              );}
         }
       })
   };
@@ -75,16 +56,11 @@ object Module  {
          })
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val fg = v;
-              val xy = v1;
-              PS.Data.Bifunctor.Joker.Module.Joker
-                .app(PS.Control.Apply.Module.apply.app(dictApply).app(fg)
-                       .app(xy));
-            }
-          }
-        }
+          val fg = v;
+            val xy = v1;
+            PS.Data.Bifunctor.Joker.Module.Joker
+              .app(PS.Control.Apply.Module.apply.app(dictApply).app(fg).app(xy)
+            );}
       })
   };
   @JvmField

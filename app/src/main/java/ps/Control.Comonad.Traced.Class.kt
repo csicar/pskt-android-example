@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Comonad.Traced.Class
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField
   val ComonadTraced = { Comonad0 : Any ->
@@ -28,41 +30,31 @@ object Module  {
   val listens = { dictFunctor : Any ->
      { f : Any ->
        { v : Any ->
-         when {
-          else -> {
-            val f1 = f;
-            val tr = v;
-            PS.Control.Comonad.Traced.Trans.Module.TracedT
-              .app(PS.Data.Functor.Module.map.app(dictFunctor)
-                     .app({ g : Any ->
-                          { t : Any ->
-                            PS.Data.Tuple.Module.Tuple.app(g.app(t))
-                              .app(f1.app(t))
-                         }
-                       })
-                     .app(tr));
-          }
-        }
-      }
+        val f1 = f;
+          val tr = v;
+          PS.Control.Comonad.Traced.Trans.Module.TracedT
+            .app(PS.Data.Functor.Module.map.app(dictFunctor)
+                   .app({ g : Any ->
+                        { t : Any ->
+                          PS.Data.Tuple.Module.Tuple.app(g.app(t))
+                            .app(f1.app(t))
+                       }
+                     })
+                   .app(tr));}
     }
   };
   @JvmField
   val listen = { dictFunctor : Any ->
      { v : Any ->
-       when {
-        else -> {
-          val tr = v;
-          PS.Control.Comonad.Traced.Trans.Module.TracedT
-            .app(PS.Data.Functor.Module.map.app(dictFunctor)
-                   .app({ f : Any ->
-                        { t : Any ->
-                          PS.Data.Tuple.Module.Tuple.app(f.app(t)).app(t)
-                       }
-                     })
-                   .app(tr));
-        }
-      }
-    }
+      val tr = v;
+        PS.Control.Comonad.Traced.Trans.Module.TracedT
+          .app(PS.Data.Functor.Module.map.app(dictFunctor)
+                 .app({ f : Any ->
+                      { t : Any ->
+                        PS.Data.Tuple.Module.Tuple.app(f.app(t)).app(t)
+                     }
+                   })
+                 .app(tr));}
   };
   @JvmField
   val comonadTracedTracedT = { dictComonad : Any ->
@@ -75,15 +67,10 @@ object Module  {
            })
          .app({ t : Any ->
            { v : Any ->
-             when {
-              else -> {
-                val t1 = t;
-                val tr = v;
-                PS.Control.Comonad.Module.extract.app(dictComonad).app(tr)
-                  .app(t1);
-              }
-            }
-          }
+            val t1 = t;
+              val tr = v;
+              PS.Control.Comonad.Module.extract.app(dictComonad).app(tr)
+                .app(t1);}
         })
     }
   };
@@ -91,22 +78,17 @@ object Module  {
   val censor = { dictFunctor : Any ->
      { f : Any ->
        { v : Any ->
-         when {
-          else -> {
-            val f1 = f;
-            val tr = v;
-            PS.Control.Comonad.Traced.Trans.Module.TracedT
-              .app(PS.Data.Functor.Module.map.app(dictFunctor)
-                     .app({ v1 : Any ->
-                          PS.Control.Semigroupoid.Module.composeFlipped
-                            .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
-                            .app(f1)
-                            .app(v1)
-                       })
-                     .app(tr));
-          }
-        }
-      }
+        val f1 = f;
+          val tr = v;
+          PS.Control.Comonad.Traced.Trans.Module.TracedT
+            .app(PS.Data.Functor.Module.map.app(dictFunctor)
+                   .app({ v1 : Any ->
+                        PS.Control.Semigroupoid.Module.composeFlipped
+                          .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
+                          .app(f1)
+                          .app(v1)
+                     })
+                   .app(tr));}
     }
   };
 }

@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.MonadPlus
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField
   val MonadPlus = { MonadZero0 : Any ->

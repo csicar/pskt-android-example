@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Monad
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField
   val Monad = { Applicative0 : Any ->
@@ -16,17 +18,12 @@ object Module  {
            .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
            .app(mb)
            .app({ v : Any ->
-             when {
-              else -> {
-                val b = v;
-                PS.Control.Applicative.Module._when
-                  .app((dictMonad as Map<String, Any>)["Applicative0"]!!
-                         .app(Unit))
-                  .app(b)
-                  .app(m);
-              }
-            }
-          })
+            val b = v;
+              PS.Control.Applicative.Module._when
+                .app((dictMonad as Map<String, Any>)["Applicative0"]!!.app(Unit)
+                )
+                .app(b)
+                .app(m);})
       }
     }
   };
@@ -38,17 +35,12 @@ object Module  {
            .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
            .app(mb)
            .app({ v : Any ->
-             when {
-              else -> {
-                val b = v;
-                PS.Control.Applicative.Module.unless
-                  .app((dictMonad as Map<String, Any>)["Applicative0"]!!
-                         .app(Unit))
-                  .app(b)
-                  .app(m);
-              }
-            }
-          })
+            val b = v;
+              PS.Control.Applicative.Module.unless
+                .app((dictMonad as Map<String, Any>)["Applicative0"]!!.app(Unit)
+                )
+                .app(b)
+                .app(m);})
       }
     }
   };
@@ -76,16 +68,11 @@ object Module  {
            .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
            .app(a)
            .app({ v : Any ->
-             when {
-              else -> {
-                val a_tick = v;
-                PS.Control.Applicative.Module.pure
-                  .app((dictMonad as Map<String, Any>)["Applicative0"]!!
-                         .app(Unit))
-                  .app(f.app(a_tick));
-              }
-            }
-          })
+            val a_tick = v;
+              PS.Control.Applicative.Module.pure
+                .app((dictMonad as Map<String, Any>)["Applicative0"]!!.app(Unit)
+                )
+                .app(f.app(a_tick));})
       }
     }
   };
@@ -97,26 +84,16 @@ object Module  {
            .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
            .app(f)
            .app({ v : Any ->
-             when {
-              else -> {
-                val f_tick = v;
-                PS.Control.Bind.Module.bind
-                  .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
-                  .app(a)
-                  .app({ v1 : Any ->
-                     when {
-                      else -> {
-                        val a_tick = v1;
-                        PS.Control.Applicative.Module.pure
-                          .app((dictMonad as Map<String, Any>)["Applicative0"]!!
-                                 .app(Unit))
-                          .app(f_tick.app(a_tick));
-                      }
-                    }
-                  });
-              }
-            }
-          })
+            val f_tick = v;
+              PS.Control.Bind.Module.bind
+                .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
+                .app(a)
+                .app({ v1 : Any ->
+                  val a_tick = v1;
+                    PS.Control.Applicative.Module.pure
+                      .app((dictMonad as Map<String, Any>)["Applicative0"]!!
+                             .app(Unit))
+                      .app(f_tick.app(a_tick));});})
       }
     }
   };

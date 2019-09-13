@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Semigroup.Traversable
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField
   val Traversable1 = { Foldable10 : Any ->
@@ -45,17 +47,12 @@ object Module  {
                                        .app({ dictApply : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v;
-              PS.Data.Functor.Module.map
-                .app((dictApply as Map<String, Any>)["Functor0"]!!.app(Unit))
-                .app(PS.Data.Monoid.Dual.Module.Dual)
-                .app(f1.app(x));
-            }
-          }
-        }
+          val f1 = f;
+            val x = v;
+            PS.Data.Functor.Module.map
+              .app((dictApply as Map<String, Any>)["Functor0"]!!.app(Unit))
+              .app(PS.Data.Monoid.Dual.Module.Dual)
+              .app(f1.app(x));}
       }
     });
   @JvmField
@@ -77,17 +74,12 @@ object Module  {
                                                  .app({ dictApply : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v;
-              PS.Data.Functor.Module.map
-                .app((dictApply as Map<String, Any>)["Functor0"]!!.app(Unit))
-                .app(PS.Data.Monoid.Multiplicative.Module.Multiplicative)
-                .app(f1.app(x));
-            }
-          }
-        }
+          val f1 = f;
+            val x = v;
+            PS.Data.Functor.Module.map
+              .app((dictApply as Map<String, Any>)["Functor0"]!!.app(Unit))
+              .app(PS.Data.Monoid.Multiplicative.Module.Multiplicative)
+              .app(f1.app(x));}
       }
     });
   @JvmField

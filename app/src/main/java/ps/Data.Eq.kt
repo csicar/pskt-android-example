@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Eq
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val eqBooleanImpl = Foreign.Data.Eq.eqBooleanImpl;
   val eqIntImpl = Foreign.Data.Eq.eqIntImpl;

@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Ord
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val ordBooleanImpl = Foreign.Data.Ord.ordBooleanImpl;
   val ordIntImpl = Foreign.Data.Ord.ordIntImpl;

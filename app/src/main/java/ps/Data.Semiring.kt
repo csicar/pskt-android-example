@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Semiring
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val intAdd = Foreign.Data.Semiring.intAdd;
   val intMul = Foreign.Data.Semiring.intMul;

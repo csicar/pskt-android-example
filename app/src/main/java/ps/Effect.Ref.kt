@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Effect.Ref
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val new = Foreign.Effect.Ref.new;
   val read = Foreign.Effect.Ref.read;

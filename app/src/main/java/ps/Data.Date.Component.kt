@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Date.Component
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   sealed class _Type_Weekday ()  {
     object Monday : _Type_Weekday() {};
@@ -49,16 +51,11 @@ object Module  {
   @JvmField
   val showYear = PS.Data.Show.Module.Show
                    .app({ v : Any ->
-       when {
-        else -> {
-          val y = v;
-          (("(Year " as String) + (((PS.Data.Show.Module.show
-                                       .app(PS.Data.Show.Module.showInt)
-                                       .app(y
-          ) as String) + (")" as String)) as String));
-        }
-      }
-    });
+      val y = v;
+        (("(Year " as String) + (((PS.Data.Show.Module.show
+                                     .app(PS.Data.Show.Module.showInt)
+                                     .app(y
+        ) as String) + (")" as String)) as String));});
   @JvmField
   val showWeekday = PS.Data.Show.Module.Show
                       .app({ v : Any ->
@@ -133,16 +130,11 @@ object Module  {
   @JvmField
   val showDay = PS.Data.Show.Module.Show
                   .app({ v : Any ->
-       when {
-        else -> {
-          val d = v;
-          (("(Day " as String) + (((PS.Data.Show.Module.show
-                                      .app(PS.Data.Show.Module.showInt)
-                                      .app(d
-          ) as String) + (")" as String)) as String));
-        }
-      }
-    });
+      val d = v;
+        (("(Day " as String) + (((PS.Data.Show.Module.show
+                                    .app(PS.Data.Show.Module.showInt)
+                                    .app(d
+        ) as String) + (")" as String)) as String));});
   @JvmField val ordYear = PS.Data.Ord.Module.ordInt;
   @JvmField val ordDay = PS.Data.Ord.Module.ordInt;
   @JvmField val eqYear = PS.Data.Eq.Module.eqInt;
@@ -523,13 +515,8 @@ object Module  {
                                        .app(PS.Data.Enum.Module.Cardinality
                                               .app(547580))
                                        .app({ v : Any ->
-                                            when {
-                                             else -> {
-                                               val n = v;
-                                               n;
-                                             }
-                                           }
-                                         })
+                                           val n = v;
+                                             n;})
                                        .app({ n : Any ->
        when {
         (PS.Data.HeytingAlgebra.Module.conj
@@ -897,13 +884,8 @@ object Module  {
                                       .app(PS.Data.Enum.Module.Cardinality
                                              .app(31))
                                       .app({ v : Any ->
-                                           when {
-                                            else -> {
-                                              val n = v;
-                                              n;
-                                            }
-                                          }
-                                        })
+                                          val n = v;
+                                            n;})
                                       .app({ n : Any ->
        when {
         (PS.Data.HeytingAlgebra.Module.conj

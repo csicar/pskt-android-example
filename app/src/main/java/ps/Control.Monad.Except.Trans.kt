@@ -1,58 +1,50 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Monad.Except.Trans
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val ExceptT = { x : Any -> x};
   @JvmField
   val withExceptT = { dictFunctor : Any ->
      { f : Any ->
        { v : Any ->
-         when {
-          else -> {
-            val f1 = f;
-            val t = v;
-            object   {
-                val mapLeft = { v1 : Any ->
-                   { v2 : Any ->
-                     when {
-                      (v2 is PS.Data.Either.Module._Type_Either.Right) -> {
-                        val x = v2.value0;
-                        PS.Data.Either.Module.Right.app(x);
-                      }
-                      (v2 is PS.Data.Either.Module._Type_Either.Left) -> {
-                        val f_tick = v1;
-                        val x = v2.value0;
-                        PS.Data.Either.Module.Left.app(f_tick.app(x));
-                      }
-                      else -> (error("Error in Pattern Match") as Any)
+        val f1 = f;
+          val t = v;
+          object   {
+              val mapLeft = { v1 : Any ->
+                 { v2 : Any ->
+                   when {
+                    (v2 is PS.Data.Either.Module._Type_Either.Right) -> {
+                      val x = v2.value0;
+                      PS.Data.Either.Module.Right.app(x);
                     }
+                    (v2 is PS.Data.Either.Module._Type_Either.Left) -> {
+                      val f_tick = v1;
+                      val x = v2.value0;
+                      PS.Data.Either.Module.Left.app(f_tick.app(x));
+                    }
+                    else -> (error("Error in Pattern Match") as Any)
                   }
-                };
-              }
-              .run({
-                val mapLeft = this.mapLeft;
-                PS.Data.Function.Module.apply
-                  .app(PS.Control.Monad.Except.Trans.Module.ExceptT)
-                  .app(PS.Data.Functor.Module.map.app(dictFunctor)
-                         .app(mapLeft.app(f1))
-                         .app(t));
-              });
-          }
-        }
-      }
+                }
+              };
+            }
+            .run({
+              val mapLeft = this.mapLeft;
+              PS.Data.Function.Module.apply
+                .app(PS.Control.Monad.Except.Trans.Module.ExceptT)
+                .app(PS.Data.Functor.Module.map.app(dictFunctor)
+                       .app(mapLeft.app(f1))
+                       .app(t));
+            });}
     }
   };
-  @JvmField val runExceptT = { v : Any -> when { else -> { val x = v; x; } }};
+  @JvmField val runExceptT = { v : Any ->val x = v; x;};
   @JvmField
   val newtypeExceptT = PS.Data.Newtype.Module.Newtype
                          .app({ n : Any ->
-                              when {
-                               else -> {
-                                 val a = n;
-                                 a;
-                               }
-                             }
-                           })
+                             val a = n;
+                               a;})
                          .app(PS.Control.Monad.Except.Trans.Module.ExceptT);
   @JvmField
   val monadTransExceptT = PS.Control.Monad.Trans.Class.Module.MonadTrans
@@ -63,31 +55,20 @@ object Module  {
                   .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
                   .app(m)
                   .app({ v : Any ->
-               when {
-                else -> {
-                  val a = v;
-                  PS.Data.Function.Module.apply
-                    .app(PS.Control.Applicative.Module.pure
-                           .app(
-                        (dictMonad as Map<String, Any>)["Applicative0"]!!
-                          .app(Unit)))
-                    .app(PS.Data.Either.Module.Right.app(a));
-                }
-              }
-            }))
+              val a = v;
+                PS.Data.Function.Module.apply
+                  .app(PS.Control.Applicative.Module.pure
+                         .app((dictMonad as Map<String, Any>)["Applicative0"]!!
+                                .app(Unit)))
+                  .app(PS.Data.Either.Module.Right.app(a));}))
       }
     });
   @JvmField
   val mapExceptT = { f : Any ->
      { v : Any ->
-       when {
-        else -> {
-          val f1 = f;
-          val m = v;
-          PS.Control.Monad.Except.Trans.Module.ExceptT.app(f1.app(m));
-        }
-      }
-    }
+      val f1 = f;
+        val m = v;
+        PS.Control.Monad.Except.Trans.Module.ExceptT.app(f1.app(m));}
   };
   @JvmField
   val functorExceptT = { dictFunctor : Any ->
@@ -128,37 +109,32 @@ object Module  {
          })
        .app({ v : Any ->
          { k : Any ->
-           when {
-            else -> {
-              val m = v;
-              val k1 = k;
-              PS.Control.Monad.Except.Trans.Module.ExceptT
-                .app(PS.Control.Bind.Module.bind
-                       .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit)
-                       )
-                       .app(m)
-                       .app(PS.Data.Either.Module.either
-                              .app(PS.Control.Semigroupoid.Module.compose
-                                     .app(
-                                       PS.Control.Semigroupoid.Module.semigroupoidFn
-                                     )
-                                     .app(PS.Control.Applicative.Module.pure
-                                            .app(
-                                         (dictMonad as Map<String, Any>)["Applicative0"]!!
-                                           .app(Unit)))
-                                     .app(PS.Data.Either.Module.Left))
-                              .app({ a : Any ->
-                       object   {
-                           val v1 = k1.app(a);
-                         }
-                         .run({
-                          val v1 = this.v1;
-                          when { else -> { val b = v1; b; } };
-                        })
-                    })));
-            }
-          }
-        }
+          val m = v;
+            val k1 = k;
+            PS.Control.Monad.Except.Trans.Module.ExceptT
+              .app(PS.Control.Bind.Module.bind
+                     .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
+                     .app(m)
+                     .app(PS.Data.Either.Module.either
+                            .app(PS.Control.Semigroupoid.Module.compose
+                                   .app(
+                                     PS.Control.Semigroupoid.Module.semigroupoidFn
+                                   )
+                                   .app(PS.Control.Applicative.Module.pure
+                                          .app(
+                                       (dictMonad as Map<String, Any>)["Applicative0"]!!
+                                         .app(Unit)))
+                                   .app(PS.Data.Either.Module.Left))
+                            .app({ a : Any ->
+                     object   {
+                         val v1 = k1.app(a);
+                       }
+                       .run({
+                        val v1 = this.v1;
+                        val b = v1;
+                        b;
+                      })
+                  })));}
       })
   };
   fun __rec_applyExceptT(): Any = { dictMonad : Any ->
@@ -238,7 +214,8 @@ object Module  {
                  }
                  .run({
                   val v = this.v;
-                  when { else -> { val b = v; b; } };
+                  val b = v;
+                  b;
                 })
             }))
       })
@@ -277,48 +254,43 @@ object Module  {
                  }
                  .run({
                   val v = this.v;
-                  when {
-                    else -> {
-                      val m = v;
-                      PS.Control.Bind.Module.bind
-                        .app(((dictMonadRec as Map<String, Any>)["Monad0"]!!
-                                .app(Unit) as Map<String, Any>)["Bind1"]!!
-                               .app(Unit))
-                        .app(m)
-                        .app({ m_tick : Any ->
-                           PS.Control.Applicative.Module.pure
-                             .app(
-                               ((dictMonadRec as Map<String, Any>)["Monad0"]!!
-                                  .app(Unit
-                                 ) as Map<String, Any>)["Applicative0"]!!
-                                 .app(Unit))
-                             .app(when {
-                              (m_tick is PS.Data.Either.Module._Type_Either
-                                           .Left) -> {
-                                val e = m_tick.value0;
-                                PS.Control.Monad.Rec.Class.Module.Done
-                                  .app(PS.Data.Either.Module.Left.app(e));
-                              }
-                              (m_tick is PS.Data.Either.Module._Type_Either
-                                           .Right)&& (m_tick
-                                                        .value0 is PS.Control.Monad.Rec.Class.Module._Type_Step
-                                                                     .Loop) -> {
-                                val a1 = m_tick.value0.value0;
-                                PS.Control.Monad.Rec.Class.Module.Loop.app(a1);
-                              }
-                              (m_tick is PS.Data.Either.Module._Type_Either
-                                           .Right)&& (m_tick
-                                                        .value0 is PS.Control.Monad.Rec.Class.Module._Type_Step
-                                                                     .Done) -> {
-                                val b = m_tick.value0.value0;
-                                PS.Control.Monad.Rec.Class.Module.Done
-                                  .app(PS.Data.Either.Module.Right.app(b));
-                              }
-                              else -> (error("Error in Pattern Match") as Any)
-                            })
-                        });
-                    }
-                  };
+                  val m = v;
+                  PS.Control.Bind.Module.bind
+                    .app(((dictMonadRec as Map<String, Any>)["Monad0"]!!
+                            .app(Unit) as Map<String, Any>)["Bind1"]!!
+                           .app(Unit))
+                    .app(m)
+                    .app({ m_tick : Any ->
+                       PS.Control.Applicative.Module.pure
+                         .app(((dictMonadRec as Map<String, Any>)["Monad0"]!!
+                                 .app(Unit
+                                ) as Map<String, Any>)["Applicative0"]!!
+                                .app(Unit))
+                         .app(when {
+                          (m_tick is PS.Data.Either.Module._Type_Either
+                                       .Left) -> {
+                            val e = m_tick.value0;
+                            PS.Control.Monad.Rec.Class.Module.Done
+                              .app(PS.Data.Either.Module.Left.app(e));
+                          }
+                          (m_tick is PS.Data.Either.Module._Type_Either
+                                       .Right)&& (m_tick
+                                                    .value0 is PS.Control.Monad.Rec.Class.Module._Type_Step
+                                                                 .Loop) -> {
+                            val a1 = m_tick.value0.value0;
+                            PS.Control.Monad.Rec.Class.Module.Loop.app(a1);
+                          }
+                          (m_tick is PS.Data.Either.Module._Type_Either
+                                       .Right)&& (m_tick
+                                                    .value0 is PS.Control.Monad.Rec.Class.Module._Type_Step
+                                                                 .Done) -> {
+                            val b = m_tick.value0.value0;
+                            PS.Control.Monad.Rec.Class.Module.Done
+                              .app(PS.Data.Either.Module.Right.app(b));
+                          }
+                          else -> (error("Error in Pattern Match") as Any)
+                        })
+                    });
                 })
             }))
       })
@@ -406,38 +378,32 @@ object Module  {
                            .app(Unit))
                     .app(m)
                     .app({ v : Any ->
-                 when {
-                  else -> {
-                    val a = v;
-                    PS.Control.Applicative.Module.pure
-                      .app(
-                        (((dictMonadWriter as Map<String, Any>)["MonadTell0"]!!
-                            .app(Unit) as Map<String, Any>)["Monad0"]!!
-                           .app(Unit) as Map<String, Any>)["Applicative0"]!!
-                          .app(Unit))
-                      .app(when {
-                        (a is PS.Data.Either.Module._Type_Either.Left) -> {
-                          val e = a.value0;
-                          PS.Data.Tuple.Module.Tuple
-                            .app(PS.Data.Either.Module.Left.app(e))
-                            .app(PS.Control.Category.Module.identity
-                                   .app(PS.Control.Category.Module.categoryFn));
-                        }
-                        (a is PS.Data.Either.Module._Type_Either
-                                .Right)&& (a
-                                             .value0 is PS.Data.Tuple.Module._Type_Tuple
-                                                          .Tuple) -> {
-                          val r = a.value0.value0;
-                          val f = a.value0.value1;
-                          PS.Data.Tuple.Module.Tuple
-                            .app(PS.Data.Either.Module.Right.app(r))
-                            .app(f);
-                        }
-                        else -> (error("Error in Pattern Match") as Any)
-                      });
-                  }
-                }
-              }))
+                val a = v;
+                  PS.Control.Applicative.Module.pure
+                    .app((((dictMonadWriter as Map<String, Any>)["MonadTell0"]!!
+                             .app(Unit) as Map<String, Any>)["Monad0"]!!
+                            .app(Unit) as Map<String, Any>)["Applicative0"]!!
+                           .app(Unit))
+                    .app(when {
+                      (a is PS.Data.Either.Module._Type_Either.Left) -> {
+                        val e = a.value0;
+                        PS.Data.Tuple.Module.Tuple
+                          .app(PS.Data.Either.Module.Left.app(e))
+                          .app(PS.Control.Category.Module.identity
+                                 .app(PS.Control.Category.Module.categoryFn));
+                      }
+                      (a is PS.Data.Either.Module._Type_Either
+                              .Right)&& (a
+                                           .value0 is PS.Data.Tuple.Module._Type_Tuple
+                                                        .Tuple) -> {
+                        val r = a.value0.value0;
+                        val f = a.value0.value1;
+                        PS.Data.Tuple.Module.Tuple
+                          .app(PS.Data.Either.Module.Right.app(r))
+                          .app(f);
+                      }
+                      else -> (error("Error in Pattern Match") as Any)
+                    });}))
         }))
   };
   @JvmField
@@ -466,37 +432,32 @@ object Module  {
          })
        .app({ v : Any ->
          { k : Any ->
-           when {
-            else -> {
-              val m = v;
-              val k1 = k;
-              PS.Control.Monad.Except.Trans.Module.ExceptT
-                .app(PS.Control.Bind.Module.bind
-                       .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit)
-                       )
-                       .app(m)
-                       .app(PS.Data.Either.Module.either
-                              .app({ a : Any ->
-                                   object   {
-                                       val v1 = k1.app(a);
-                                     }
-                                     .run({
-                                      val v1 = this.v1;
-                                      when { else -> { val b = v1; b; } };
-                                    })
-                                })
-                              .app(PS.Control.Semigroupoid.Module.compose
-                                     .app(
-                                       PS.Control.Semigroupoid.Module.semigroupoidFn
-                                     )
-                                     .app(PS.Control.Applicative.Module.pure
-                                            .app(
-                                         (dictMonad as Map<String, Any>)["Applicative0"]!!
-                                           .app(Unit)))
-                                     .app(PS.Data.Either.Module.Right))));
-            }
-          }
-        }
+          val m = v;
+            val k1 = k;
+            PS.Control.Monad.Except.Trans.Module.ExceptT
+              .app(PS.Control.Bind.Module.bind
+                     .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
+                     .app(m)
+                     .app(PS.Data.Either.Module.either
+                            .app({ a : Any ->
+                                 object   {
+                                     val v1 = k1.app(a);
+                                   }
+                                   .run({
+                                    val v1 = this.v1;
+                                    val b = v1;
+                                    b;
+                                  })
+                              })
+                            .app(PS.Control.Semigroupoid.Module.compose
+                                   .app(
+                                     PS.Control.Semigroupoid.Module.semigroupoidFn
+                                   )
+                                   .app(PS.Control.Applicative.Module.pure
+                                          .app(
+                                       (dictMonad as Map<String, Any>)["Applicative0"]!!
+                                         .app(Unit)))
+                                   .app(PS.Data.Either.Module.Right))));}
       })
   };
   @JvmField
@@ -512,79 +473,62 @@ object Module  {
            })
          .app({ v : Any ->
            { v1 : Any ->
-             when {
-              else -> {
-                val m = v;
-                val n = v1;
-                PS.Control.Monad.Except.Trans.Module.ExceptT
-                  .app(PS.Control.Bind.Module.bind
-                         .app((dictMonad as Map<String, Any>)["Bind1"]!!
+            val m = v;
+              val n = v1;
+              PS.Control.Monad.Except.Trans.Module.ExceptT
+                .app(PS.Control.Bind.Module.bind
+                       .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit)
+                       )
+                       .app(m)
+                       .app({ v2 : Any ->
+                    val rm = v2;
+                      when {
+                        (rm is PS.Data.Either.Module._Type_Either.Right) -> {
+                          val x = rm.value0;
+                          PS.Control.Applicative.Module.pure
+                            .app(
+                              (dictMonad as Map<String, Any>)["Applicative0"]!!
                                 .app(Unit))
-                         .app(m)
-                         .app({ v2 : Any ->
-                       when {
-                        else -> {
-                          val rm = v2;
-                          when {
-                            (rm is PS.Data.Either.Module._Type_Either
-                                     .Right) -> {
-                              val x = rm.value0;
-                              PS.Control.Applicative.Module.pure
-                                .app(
-                                  (dictMonad as Map<String, Any>)["Applicative0"]!!
-                                    .app(Unit))
-                                .app(PS.Data.Either.Module.Right.app(x));
-                            }
-                            (rm is PS.Data.Either.Module._Type_Either.Left) -> {
-                              val err = rm.value0;
-                              PS.Control.Bind.Module.bind
-                                .app((dictMonad as Map<String, Any>)["Bind1"]!!
-                                       .app(Unit))
-                                .app(n)
-                                .app({ v3 : Any ->
-                                   when {
-                                    else -> {
-                                      val rn = v3;
-                                      when {
-                                        (rn is PS.Data.Either.Module._Type_Either
-                                                 .Right) -> {
-                                          val x = rn.value0;
-                                          PS.Control.Applicative.Module.pure
-                                            .app(
-                                              (dictMonad as Map<String, Any>)["Applicative0"]!!
-                                                .app(Unit))
-                                            .app(PS.Data.Either.Module.Right
-                                                   .app(x));
-                                        }
-                                        (rn is PS.Data.Either.Module._Type_Either
-                                                 .Left) -> {
-                                          val err_tick = rn.value0;
-                                          PS.Control.Applicative.Module.pure
-                                            .app(
-                                              (dictMonad as Map<String, Any>)["Applicative0"]!!
-                                                .app(Unit))
-                                            .app(PS.Data.Either.Module.Left
-                                                   .app(
-                                              PS.Data.Semigroup.Module.append
-                                                .app(dictSemigroup)
-                                                .app(err)
-                                                .app(err_tick)));
-                                        }
-                                        else -> (error("Error in Pattern Match"
-                                        ) as Any)
-                                      };
-                                    }
-                                  }
-                                });
-                            }
-                            else -> (error("Error in Pattern Match") as Any)
-                          };
+                            .app(PS.Data.Either.Module.Right.app(x));
                         }
-                      }
-                    }));
-              }
-            }
-          }
+                        (rm is PS.Data.Either.Module._Type_Either.Left) -> {
+                          val err = rm.value0;
+                          PS.Control.Bind.Module.bind
+                            .app((dictMonad as Map<String, Any>)["Bind1"]!!
+                                   .app(Unit))
+                            .app(n)
+                            .app({ v3 : Any ->
+                              val rn = v3;
+                                when {
+                                  (rn is PS.Data.Either.Module._Type_Either
+                                           .Right) -> {
+                                    val x = rn.value0;
+                                    PS.Control.Applicative.Module.pure
+                                      .app(
+                                        (dictMonad as Map<String, Any>)["Applicative0"]!!
+                                          .app(Unit))
+                                      .app(PS.Data.Either.Module.Right.app(x));
+                                  }
+                                  (rn is PS.Data.Either.Module._Type_Either
+                                           .Left) -> {
+                                    val err_tick = rn.value0;
+                                    PS.Control.Applicative.Module.pure
+                                      .app(
+                                        (dictMonad as Map<String, Any>)["Applicative0"]!!
+                                          .app(Unit))
+                                      .app(PS.Data.Either.Module.Left
+                                             .app(
+                                        PS.Data.Semigroup.Module.append
+                                          .app(dictSemigroup)
+                                          .app(err)
+                                          .app(err_tick)));
+                                  }
+                                  else -> (error("Error in Pattern Match"
+                                  ) as Any)
+                                };});
+                        }
+                        else -> (error("Error in Pattern Match") as Any)
+                      };}));}
         })
     }
   };

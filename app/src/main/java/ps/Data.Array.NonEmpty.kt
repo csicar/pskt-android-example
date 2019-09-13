@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Array.NonEmpty
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val unsafeFromArrayF = PS.Unsafe.Coerce.Module.unsafeCoerce;
   @JvmField val unsafeFromArray = PS.Unsafe.Coerce.Module.unsafeCoerce;

@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Monad.Writer.Class
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField
   val MonadTell = { Monad0 : Any ->
@@ -66,20 +68,15 @@ object Module  {
                          .app(Unit))
                   .app(m)
                   .app({ v : Any ->
-               when {
-                else -> {
-                  val a = v;
-                  PS.Data.Function.Module.apply
-                    .app(PS.Control.Applicative.Module.pure
-                           .app(
-                        (((dictMonadWriter as Map<String, Any>)["MonadTell0"]!!
-                            .app(Unit) as Map<String, Any>)["Monad0"]!!
-                           .app(Unit) as Map<String, Any>)["Applicative0"]!!
-                          .app(Unit)))
-                    .app(PS.Data.Tuple.Module.Tuple.app(a).app(f));
-                }
-              }
-            }))
+              val a = v;
+                PS.Data.Function.Module.apply
+                  .app(PS.Control.Applicative.Module.pure
+                         .app(
+                      (((dictMonadWriter as Map<String, Any>)["MonadTell0"]!!
+                          .app(Unit) as Map<String, Any>)["Monad0"]!!
+                         .app(Unit) as Map<String, Any>)["Applicative0"]!!
+                        .app(Unit)))
+                  .app(PS.Data.Tuple.Module.Tuple.app(a).app(f));}))
       }
     }
   };

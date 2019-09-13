@@ -1,51 +1,43 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.List.Lazy.NonEmpty
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField
   val uncons = { v : Any ->
-     when {
-      else -> {
-        val nel = v;
-        object   {
-            val v1 = PS.Data.Lazy.Module.force.app(nel);
-          }
-          .run({
-            val v1 = this.v1;
-            when {
-              (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
-                val x = v1.value0;
-                val xs = v1.value1;
-                mapOf(("head" to x),  ("tail" to xs));
-              }
-              else -> (error("Error in Pattern Match") as Any)
-            };
-          });
-      }
-    }
-  };
+    val nel = v;
+      object   {
+          val v1 = PS.Data.Lazy.Module.force.app(nel);
+        }
+        .run({
+          val v1 = this.v1;
+          when {
+            (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
+              val x = v1.value0;
+              val xs = v1.value1;
+              mapOf(("head" to x),  ("tail" to xs));
+            }
+            else -> (error("Error in Pattern Match") as Any)
+          };
+        });};
   @JvmField
   val toList = { v : Any ->
-     when {
-      else -> {
-        val nel = v;
-        object   {
-            val v1 = PS.Data.Lazy.Module.force.app(nel);
-          }
-          .run({
-            val v1 = this.v1;
-            when {
-              (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
-                val x = v1.value0;
-                val xs = v1.value1;
-                PS.Data.List.Lazy.Types.Module.cons.app(x).app(xs);
-              }
-              else -> (error("Error in Pattern Match") as Any)
-            };
-          });
-      }
-    }
-  };
+    val nel = v;
+      object   {
+          val v1 = PS.Data.Lazy.Module.force.app(nel);
+        }
+        .run({
+          val v1 = this.v1;
+          when {
+            (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
+              val x = v1.value0;
+              val xs = v1.value1;
+              PS.Data.List.Lazy.Types.Module.cons.app(x).app(xs);
+            }
+            else -> (error("Error in Pattern Match") as Any)
+          };
+        });};
   @JvmField
   val toUnfoldable = { dictUnfoldable : Any ->
      PS.Control.Semigroupoid.Module.compose
@@ -64,25 +56,20 @@ object Module  {
   };
   @JvmField
   val tail = { v : Any ->
-     when {
-      else -> {
-        val nel = v;
-        object   {
-            val v1 = PS.Data.Lazy.Module.force.app(nel);
-          }
-          .run({
-            val v1 = this.v1;
-            when {
-              (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
-                val xs = v1.value1;
-                xs;
-              }
-              else -> (error("Error in Pattern Match") as Any)
-            };
-          });
-      }
-    }
-  };
+    val nel = v;
+      object   {
+          val v1 = PS.Data.Lazy.Module.force.app(nel);
+        }
+        .run({
+          val v1 = this.v1;
+          when {
+            (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
+              val xs = v1.value1;
+              xs;
+            }
+            else -> (error("Error in Pattern Match") as Any)
+          };
+        });};
   @JvmField
   val singleton = PS.Control.Applicative.Module.pure
                     .app(PS.Data.List.Lazy.Types.Module.applicativeNonEmptyList
@@ -99,52 +86,42 @@ object Module  {
   };
   @JvmField
   val length = { v : Any ->
-     when {
-      else -> {
-        val nel = v;
-        object   {
-            val v1 = PS.Data.Lazy.Module.force.app(nel);
-          }
-          .run({
-            val v1 = this.v1;
-            when {
-              (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
-                val x = v1.value0;
-                val xs = v1.value1;
-                PS.Data.Semiring.Module.add
-                  .app(PS.Data.Semiring.Module.semiringInt)
-                  .app(1)
-                  .app(PS.Data.List.Lazy.Module.length.app(xs));
-              }
-              else -> (error("Error in Pattern Match") as Any)
-            };
-          });
-      }
-    }
-  };
+    val nel = v;
+      object   {
+          val v1 = PS.Data.Lazy.Module.force.app(nel);
+        }
+        .run({
+          val v1 = this.v1;
+          when {
+            (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
+              val x = v1.value0;
+              val xs = v1.value1;
+              PS.Data.Semiring.Module.add
+                .app(PS.Data.Semiring.Module.semiringInt)
+                .app(1)
+                .app(PS.Data.List.Lazy.Module.length.app(xs));
+            }
+            else -> (error("Error in Pattern Match") as Any)
+          };
+        });};
   @JvmField
   val last = { v : Any ->
-     when {
-      else -> {
-        val nel = v;
-        object   {
-            val v1 = PS.Data.Lazy.Module.force.app(nel);
-          }
-          .run({
-            val v1 = this.v1;
-            when {
-              (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
-                val x = v1.value0;
-                val xs = v1.value1;
-                PS.Data.Maybe.Module.fromMaybe.app(x)
-                  .app(PS.Data.List.Lazy.Module.last.app(xs));
-              }
-              else -> (error("Error in Pattern Match") as Any)
-            };
-          });
-      }
-    }
-  };
+    val nel = v;
+      object   {
+          val v1 = PS.Data.Lazy.Module.force.app(nel);
+        }
+        .run({
+          val v1 = this.v1;
+          when {
+            (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
+              val x = v1.value0;
+              val xs = v1.value1;
+              PS.Data.Maybe.Module.fromMaybe.app(x)
+                .app(PS.Data.List.Lazy.Module.last.app(xs));
+            }
+            else -> (error("Error in Pattern Match") as Any)
+          };
+        });};
   @JvmField
   val iterate = { f : Any ->
      { x : Any ->
@@ -159,52 +136,41 @@ object Module  {
   };
   @JvmField
   val _init = { v : Any ->
-     when {
-      else -> {
-        val nel = v;
-        object   {
-            val v1 = PS.Data.Lazy.Module.force.app(nel);
-          }
-          .run({
-            val v1 = this.v1;
-            when {
-              (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
-                val x = v1.value0;
-                val xs = v1.value1;
-                PS.Data.Maybe.Module.maybe
-                  .app(PS.Data.List.Lazy.Types.Module.nil)
-                  .app({ v2 : Any ->
-                       PS.Data.List.Lazy.Types.Module.cons.app(x).app(v2)
-                    })
-                  .app(PS.Data.List.Lazy.Module._init.app(xs));
-              }
-              else -> (error("Error in Pattern Match") as Any)
-            };
-          });
-      }
-    }
-  };
+    val nel = v;
+      object   {
+          val v1 = PS.Data.Lazy.Module.force.app(nel);
+        }
+        .run({
+          val v1 = this.v1;
+          when {
+            (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
+              val x = v1.value0;
+              val xs = v1.value1;
+              PS.Data.Maybe.Module.maybe.app(PS.Data.List.Lazy.Types.Module.nil)
+                .app({ v2 : Any ->
+                     PS.Data.List.Lazy.Types.Module.cons.app(x).app(v2)
+                  })
+                .app(PS.Data.List.Lazy.Module._init.app(xs));
+            }
+            else -> (error("Error in Pattern Match") as Any)
+          };
+        });};
   @JvmField
   val head = { v : Any ->
-     when {
-      else -> {
-        val nel = v;
-        object   {
-            val v1 = PS.Data.Lazy.Module.force.app(nel);
-          }
-          .run({
-            val v1 = this.v1;
-            when {
-              (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
-                val x = v1.value0;
-                x;
-              }
-              else -> (error("Error in Pattern Match") as Any)
-            };
-          });
-      }
-    }
-  };
+    val nel = v;
+      object   {
+          val v1 = PS.Data.Lazy.Module.force.app(nel);
+        }
+        .run({
+          val v1 = this.v1;
+          when {
+            (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
+              val x = v1.value0;
+              x;
+            }
+            else -> (error("Error in Pattern Match") as Any)
+          };
+        });};
   @JvmField
   val fromList = { l : Any ->
      object   {

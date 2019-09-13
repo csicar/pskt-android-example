@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Monad.ST.Internal
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val map_ = Foreign.Control.Monad.ST.Internal.map_;
   val pure_ = Foreign.Control.Monad.ST.Internal.pure_;
@@ -93,82 +95,56 @@ object Module  {
            .run({
             val isLooping = this.isLooping;
             val fromDone = this.fromDone;
-            PS.Control.Bind.Module.bind
-              .app(PS.Control.Monad.ST.Internal.Module.bindST)
-              .app(PS.Control.Bind.Module.bindFlipped
-                     .app(PS.Control.Monad.ST.Internal.Module.bindST)
-                     .app(PS.Control.Monad.ST.Internal.Module.new)
-                     .app(f.app(a)))
-              .app({ v : Any ->
-                 when {
-                  else -> {
-                    val r = v;
-                    PS.Control.Bind.Module.discard
-                      .app(PS.Control.Bind.Module.discardUnit)
-                      .app(PS.Control.Monad.ST.Internal.Module.bindST)
-                      .app(PS.Control.Monad.ST.Internal.Module._while
-                             .app(PS.Data.Functor.Module.map
-                                    .app(
-                                      PS.Control.Monad.ST.Internal.Module.functorST
-                                    )
-                                    .app(isLooping)
-                                    .app(
-                                 PS.Control.Monad.ST.Internal.Module.read.app(r)
-                               ))
-                             .app(PS.Control.Bind.Module.bind
-                                    .app(
-                                      PS.Control.Monad.ST.Internal.Module.bindST
-                                    )
-                                    .app(
-                                      PS.Control.Monad.ST.Internal.Module.read
-                                        .app(r))
-                                    .app({ v1 : Any ->
-                               when {
-                                (v1 is PS.Control.Monad.Rec.Class.Module._Type_Step
-                                         .Loop) -> {
-                                  val a_tick = v1.value0;
-                                  PS.Control.Bind.Module.bind
-                                    .app(
-                                      PS.Control.Monad.ST.Internal.Module.bindST
-                                    )
-                                    .app(f.app(a_tick))
-                                    .app({ v2 : Any ->
-                                       when {
-                                        else -> {
-                                          val e = v2;
-                                          PS.Data.Functor.Module.void
-                                            .app(
-                                              PS.Control.Monad.ST.Internal.Module.functorST
-                                            )
-                                            .app(
-                                            PS.Control.Monad.ST.Internal.Module.write
-                                              .app(e)
-                                              .app(r));
-                                        }
-                                      }
-                                    });
-                                }
-                                (v1 is PS.Control.Monad.Rec.Class.Module._Type_Step
-                                         .Done) -> {
-                                  val b = v1.value0;
-                                  PS.Control.Applicative.Module.pure
-                                    .app(
-                                      PS.Control.Monad.ST.Internal.Module.applicativeST
-                                    )
-                                    .app(PS.Data.Unit.Module.unit);
-                                }
-                                else -> (error("Error in Pattern Match") as Any)
-                              }
-                            })))
-                      .app({ _ : Any ->
-                         PS.Data.Functor.Module.map
-                           .app(PS.Control.Monad.ST.Internal.Module.functorST)
-                           .app(fromDone)
-                           .app(PS.Control.Monad.ST.Internal.Module.read.app(r))
-                      });
-                  }
-                }
-              });
+            /* defer **/{
+              val v = PS.Control.Bind.Module.bindFlipped
+                        .app(PS.Control.Monad.ST.Internal.Module.bindST)
+                        .app(PS.Control.Monad.ST.Internal.Module.new)
+                        .app(f.app(a))
+                        .appRun();
+              val r = v;
+              PS.Control.Monad.ST.Internal.Module._while
+                .app(PS.Data.Functor.Module.map
+                       .app(PS.Control.Monad.ST.Internal.Module.functorST)
+                       .app(isLooping)
+                       .app(PS.Control.Monad.ST.Internal.Module.read.app(r)))
+                .app(/* defer **/{
+                    val v1 = PS.Control.Monad.ST.Internal.Module.read.app(r)
+                               .appRun();
+                    when {
+                        (v1 is PS.Control.Monad.Rec.Class.Module._Type_Step
+                                 .Loop) -> {
+                          val a_tick = v1.value0;
+                          /* defer **/{
+                            val v2 = f.app(a_tick).appRun();
+                            val e = v2;
+                            PS.Data.Functor.Module.void
+                              .app(PS.Control.Monad.ST.Internal.Module.functorST
+                              )
+                              .app(PS.Control.Monad.ST.Internal.Module.write
+                                     .app(e)
+                                     .app(r))
+                              .appRun();
+                          };
+                        }
+                        (v1 is PS.Control.Monad.Rec.Class.Module._Type_Step
+                                 .Done) -> {
+                          val b = v1.value0;
+                          PS.Control.Applicative.Module.pure
+                            .app(
+                              PS.Control.Monad.ST.Internal.Module.applicativeST)
+                            .app(PS.Data.Unit.Module.unit);
+                        }
+                        else -> (error("Error in Pattern Match") as Any)
+                      }
+                      .appRun();
+                  })
+                .appRun();
+              PS.Data.Functor.Module.map
+                .app(PS.Control.Monad.ST.Internal.Module.functorST)
+                .app(fromDone)
+                .app(PS.Control.Monad.ST.Internal.Module.read.app(r))
+                .appRun();
+            };
           })
       }
     });

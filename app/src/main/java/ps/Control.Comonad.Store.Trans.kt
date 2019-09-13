@@ -1,19 +1,16 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Comonad.Store.Trans
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val StoreT = { x : Any -> x};
-  @JvmField val runStoreT = { v : Any -> when { else -> { val s = v; s; } }};
+  @JvmField val runStoreT = { v : Any ->val s = v; s;};
   @JvmField
   val newtypeStoreT = PS.Data.Newtype.Module.Newtype
                         .app({ n : Any ->
-                             when {
-                              else -> {
-                                val a = n;
-                                a;
-                              }
-                            }
-                          })
+                            val a = n;
+                              a;})
                         .app(PS.Control.Comonad.Store.Trans.Module.StoreT);
   @JvmField
   val functorStoreT = { dictFunctor : Any ->

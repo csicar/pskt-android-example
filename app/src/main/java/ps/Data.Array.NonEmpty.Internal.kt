@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Array.NonEmpty.Internal
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val fold1Impl = Foreign.Data.Array.NonEmpty.Internal.fold1Impl;
   val traverse1Impl = Foreign.Data.Array.NonEmpty.Internal.traverse1Impl;
@@ -15,18 +17,13 @@ object Module  {
   val showNonEmptyArray = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val xs = v;
-            (("(NonEmptyArray " as String) + (((PS.Data.Show.Module.show
-                                                  .app(
-                                                    PS.Data.Show.Module.showArray
-                                                      .app(dictShow))
-                                                  .app(xs
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val xs = v;
+          (("(NonEmptyArray " as String) + (((PS.Data.Show.Module.show
+                                                .app(
+                                                  PS.Data.Show.Module.showArray
+                                                    .app(dictShow))
+                                                .app(xs
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField
   val semigroupNonEmptyArray = PS.Data.Semigroup.Module.semigroupArray;

@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Monad.Gen
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   sealed class _Type_LL ()  {
     data class Cons (val value0 : Any,  val value1 : Any) : _Type_LL() {};
@@ -63,31 +65,24 @@ object Module  {
                               .app(Unit))
                        .app(gen)
                        .app({ v1 : Any ->
-                          when {
-                           else -> {
-                             val x = v1;
-                             PS.Data.Function.Module.apply
-                               .app(PS.Control.Applicative.Module.pure
-                                      .app(
-                                   ((dictMonadGen as Map<String, Any>)["Monad0"]!!
-                                      .app(Unit
-                                     ) as Map<String, Any>)["Applicative0"]!!
-                                     .app(Unit)))
-                               .app(PS.Control.Monad.Rec.Class.Module.Loop
-                                      .app(PS.Data.Tuple.Module.Tuple
-                                             .app(
-                                               PS.Control.Monad.Gen.Module.Cons
-                                                 .app(x)
-                                                 .app(acc))
-                                             .app(PS.Data.Ring.Module.sub
-                                                    .app(
-                                                      PS.Data.Ring.Module.ringInt
-                                                    )
-                                                    .app(n)
-                                                    .app(1))));
-                           }
-                         }
-                       });
+                         val x = v1;
+                           PS.Data.Function.Module.apply
+                             .app(PS.Control.Applicative.Module.pure
+                                    .app(
+                                 ((dictMonadGen as Map<String, Any>)["Monad0"]!!
+                                    .app(Unit
+                                   ) as Map<String, Any>)["Applicative0"]!!
+                                   .app(Unit)))
+                             .app(PS.Control.Monad.Rec.Class.Module.Loop
+                                    .app(PS.Data.Tuple.Module.Tuple
+                                           .app(PS.Control.Monad.Gen.Module.Cons
+                                                  .app(x)
+                                                  .app(acc))
+                                           .app(PS.Data.Ring.Module.sub
+                                                  .app(
+                                                    PS.Data.Ring.Module.ringInt)
+                                                  .app(n)
+                                                  .app(1))));});
                    }
                    else -> (error("Error in Pattern Match") as Any)
                  }
@@ -122,79 +117,63 @@ object Module  {
   val semigroupFreqSemigroup = PS.Data.Semigroup.Module.Semigroup
                                  .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val f = v;
-            val g = v1;
-            PS.Control.Monad.Gen.Module.FreqSemigroup
-              .app({ pos : Any ->
-                 object   {
-                     val v2 = f.app(pos);
-                   }
-                   .run({
-                    val v2 = this.v2;
-                    when {
-                      (v2 is PS.Data.Tuple.Module._Type_Tuple
-                               .Tuple)&& (v2
-                                            .value0 is PS.Data.Maybe.Module._Type_Maybe
-                                                         .Just) -> {
-                        val pos_tick = v2.value0.value0;
-                        g.app(pos_tick);
-                      }
-                      else -> {
-                        val result = v2;
-                        result;
-                      }
-                    };
-                  })
-              });
-          }
-        }
-      }
+        val f = v;
+          val g = v1;
+          PS.Control.Monad.Gen.Module.FreqSemigroup
+            .app({ pos : Any ->
+               object   {
+                   val v2 = f.app(pos);
+                 }
+                 .run({
+                  val v2 = this.v2;
+                  when {
+                    (v2 is PS.Data.Tuple.Module._Type_Tuple
+                             .Tuple)&& (v2
+                                          .value0 is PS.Data.Maybe.Module._Type_Maybe
+                                                       .Just) -> {
+                      val pos_tick = v2.value0.value0;
+                      g.app(pos_tick);
+                    }
+                    else -> {
+                      val result = v2;
+                      result;
+                    }
+                  };
+                })
+            });}
     });
   @JvmField
   val semigroupAtIndex = PS.Data.Semigroup.Module.Semigroup
                            .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val f = v;
-            val g = v1;
-            PS.Control.Monad.Gen.Module.AtIndex
-              .app({ i : Any ->
-                 when {
-                  (PS.Data.Ord.Module.lessThanOrEq
-                     .app(PS.Data.Ord.Module.ordInt)
-                     .app(i)
-                     .app(0) == true) -> {
-                    f.app(i);
-                  }
-                  else -> {
-                    g
-                      .app(PS.Data.Ring.Module.sub
-                             .app(PS.Data.Ring.Module.ringInt)
-                             .app(i)
-                             .app(1));
-                  }
+        val f = v;
+          val g = v1;
+          PS.Control.Monad.Gen.Module.AtIndex
+            .app({ i : Any ->
+               when {
+                (PS.Data.Ord.Module.lessThanOrEq.app(PS.Data.Ord.Module.ordInt)
+                   .app(i)
+                   .app(0) == true) -> {
+                  f.app(i);
                 }
-              });
-          }
-        }
-      }
+                else -> {
+                  g
+                    .app(PS.Data.Ring.Module.sub
+                           .app(PS.Data.Ring.Module.ringInt)
+                           .app(i)
+                           .app(1));
+                }
+              }
+            });}
     });
   @JvmField
   val getFreqVal = { v : Any ->
-     when {
-      else -> {
-        val f = v;
-        PS.Control.Semigroupoid.Module.compose
-          .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
-          .app(PS.Data.Tuple.Module.snd)
-          .app(f);
-      }
-    }
-  };
-  @JvmField val getAtIndex = { v : Any -> when { else -> { val f = v; f; } }};
+    val f = v;
+      PS.Control.Semigroupoid.Module.compose
+        .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
+        .app(PS.Data.Tuple.Module.snd)
+        .app(f);};
+  @JvmField val getAtIndex = { v : Any ->val f = v; f;};
   @JvmField
   val freqSemigroup = { v : Any ->
      when {
@@ -393,21 +372,15 @@ object Module  {
                                 .app(xs))
                          .app(1)))
            .app({ v : Any ->
-             when {
-              else -> {
-                val n = v;
-                PS.Data.Function.Module.apply
-                  .app(PS.Control.Applicative.Module.pure
-                         .app(((dictMonadGen as Map<String, Any>)["Monad0"]!!
-                                 .app(Unit
-                                ) as Map<String, Any>)["Applicative0"]!!
-                                .app(Unit)))
-                  .app(PS.Control.Monad.Gen.Module.fromIndex.app(dictFoldable1)
-                         .app(n)
-                         .app(xs));
-              }
-            }
-          })
+            val n = v;
+              PS.Data.Function.Module.apply
+                .app(PS.Control.Applicative.Module.pure
+                       .app(((dictMonadGen as Map<String, Any>)["Monad0"]!!
+                               .app(Unit) as Map<String, Any>)["Applicative0"]!!
+                              .app(Unit)))
+                .app(PS.Control.Monad.Gen.Module.fromIndex.app(dictFoldable1)
+                       .app(n)
+                       .app(xs));})
       }
     }
   };
@@ -430,14 +403,9 @@ object Module  {
                                 .app(xs))
                          .app(1)))
            .app({ v : Any ->
-             when {
-              else -> {
-                val n = v;
-                PS.Control.Monad.Gen.Module.fromIndex.app(dictFoldable1).app(n)
-                  .app(xs);
-              }
-            }
-          })
+            val n = v;
+              PS.Control.Monad.Gen.Module.fromIndex.app(dictFoldable1).app(n)
+                .app(xs);})
       }
     }
   };

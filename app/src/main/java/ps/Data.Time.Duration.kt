@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Time.Duration
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Seconds = { x : Any -> x};
   @JvmField val Minutes = { x : Any -> x};
@@ -20,153 +22,103 @@ object Module  {
   @JvmField
   val showSeconds = PS.Data.Show.Module.Show
                       .app({ v : Any ->
-       when {
-        else -> {
-          val n = v;
-          (("(Seconds " as String) + (((PS.Data.Show.Module.show
-                                          .app(PS.Data.Show.Module.showNumber)
-                                          .app(n
-          ) as String) + (")" as String)) as String));
-        }
-      }
-    });
+      val n = v;
+        (("(Seconds " as String) + (((PS.Data.Show.Module.show
+                                        .app(PS.Data.Show.Module.showNumber)
+                                        .app(n
+        ) as String) + (")" as String)) as String));});
   @JvmField
   val showMinutes = PS.Data.Show.Module.Show
                       .app({ v : Any ->
-       when {
-        else -> {
-          val n = v;
-          (("(Minutes " as String) + (((PS.Data.Show.Module.show
-                                          .app(PS.Data.Show.Module.showNumber)
-                                          .app(n
-          ) as String) + (")" as String)) as String));
-        }
-      }
-    });
+      val n = v;
+        (("(Minutes " as String) + (((PS.Data.Show.Module.show
+                                        .app(PS.Data.Show.Module.showNumber)
+                                        .app(n
+        ) as String) + (")" as String)) as String));});
   @JvmField
   val showMilliseconds = PS.Data.Show.Module.Show
                            .app({ v : Any ->
-       when {
-        else -> {
-          val n = v;
-          (("(Milliseconds " as String) + (((PS.Data.Show.Module.show
-                                               .app(
-                                                 PS.Data.Show.Module.showNumber)
-                                               .app(n
-          ) as String) + (")" as String)) as String));
-        }
-      }
-    });
+      val n = v;
+        (("(Milliseconds " as String) + (((PS.Data.Show.Module.show
+                                             .app(PS.Data.Show.Module.showNumber
+                                             )
+                                             .app(n
+        ) as String) + (")" as String)) as String));});
   @JvmField
   val showHours = PS.Data.Show.Module.Show
                     .app({ v : Any ->
-       when {
-        else -> {
-          val n = v;
-          (("(Hours " as String) + (((PS.Data.Show.Module.show
-                                        .app(PS.Data.Show.Module.showNumber)
-                                        .app(n
-          ) as String) + (")" as String)) as String));
-        }
-      }
-    });
+      val n = v;
+        (("(Hours " as String) + (((PS.Data.Show.Module.show
+                                      .app(PS.Data.Show.Module.showNumber)
+                                      .app(n
+        ) as String) + (")" as String)) as String));});
   @JvmField
   val showDays = PS.Data.Show.Module.Show
                    .app({ v : Any ->
-       when {
-        else -> {
-          val n = v;
-          (("(Days " as String) + (((PS.Data.Show.Module.show
-                                       .app(PS.Data.Show.Module.showNumber)
-                                       .app(n
-          ) as String) + (")" as String)) as String));
-        }
-      }
-    });
+      val n = v;
+        (("(Days " as String) + (((PS.Data.Show.Module.show
+                                     .app(PS.Data.Show.Module.showNumber)
+                                     .app(n
+        ) as String) + (")" as String)) as String));});
   @JvmField
   val semigroupSeconds = PS.Data.Semigroup.Module.Semigroup
                            .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val x = v;
-            val y = v1;
-            PS.Data.Time.Duration.Module.Seconds
-              .app(PS.Data.Semiring.Module.add
-                     .app(PS.Data.Semiring.Module.semiringNumber)
-                     .app(x)
-                     .app(y));
-          }
-        }
-      }
+        val x = v;
+          val y = v1;
+          PS.Data.Time.Duration.Module.Seconds
+            .app(PS.Data.Semiring.Module.add
+                   .app(PS.Data.Semiring.Module.semiringNumber)
+                   .app(x)
+                   .app(y));}
     });
   @JvmField
   val semigroupMinutes = PS.Data.Semigroup.Module.Semigroup
                            .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val x = v;
-            val y = v1;
-            PS.Data.Time.Duration.Module.Minutes
-              .app(PS.Data.Semiring.Module.add
-                     .app(PS.Data.Semiring.Module.semiringNumber)
-                     .app(x)
-                     .app(y));
-          }
-        }
-      }
+        val x = v;
+          val y = v1;
+          PS.Data.Time.Duration.Module.Minutes
+            .app(PS.Data.Semiring.Module.add
+                   .app(PS.Data.Semiring.Module.semiringNumber)
+                   .app(x)
+                   .app(y));}
     });
   @JvmField
   val semigroupMilliseconds = PS.Data.Semigroup.Module.Semigroup
                                 .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val x = v;
-            val y = v1;
-            PS.Data.Time.Duration.Module.Milliseconds
-              .app(PS.Data.Semiring.Module.add
-                     .app(PS.Data.Semiring.Module.semiringNumber)
-                     .app(x)
-                     .app(y));
-          }
-        }
-      }
+        val x = v;
+          val y = v1;
+          PS.Data.Time.Duration.Module.Milliseconds
+            .app(PS.Data.Semiring.Module.add
+                   .app(PS.Data.Semiring.Module.semiringNumber)
+                   .app(x)
+                   .app(y));}
     });
   @JvmField
   val semigroupHours = PS.Data.Semigroup.Module.Semigroup
                          .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val x = v;
-            val y = v1;
-            PS.Data.Time.Duration.Module.Hours
-              .app(PS.Data.Semiring.Module.add
-                     .app(PS.Data.Semiring.Module.semiringNumber)
-                     .app(x)
-                     .app(y));
-          }
-        }
-      }
+        val x = v;
+          val y = v1;
+          PS.Data.Time.Duration.Module.Hours
+            .app(PS.Data.Semiring.Module.add
+                   .app(PS.Data.Semiring.Module.semiringNumber)
+                   .app(x)
+                   .app(y));}
     });
   @JvmField
   val semigroupDays = PS.Data.Semigroup.Module.Semigroup
                         .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val x = v;
-            val y = v1;
-            PS.Data.Time.Duration.Module.Days
-              .app(PS.Data.Semiring.Module.add
-                     .app(PS.Data.Semiring.Module.semiringNumber)
-                     .app(x)
-                     .app(y));
-          }
-        }
-      }
+        val x = v;
+          val y = v1;
+          PS.Data.Time.Duration.Module.Days
+            .app(PS.Data.Semiring.Module.add
+                   .app(PS.Data.Semiring.Module.semiringNumber)
+                   .app(x)
+                   .app(y));}
     });
   @JvmField val ordSeconds = PS.Data.Ord.Module.ordNumber;
   @JvmField val ordMinutes = PS.Data.Ord.Module.ordNumber;
@@ -176,57 +128,32 @@ object Module  {
   @JvmField
   val newtypeSeconds = PS.Data.Newtype.Module.Newtype
                          .app({ n : Any ->
-                              when {
-                               else -> {
-                                 val a = n;
-                                 a;
-                               }
-                             }
-                           })
+                             val a = n;
+                               a;})
                          .app(PS.Data.Time.Duration.Module.Seconds);
   @JvmField
   val newtypeMinutes = PS.Data.Newtype.Module.Newtype
                          .app({ n : Any ->
-                              when {
-                               else -> {
-                                 val a = n;
-                                 a;
-                               }
-                             }
-                           })
+                             val a = n;
+                               a;})
                          .app(PS.Data.Time.Duration.Module.Minutes);
   @JvmField
   val newtypeMilliseconds = PS.Data.Newtype.Module.Newtype
                               .app({ n : Any ->
-                                   when {
-                                    else -> {
-                                      val a = n;
-                                      a;
-                                    }
-                                  }
-                                })
+                                  val a = n;
+                                    a;})
                               .app(PS.Data.Time.Duration.Module.Milliseconds);
   @JvmField
   val newtypeHours = PS.Data.Newtype.Module.Newtype
                        .app({ n : Any ->
-                            when {
-                             else -> {
-                               val a = n;
-                               a;
-                             }
-                           }
-                         })
+                           val a = n;
+                             a;})
                        .app(PS.Data.Time.Duration.Module.Hours);
   @JvmField
   val newtypeDays = PS.Data.Newtype.Module.Newtype
                       .app({ n : Any ->
-                           when {
-                            else -> {
-                              val a = n;
-                              a;
-                            }
-                          }
-                        })
+                          val a = n;
+                            a;})
                       .app(PS.Data.Time.Duration.Module.Days);
   @JvmField
   val monoidSeconds = PS.Data.Monoid.Module.Monoid

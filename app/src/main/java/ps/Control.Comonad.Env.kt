@@ -1,20 +1,17 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Comonad.Env
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val withEnv = PS.Control.Comonad.Env.Trans.Module.withEnvT;
   @JvmField
   val runEnv = { v : Any ->
-     when {
-      else -> {
-        val x = v;
-        PS.Data.Functor.Module.map.app(PS.Data.Tuple.Module.functorTuple)
-          .app(PS.Data.Newtype.Module.unwrap
-                 .app(PS.Data.Identity.Module.newtypeIdentity))
-          .app(x);
-      }
-    }
-  };
+    val x = v;
+      PS.Data.Functor.Module.map.app(PS.Data.Tuple.Module.functorTuple)
+        .app(PS.Data.Newtype.Module.unwrap
+               .app(PS.Data.Identity.Module.newtypeIdentity))
+        .app(x);};
   @JvmField
   val mapEnv = PS.Data.Functor.Module.map
                  .app(PS.Control.Comonad.Env.Trans.Module.functorEnvT

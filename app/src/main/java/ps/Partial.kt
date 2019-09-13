@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Partial
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val crashWith = Foreign.Partial.crashWith;
   @JvmField

@@ -1,32 +1,24 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Ord.Down
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Down = { x : Any -> x};
   @JvmField
   val showDown = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val a = v;
-            (("(Down " as String) + (((PS.Data.Show.Module.show.app(dictShow)
-                                         .app(a
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val a = v;
+          (("(Down " as String) + (((PS.Data.Show.Module.show.app(dictShow)
+                                       .app(a
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField
   val newtypeDown = PS.Data.Newtype.Module.Newtype
                       .app({ n : Any ->
-                           when {
-                            else -> {
-                              val a = n;
-                              a;
-                            }
-                          }
-                        })
+                          val a = n;
+                            a;})
                       .app(PS.Data.Ord.Down.Module.Down);
   @JvmField val eqDown = { dictEq : Any -> dictEq};
   @JvmField
@@ -38,15 +30,10 @@ object Module  {
          })
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val x = v;
-              val y = v1;
-              PS.Data.Ordering.Module.invert
-                .app(PS.Data.Ord.Module.compare.app(dictOrd).app(x).app(y));
-            }
-          }
-        }
+          val x = v;
+            val y = v1;
+            PS.Data.Ordering.Module.invert
+              .app(PS.Data.Ord.Module.compare.app(dictOrd).app(x).app(y));}
       })
   };
   @JvmField

@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.List.Lazy.Types
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   sealed class _Type_Step ()  {
     object Nil : _Type_Step() {};
@@ -24,24 +26,14 @@ object Module  {
   @JvmField
   val newtypeNonEmptyList = PS.Data.Newtype.Module.Newtype
                               .app({ n : Any ->
-                                   when {
-                                    else -> {
-                                      val a = n;
-                                      a;
-                                    }
-                                  }
-                                })
+                                  val a = n;
+                                    a;})
                               .app(PS.Data.List.Lazy.Types.Module.NonEmptyList);
   @JvmField
   val newtypeList = PS.Data.Newtype.Module.Newtype
                       .app({ n : Any ->
-                           when {
-                            else -> {
-                              val a = n;
-                              a;
-                            }
-                          }
-                        })
+                          val a = n;
+                            a;})
                       .app(PS.Data.List.Lazy.Types.Module.List);
   @JvmField
   val step = PS.Control.Semigroupoid.Module.compose
@@ -123,23 +115,17 @@ object Module  {
   val showNonEmptyList = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val nel = v;
-            (("(NonEmptyList " as String) + (((PS.Data.Show.Module.show
-                                                 .app(
-                                                   PS.Data.Lazy.Module.showLazy
+        val nel = v;
+          (("(NonEmptyList " as String) + (((PS.Data.Show.Module.show
+                                               .app(PS.Data.Lazy.Module.showLazy
+                                                      .app(
+                                                   PS.Data.NonEmpty.Module.showNonEmpty
+                                                     .app(dictShow)
                                                      .app(
-                                                     PS.Data.NonEmpty.Module.showNonEmpty
-                                                       .app(dictShow)
-                                                       .app(
-                                                       PS.Data.List.Lazy.Types.Module.showList
-                                                         .app(dictShow))))
-                                                 .app(nel
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+                                                     PS.Data.List.Lazy.Types.Module.showList
+                                                       .app(dictShow))))
+                                               .app(nel
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField
   val monoidList = PS.Data.Monoid.Module.Monoid
@@ -196,22 +182,16 @@ object Module  {
   val functorNonEmptyList = PS.Data.Functor.Module.Functor
                               .app({ f : Any ->
        { v : Any ->
-         when {
-          else -> {
-            val f1 = f;
-            val nel = v;
-            PS.Data.List.Lazy.Types.Module.NonEmptyList
-              .app(PS.Data.Functor.Module.map
-                     .app(PS.Data.Lazy.Module.functorLazy)
-                     .app(PS.Data.Functor.Module.map
-                            .app(PS.Data.NonEmpty.Module.functorNonEmpty
-                                   .app(
-                                PS.Data.List.Lazy.Types.Module.functorList))
-                            .app(f1))
-                     .app(nel));
-          }
-        }
-      }
+        val f1 = f;
+          val nel = v;
+          PS.Data.List.Lazy.Types.Module.NonEmptyList
+            .app(PS.Data.Functor.Module.map.app(PS.Data.Lazy.Module.functorLazy)
+                   .app(PS.Data.Functor.Module.map
+                          .app(PS.Data.NonEmpty.Module.functorNonEmpty
+                                 .app(PS.Data.List.Lazy.Types.Module.functorList
+                            ))
+                          .app(f1))
+                   .app(nel));}
     });
   @JvmField
   val eq1List = PS.Data.Eq.Module.Eq1
@@ -520,140 +500,118 @@ object Module  {
                                })
                              .app({ f : Any ->
        { v : Any ->
-         when {
-          else -> {
-            val f1 = f;
-            val w = v;
-            val nel = v;
-            object   {
-                val go = { a : Any ->
-                   { v1 : Any ->
-                     when {
-                      ((v1 as Map<String, Any>).size == 2) -> {
-                        val a1 = a;
-                        val _val = v1["val"]!!;
-                        val acc = v1["acc"]!!;
-                        mapOf(("val" to PS.Data.List.Lazy.Types.Module.cons
-                                          .app(f1
-                                                 .app(
-                                              PS.Data.List.Lazy.Types.Module.NonEmptyList
-                                                .app(PS.Data.Lazy.Module.defer
-                                                       .app({ v2 : Any ->
-                                                     PS.Data.NonEmpty.Module.NonEmpty
-                                                       .app(a1)
-                                                       .app(acc)
-                                                  }))))
-                                          .app(_val)),  
-                          ("acc" to PS.Data.List.Lazy.Types.Module.cons.app(a1)
-                                      .app(acc)));
-                      }
-                      else -> (error("Error in Pattern Match") as Any)
+        val f1 = f;
+          val w = v;
+          val nel = v;
+          object   {
+              val go = { a : Any ->
+                 { v1 : Any ->
+                   when {
+                    ((v1 as Map<String, Any>).size == 2) -> {
+                      val a1 = a;
+                      val _val = v1["val"]!!;
+                      val acc = v1["acc"]!!;
+                      mapOf(("val" to PS.Data.List.Lazy.Types.Module.cons
+                                        .app(f1
+                                               .app(
+                                            PS.Data.List.Lazy.Types.Module.NonEmptyList
+                                              .app(PS.Data.Lazy.Module.defer
+                                                     .app({ v2 : Any ->
+                                                   PS.Data.NonEmpty.Module.NonEmpty
+                                                     .app(a1)
+                                                     .app(acc)
+                                                }))))
+                                        .app(_val)),  
+                        ("acc" to PS.Data.List.Lazy.Types.Module.cons.app(a1)
+                                    .app(acc)));
                     }
+                    else -> (error("Error in Pattern Match") as Any)
                   }
-                };
-              }
-              .run({
-                val go = this.go;
-                object   {
-                    val v1 = PS.Data.Lazy.Module.force.app(nel);
-                  }
-                  .run({
-                    val v1 = this.v1;
-                    when {
-                      (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty
-                               .NonEmpty) -> {
-                        val _as = v1.value1;
-                        PS.Data.Function.Module.apply
-                          .app(PS.Data.List.Lazy.Types.Module.NonEmptyList)
-                          .app(PS.Data.Lazy.Module.defer
-                                 .app({ v2 : Any ->
-                               PS.Data.NonEmpty.Module.NonEmpty.app(f1.app(w))
-                                 .app((PS.Data.Foldable.Module.foldr
-                                         .app(
-                                           PS.Data.List.Lazy.Types.Module.foldableList
-                                         )
-                                         .app(go)
-                                         .app(mapOf(
-                                             ("val" to PS.Data.List.Lazy.Types.Module.nil), 
-                                             
-                                             ("acc" to PS.Data.List.Lazy.Types.Module.nil)
-                                           ))
-                                         .app(_as) as Map<String, Any>)["val"]!!
-                              )
-                            }));
-                      }
-                      else -> (error("Error in Pattern Match") as Any)
-                    };
-                  });
-              });
-          }
-        }
-      }
+                }
+              };
+            }
+            .run({
+              val go = this.go;
+              object   {
+                  val v1 = PS.Data.Lazy.Module.force.app(nel);
+                }
+                .run({
+                  val v1 = this.v1;
+                  when {
+                    (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
+                      val _as = v1.value1;
+                      PS.Data.Function.Module.apply
+                        .app(PS.Data.List.Lazy.Types.Module.NonEmptyList)
+                        .app(PS.Data.Lazy.Module.defer
+                               .app({ v2 : Any ->
+                             PS.Data.NonEmpty.Module.NonEmpty.app(f1.app(w))
+                               .app((PS.Data.Foldable.Module.foldr
+                                       .app(
+                                         PS.Data.List.Lazy.Types.Module.foldableList
+                                       )
+                                       .app(go)
+                                       .app(mapOf(
+                                           ("val" to PS.Data.List.Lazy.Types.Module.nil), 
+                                           
+                                           ("acc" to PS.Data.List.Lazy.Types.Module.nil)
+                                         ))
+                                       .app(_as) as Map<String, Any>)["val"]!!)
+                          }));
+                    }
+                    else -> (error("Error in Pattern Match") as Any)
+                  };
+                });
+            });}
     });
   @JvmField
   val foldableNonEmptyList = PS.Data.Foldable.Module.Foldable
                                .app({ dictMonoid : Any ->
                                     { f : Any ->
                                       { v : Any ->
-                                        when {
-                                         else -> {
-                                           val f1 = f;
-                                           val nel = v;
-                                           PS.Data.Foldable.Module.foldMap
-                                             .app(
-                                               PS.Data.NonEmpty.Module.foldableNonEmpty
-                                                 .app(
-                                                 PS.Data.List.Lazy.Types.Module.foldableList
-                                               ))
-                                             .app(dictMonoid)
-                                             .app(f1)
-                                             .app(PS.Data.Lazy.Module.force
-                                                    .app(nel));
-                                         }
-                                       }
-                                     }
+                                       val f1 = f;
+                                         val nel = v;
+                                         PS.Data.Foldable.Module.foldMap
+                                           .app(
+                                             PS.Data.NonEmpty.Module.foldableNonEmpty
+                                               .app(
+                                               PS.Data.List.Lazy.Types.Module.foldableList
+                                             ))
+                                           .app(dictMonoid)
+                                           .app(f1)
+                                           .app(PS.Data.Lazy.Module.force
+                                                  .app(nel));}
                                    }
                                  })
                                .app({ f : Any ->
                                     { b : Any ->
                                       { v : Any ->
-                                        when {
-                                         else -> {
-                                           val f1 = f;
-                                           val b1 = b;
-                                           val nel = v;
-                                           PS.Data.Foldable.Module.foldl
-                                             .app(
-                                               PS.Data.NonEmpty.Module.foldableNonEmpty
-                                                 .app(
-                                                 PS.Data.List.Lazy.Types.Module.foldableList
-                                               ))
-                                             .app(f1)
-                                             .app(b1)
-                                             .app(PS.Data.Lazy.Module.force
-                                                    .app(nel));
-                                         }
-                                       }
-                                     }
+                                       val f1 = f;
+                                         val b1 = b;
+                                         val nel = v;
+                                         PS.Data.Foldable.Module.foldl
+                                           .app(
+                                             PS.Data.NonEmpty.Module.foldableNonEmpty
+                                               .app(
+                                               PS.Data.List.Lazy.Types.Module.foldableList
+                                             ))
+                                           .app(f1)
+                                           .app(b1)
+                                           .app(PS.Data.Lazy.Module.force
+                                                  .app(nel));}
                                    }
                                  })
                                .app({ f : Any ->
        { b : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val b1 = b;
-              val nel = v;
-              PS.Data.Foldable.Module.foldr
-                .app(PS.Data.NonEmpty.Module.foldableNonEmpty
-                       .app(PS.Data.List.Lazy.Types.Module.foldableList))
-                .app(f1)
-                .app(b1)
-                .app(PS.Data.Lazy.Module.force.app(nel));
-            }
-          }
-        }
+          val f1 = f;
+            val b1 = b;
+            val nel = v;
+            PS.Data.Foldable.Module.foldr
+              .app(PS.Data.NonEmpty.Module.foldableNonEmpty
+                     .app(PS.Data.List.Lazy.Types.Module.foldableList))
+              .app(f1)
+              .app(b1)
+              .app(PS.Data.Lazy.Module.force.app(nel));}
       }
     });
   @JvmField val foldableWithIndexList = (::__rec_foldableWithIndexList)();
@@ -831,20 +789,52 @@ object Module  {
                                         .app({ dictMonoid : Any ->
                                              { f : Any ->
                                                { v : Any ->
-                                                 when {
-                                                  else -> {
-                                                    val f1 = f;
-                                                    val ne = v;
-                                                    PS.Data.Function.Module.apply
-                                                      .app(
-                                                        PS.Data.FoldableWithIndex.Module.foldMapWithIndex
+                                                val f1 = f;
+                                                  val ne = v;
+                                                  PS.Data.Function.Module.apply
+                                                    .app(
+                                                      PS.Data.FoldableWithIndex.Module.foldMapWithIndex
+                                                        .app(
+                                                          PS.Data.NonEmpty.Module.foldableWithIndexNonEmpty
+                                                            .app(
+                                                            PS.Data.List.Lazy.Types.Module.foldableWithIndexList
+                                                          ))
+                                                        .app(dictMonoid)
+                                                        .app(
+                                                        PS.Control.Semigroupoid.Module.compose
                                                           .app(
-                                                            PS.Data.NonEmpty.Module.foldableWithIndexNonEmpty
+                                                            PS.Control.Semigroupoid.Module.semigroupoidFn
+                                                          )
+                                                          .app(f1)
+                                                          .app(
+                                                          PS.Data.Maybe.Module.maybe
+                                                            .app(0)
+                                                            .app(
+                                                            PS.Data.Semiring.Module.add
                                                               .app(
-                                                              PS.Data.List.Lazy.Types.Module.foldableWithIndexList
-                                                            ))
-                                                          .app(dictMonoid)
-                                                          .app(
+                                                                PS.Data.Semiring.Module.semiringInt
+                                                              )
+                                                              .app(1)))))
+                                                    .app(
+                                                    PS.Data.Lazy.Module.force
+                                                      .app(ne));}
+                                            }
+                                          })
+                                        .app({ f : Any ->
+                                             { b : Any ->
+                                               { v : Any ->
+                                                val f1 = f;
+                                                  val b1 = b;
+                                                  val ne = v;
+                                                  PS.Data.Function.Module.apply
+                                                    .app(
+                                                      PS.Data.FoldableWithIndex.Module.foldlWithIndex
+                                                        .app(
+                                                          PS.Data.NonEmpty.Module.foldableWithIndexNonEmpty
+                                                            .app(
+                                                            PS.Data.List.Lazy.Types.Module.foldableWithIndexList
+                                                          ))
+                                                        .app(
                                                           PS.Control.Semigroupoid.Module.compose
                                                             .app(
                                                               PS.Control.Semigroupoid.Module.semigroupoidFn
@@ -858,84 +848,34 @@ object Module  {
                                                                 .app(
                                                                   PS.Data.Semiring.Module.semiringInt
                                                                 )
-                                                                .app(1)))))
-                                                      .app(
-                                                      PS.Data.Lazy.Module.force
-                                                        .app(ne));
-                                                  }
-                                                }
-                                              }
-                                            }
-                                          })
-                                        .app({ f : Any ->
-                                             { b : Any ->
-                                               { v : Any ->
-                                                 when {
-                                                  else -> {
-                                                    val f1 = f;
-                                                    val b1 = b;
-                                                    val ne = v;
-                                                    PS.Data.Function.Module.apply
-                                                      .app(
-                                                        PS.Data.FoldableWithIndex.Module.foldlWithIndex
-                                                          .app(
-                                                            PS.Data.NonEmpty.Module.foldableWithIndexNonEmpty
-                                                              .app(
-                                                              PS.Data.List.Lazy.Types.Module.foldableWithIndexList
-                                                            ))
-                                                          .app(
-                                                            PS.Control.Semigroupoid.Module.compose
-                                                              .app(
-                                                                PS.Control.Semigroupoid.Module.semigroupoidFn
-                                                              )
-                                                              .app(f1)
-                                                              .app(
-                                                              PS.Data.Maybe.Module.maybe
-                                                                .app(0)
-                                                                .app(
-                                                                PS.Data.Semiring.Module.add
-                                                                  .app(
-                                                                    PS.Data.Semiring.Module.semiringInt
-                                                                  )
-                                                                  .app(1))))
-                                                          .app(b1))
-                                                      .app(
-                                                      PS.Data.Lazy.Module.force
-                                                        .app(ne));
-                                                  }
-                                                }
-                                              }
+                                                                .app(1))))
+                                                        .app(b1))
+                                                    .app(
+                                                    PS.Data.Lazy.Module.force
+                                                      .app(ne));}
                                             }
                                           })
                                         .app({ f : Any ->
        { b : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val b1 = b;
-              val ne = v;
-              PS.Data.Function.Module.apply
-                .app(PS.Data.FoldableWithIndex.Module.foldrWithIndex
-                       .app(PS.Data.NonEmpty.Module.foldableWithIndexNonEmpty
-                              .app(
-                           PS.Data.List.Lazy.Types.Module.foldableWithIndexList)
-                       )
-                       .app(PS.Control.Semigroupoid.Module.compose
-                              .app(PS.Control.Semigroupoid.Module.semigroupoidFn
-                              )
-                              .app(f1)
-                              .app(PS.Data.Maybe.Module.maybe.app(0)
-                                     .app(PS.Data.Semiring.Module.add
-                                            .app(
-                                              PS.Data.Semiring.Module.semiringInt
-                                            )
-                                            .app(1))))
-                       .app(b1))
-                .app(PS.Data.Lazy.Module.force.app(ne));
-            }
-          }
-        }
+          val f1 = f;
+            val b1 = b;
+            val ne = v;
+            PS.Data.Function.Module.apply
+              .app(PS.Data.FoldableWithIndex.Module.foldrWithIndex
+                     .app(PS.Data.NonEmpty.Module.foldableWithIndexNonEmpty
+                            .app(
+                         PS.Data.List.Lazy.Types.Module.foldableWithIndexList))
+                     .app(PS.Control.Semigroupoid.Module.compose
+                            .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
+                            .app(f1)
+                            .app(PS.Data.Maybe.Module.maybe.app(0)
+                                   .app(PS.Data.Semiring.Module.add
+                                          .app(
+                                            PS.Data.Semiring.Module.semiringInt)
+                                          .app(1))))
+                     .app(b1))
+              .app(PS.Data.Lazy.Module.force.app(ne));}
       }
     });
   @JvmField
@@ -963,99 +903,83 @@ object Module  {
                                          })
                                        .app({ f : Any ->
        { v : Any ->
-         when {
-          else -> {
-            val f1 = f;
-            val ne = v;
-            PS.Data.Function.Module.apply
-              .app(PS.Data.List.Lazy.Types.Module.NonEmptyList)
-              .app(PS.Data.Lazy.Module.defer
-                     .app({ v1 : Any ->
-                   PS.Data.Function.Module.apply
-                     .app(PS.Data.FunctorWithIndex.Module.mapWithIndex
-                            .app(PS.Data.NonEmpty.Module.functorWithIndex
-                                   .app(
-                                PS.Data.List.Lazy.Types.Module.functorWithIndexList
-                              ))
-                            .app(PS.Control.Semigroupoid.Module.compose
-                                   .app(
-                                     PS.Control.Semigroupoid.Module.semigroupoidFn
-                                   )
-                                   .app(f1)
-                                   .app(PS.Data.Maybe.Module.maybe.app(0)
-                                          .app(PS.Data.Semiring.Module.add
-                                                 .app(
-                                                   PS.Data.Semiring.Module.semiringInt
-                                                 )
-                                                 .app(1)))))
-                     .app(PS.Data.Lazy.Module.force.app(ne))
-                }));
-          }
-        }
-      }
+        val f1 = f;
+          val ne = v;
+          PS.Data.Function.Module.apply
+            .app(PS.Data.List.Lazy.Types.Module.NonEmptyList)
+            .app(PS.Data.Lazy.Module.defer
+                   .app({ v1 : Any ->
+                 PS.Data.Function.Module.apply
+                   .app(PS.Data.FunctorWithIndex.Module.mapWithIndex
+                          .app(PS.Data.NonEmpty.Module.functorWithIndex
+                                 .app(
+                              PS.Data.List.Lazy.Types.Module.functorWithIndexList
+                            ))
+                          .app(PS.Control.Semigroupoid.Module.compose
+                                 .app(
+                                   PS.Control.Semigroupoid.Module.semigroupoidFn
+                                 )
+                                 .app(f1)
+                                 .app(PS.Data.Maybe.Module.maybe.app(0)
+                                        .app(PS.Data.Semiring.Module.add
+                                               .app(
+                                                 PS.Data.Semiring.Module.semiringInt
+                                               )
+                                               .app(1)))))
+                   .app(PS.Data.Lazy.Module.force.app(ne))
+              }));}
     });
   @JvmField
   val toList = { v : Any ->
-     when {
-      else -> {
-        val nel = v;
-        PS.Control.Lazy.Module.defer
-          .app(PS.Data.List.Lazy.Types.Module.lazyList)
-          .app({ v1 : Any ->
-             object   {
-                 val v2 = PS.Data.Lazy.Module.force.app(nel);
-               }
-               .run({
-                val v2 = this.v2;
-                when {
-                  (v2 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
-                    val x = v2.value0;
-                    val xs = v2.value1;
-                    PS.Data.List.Lazy.Types.Module.cons.app(x).app(xs);
-                  }
-                  else -> (error("Error in Pattern Match") as Any)
-                };
-              })
-          });
-      }
-    }
-  };
+    val nel = v;
+      PS.Control.Lazy.Module.defer.app(PS.Data.List.Lazy.Types.Module.lazyList)
+        .app({ v1 : Any ->
+           object   {
+               val v2 = PS.Data.Lazy.Module.force.app(nel);
+             }
+             .run({
+              val v2 = this.v2;
+              when {
+                (v2 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
+                  val x = v2.value0;
+                  val xs = v2.value1;
+                  PS.Data.List.Lazy.Types.Module.cons.app(x).app(xs);
+                }
+                else -> (error("Error in Pattern Match") as Any)
+              };
+            })
+        });};
   @JvmField
   val semigroupNonEmptyList = PS.Data.Semigroup.Module.Semigroup
                                 .app({ v : Any ->
        { as_tick : Any ->
-         when {
-          else -> {
-            val neas = v;
-            val as_tick1 = as_tick;
-            object   {
-                val v1 = PS.Data.Lazy.Module.force.app(neas);
-              }
-              .run({
-                val v1 = this.v1;
-                when {
-                  (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
-                    val a = v1.value0;
-                    val _as = v1.value1;
-                    PS.Data.List.Lazy.Types.Module.NonEmptyList
-                      .app(PS.Data.Lazy.Module.defer
-                             .app({ v2 : Any ->
-                           PS.Data.NonEmpty.Module.NonEmpty.app(a)
-                             .app(PS.Data.Semigroup.Module.append
-                                    .app(
-                                      PS.Data.List.Lazy.Types.Module.semigroupList
-                                    )
-                                    .app(_as)
-                                    .app(PS.Data.List.Lazy.Types.Module.toList
-                                           .app(as_tick1)))
-                        }));
-                  }
-                  else -> (error("Error in Pattern Match") as Any)
-                };
-              });
-          }
-        }
-      }
+        val neas = v;
+          val as_tick1 = as_tick;
+          object   {
+              val v1 = PS.Data.Lazy.Module.force.app(neas);
+            }
+            .run({
+              val v1 = this.v1;
+              when {
+                (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
+                  val a = v1.value0;
+                  val _as = v1.value1;
+                  PS.Data.List.Lazy.Types.Module.NonEmptyList
+                    .app(PS.Data.Lazy.Module.defer
+                           .app({ v2 : Any ->
+                         PS.Data.NonEmpty.Module.NonEmpty.app(a)
+                           .app(PS.Data.Semigroup.Module.append
+                                  .app(
+                                    PS.Data.List.Lazy.Types.Module.semigroupList
+                                  )
+                                  .app(_as)
+                                  .app(PS.Data.List.Lazy.Types.Module.toList
+                                         .app(as_tick1)))
+                      }));
+                }
+                else -> (error("Error in Pattern Match") as Any)
+              };
+            });}
     });
   @JvmField val traversableList = (::__rec_traversableList)();
   fun __rec_traversableList(): Any = PS.Data.Traversable.Module.Traversable
@@ -1110,68 +1034,58 @@ object Module  {
                                     })
                                   .app({ dictApplicative : Any ->
                                        { v : Any ->
-                                         when {
-                                          else -> {
-                                            val nel = v;
-                                            PS.Data.Function.Module.apply
-                                              .app(PS.Data.Functor.Module.map
+                                        val nel = v;
+                                          PS.Data.Function.Module.apply
+                                            .app(PS.Data.Functor.Module.map
+                                                   .app(
+                                                     ((dictApplicative as Map<String, Any>)["Apply0"]!!
+                                                        .app(Unit
+                                                       ) as Map<String, Any>)["Functor0"]!!
+                                                       .app(Unit))
+                                                   .app({ xxs : Any ->
+                                                   PS.Data.Function.Module.apply
                                                      .app(
-                                                       ((dictApplicative as Map<String, Any>)["Apply0"]!!
-                                                          .app(Unit
-                                                         ) as Map<String, Any>)["Functor0"]!!
-                                                         .app(Unit))
-                                                     .app({ xxs : Any ->
-                                                     PS.Data.Function.Module.apply
-                                                       .app(
-                                                         PS.Data.List.Lazy.Types.Module.NonEmptyList
-                                                       )
-                                                       .app(
-                                                      PS.Data.Lazy.Module.defer
-                                                        .app({ v1 : Any ->
-                                                           xxs
-                                                        }))
-                                                  }))
+                                                       PS.Data.List.Lazy.Types.Module.NonEmptyList
+                                                     )
+                                                     .app(
+                                                    PS.Data.Lazy.Module.defer
+                                                      .app({ v1 : Any ->
+                                                         xxs
+                                                      }))
+                                                }))
+                                            .app(
+                                            PS.Data.Traversable.Module.sequence
                                               .app(
-                                              PS.Data.Traversable.Module.sequence
-                                                .app(
-                                                  PS.Data.NonEmpty.Module.traversableNonEmpty
-                                                    .app(
-                                                    PS.Data.List.Lazy.Types.Module.traversableList
-                                                  ))
-                                                .app(dictApplicative)
-                                                .app(PS.Data.Lazy.Module.force
-                                                       .app(nel)));
-                                          }
-                                        }
-                                      }
+                                                PS.Data.NonEmpty.Module.traversableNonEmpty
+                                                  .app(
+                                                  PS.Data.List.Lazy.Types.Module.traversableList
+                                                ))
+                                              .app(dictApplicative)
+                                              .app(PS.Data.Lazy.Module.force
+                                                     .app(nel)));}
                                     })
                                   .app({ dictApplicative : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val nel = v;
-              PS.Data.Function.Module.apply
-                .app(PS.Data.Functor.Module.map
-                       .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                               .app(Unit) as Map<String, Any>)["Functor0"]!!
-                              .app(Unit))
-                       .app({ xxs : Any ->
-                       PS.Data.Function.Module.apply
-                         .app(PS.Data.List.Lazy.Types.Module.NonEmptyList)
-                         .app(PS.Data.Lazy.Module.defer.app({ v1 : Any -> xxs}))
-                    }))
-                .app(PS.Data.Traversable.Module.traverse
-                       .app(PS.Data.NonEmpty.Module.traversableNonEmpty
-                              .app(
-                           PS.Data.List.Lazy.Types.Module.traversableList))
-                       .app(dictApplicative)
-                       .app(f1)
-                       .app(PS.Data.Lazy.Module.force.app(nel)));
-            }
-          }
-        }
+          val f1 = f;
+            val nel = v;
+            PS.Data.Function.Module.apply
+              .app(PS.Data.Functor.Module.map
+                     .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                             .app(Unit) as Map<String, Any>)["Functor0"]!!
+                            .app(Unit))
+                     .app({ xxs : Any ->
+                     PS.Data.Function.Module.apply
+                       .app(PS.Data.List.Lazy.Types.Module.NonEmptyList)
+                       .app(PS.Data.Lazy.Module.defer.app({ v1 : Any -> xxs}))
+                  }))
+              .app(PS.Data.Traversable.Module.traverse
+                     .app(PS.Data.NonEmpty.Module.traversableNonEmpty
+                            .app(PS.Data.List.Lazy.Types.Module.traversableList)
+                     )
+                     .app(dictApplicative)
+                     .app(f1)
+                     .app(PS.Data.Lazy.Module.force.app(nel)));}
       }
     });
   @JvmField
@@ -1224,44 +1138,38 @@ object Module  {
                                            .app({ dictApplicative : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val ne = v;
-              PS.Data.Function.Module.apply
-                .app(PS.Data.Functor.Module.map
-                       .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                               .app(Unit) as Map<String, Any>)["Functor0"]!!
-                              .app(Unit))
-                       .app({ xxs : Any ->
-                       PS.Data.Function.Module.apply
-                         .app(PS.Data.List.Lazy.Types.Module.NonEmptyList)
-                         .app(PS.Data.Lazy.Module.defer.app({ v1 : Any -> xxs}))
-                    }))
-                .app(PS.Data.Function.Module.apply
-                       .app(
-                         PS.Data.TraversableWithIndex.Module.traverseWithIndex
-                           .app(
-                             PS.Data.NonEmpty.Module.traversableWithIndexNonEmpty
-                               .app(
-                               PS.Data.List.Lazy.Types.Module.traversableWithIndexList
-                             ))
-                           .app(dictApplicative)
-                           .app(PS.Control.Semigroupoid.Module.compose
-                                  .app(
-                                    PS.Control.Semigroupoid.Module.semigroupoidFn
-                                  )
-                                  .app(f1)
-                                  .app(PS.Data.Maybe.Module.maybe.app(0)
-                                         .app(PS.Data.Semiring.Module.add
-                                                .app(
-                                                  PS.Data.Semiring.Module.semiringInt
-                                                )
-                                                .app(1)))))
-                       .app(PS.Data.Lazy.Module.force.app(ne)));
-            }
-          }
-        }
+          val f1 = f;
+            val ne = v;
+            PS.Data.Function.Module.apply
+              .app(PS.Data.Functor.Module.map
+                     .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                             .app(Unit) as Map<String, Any>)["Functor0"]!!
+                            .app(Unit))
+                     .app({ xxs : Any ->
+                     PS.Data.Function.Module.apply
+                       .app(PS.Data.List.Lazy.Types.Module.NonEmptyList)
+                       .app(PS.Data.Lazy.Module.defer.app({ v1 : Any -> xxs}))
+                  }))
+              .app(PS.Data.Function.Module.apply
+                     .app(PS.Data.TraversableWithIndex.Module.traverseWithIndex
+                            .app(
+                              PS.Data.NonEmpty.Module.traversableWithIndexNonEmpty
+                                .app(
+                                PS.Data.List.Lazy.Types.Module.traversableWithIndexList
+                              ))
+                            .app(dictApplicative)
+                            .app(PS.Control.Semigroupoid.Module.compose
+                                   .app(
+                                     PS.Control.Semigroupoid.Module.semigroupoidFn
+                                   )
+                                   .app(f1)
+                                   .app(PS.Data.Maybe.Module.maybe.app(0)
+                                          .app(PS.Data.Semiring.Module.add
+                                                 .app(
+                                                   PS.Data.Semiring.Module.semiringInt
+                                                 )
+                                                 .app(1)))))
+                     .app(PS.Data.Lazy.Module.force.app(ne)));}
       }
     });
   @JvmField
@@ -1388,14 +1296,9 @@ object Module  {
                                    PS.Data.List.Lazy.Types.Module.extendNonEmptyList
                                 })
                               .app({ v : Any ->
-       when {
-        else -> {
-          val nel = v;
-          PS.Data.Function.Module.apply.app(PS.Data.NonEmpty.Module.head)
-            .app(PS.Data.Lazy.Module.force.app(nel));
-        }
-      }
-    });
+      val nel = v;
+        PS.Data.Function.Module.apply.app(PS.Data.NonEmpty.Module.head)
+          .app(PS.Data.Lazy.Module.force.app(nel));});
   @JvmField val monadList = (::__rec_monadList)();
   @JvmField val bindList = (::__rec_bindList)();
   @JvmField val applyList = (::__rec_applyList)();
@@ -1469,61 +1372,55 @@ object Module  {
                               })
                             .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val nefs = v;
-            val neas = v1;
-            object   {
-                val v2 = PS.Data.Lazy.Module.force.app(neas);
-                val v3 = PS.Data.Lazy.Module.force.app(nefs);
-              }
-              .run({
-                val v2 = this.v2;
-                val v3 = this.v3;
-                when {
-                  (v3 is PS.Data.NonEmpty.Module._Type_NonEmpty
-                           .NonEmpty)&&
-                  (v2 is PS.Data.NonEmpty.Module._Type_NonEmpty
-                           .NonEmpty) -> {
-                    val f = v3.value0;
-                    val fs = v3.value1;
-                    val a = v2.value0;
-                    val _as = v2.value1;
-                    PS.Data.List.Lazy.Types.Module.NonEmptyList
-                      .app(PS.Data.Lazy.Module.defer
-                             .app({ v4 : Any ->
-                           PS.Data.NonEmpty.Module.NonEmpty.app(f.app(a))
-                             .app(PS.Data.Semigroup.Module.append
-                                    .app(
-                                      PS.Data.List.Lazy.Types.Module.semigroupList
-                                    )
-                                    .app(PS.Control.Apply.Module.apply
-                                           .app(
-                                             PS.Data.List.Lazy.Types.Module.applyList
-                                           )
-                                           .app(fs)
-                                           .app(
-                                        PS.Data.List.Lazy.Types.Module.cons
-                                          .app(a)
-                                          .app(
-                                          PS.Data.List.Lazy.Types.Module.nil)))
-                                    .app(PS.Control.Apply.Module.apply
-                                           .app(
-                                             PS.Data.List.Lazy.Types.Module.applyList
-                                           )
-                                           .app(
-                                             PS.Data.List.Lazy.Types.Module.cons
-                                               .app(f)
-                                               .app(fs))
-                                           .app(_as)))
-                        }));
-                  }
-                  else -> (error("Error in Pattern Match") as Any)
-                };
-              });
-          }
-        }
-      }
+        val nefs = v;
+          val neas = v1;
+          object   {
+              val v2 = PS.Data.Lazy.Module.force.app(neas);
+              val v3 = PS.Data.Lazy.Module.force.app(nefs);
+            }
+            .run({
+              val v2 = this.v2;
+              val v3 = this.v3;
+              when {
+                (v3 is PS.Data.NonEmpty.Module._Type_NonEmpty
+                         .NonEmpty)&&
+                (v2 is PS.Data.NonEmpty.Module._Type_NonEmpty
+                         .NonEmpty) -> {
+                  val f = v3.value0;
+                  val fs = v3.value1;
+                  val a = v2.value0;
+                  val _as = v2.value1;
+                  PS.Data.List.Lazy.Types.Module.NonEmptyList
+                    .app(PS.Data.Lazy.Module.defer
+                           .app({ v4 : Any ->
+                         PS.Data.NonEmpty.Module.NonEmpty.app(f.app(a))
+                           .app(PS.Data.Semigroup.Module.append
+                                  .app(
+                                    PS.Data.List.Lazy.Types.Module.semigroupList
+                                  )
+                                  .app(PS.Control.Apply.Module.apply
+                                         .app(
+                                           PS.Data.List.Lazy.Types.Module.applyList
+                                         )
+                                         .app(fs)
+                                         .app(
+                                      PS.Data.List.Lazy.Types.Module.cons.app(a)
+                                        .app(PS.Data.List.Lazy.Types.Module.nil)
+                                    ))
+                                  .app(PS.Control.Apply.Module.apply
+                                         .app(
+                                           PS.Data.List.Lazy.Types.Module.applyList
+                                         )
+                                         .app(
+                                           PS.Data.List.Lazy.Types.Module.cons
+                                             .app(f)
+                                             .app(fs))
+                                         .app(_as)))
+                      }));
+                }
+                else -> (error("Error in Pattern Match") as Any)
+              };
+            });}
     });
   @JvmField
   val bindNonEmptyList = PS.Control.Bind.Module.Bind
@@ -1532,71 +1429,65 @@ object Module  {
                              })
                            .app({ v : Any ->
        { f : Any ->
-         when {
-          else -> {
-            val nel = v;
-            val f1 = f;
-            object   {
-                val v1 = PS.Data.Lazy.Module.force.app(nel);
-              }
-              .run({
-                val v1 = this.v1;
-                when {
-                  (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
-                    val a = v1.value0;
-                    val _as = v1.value1;
-                    object   {
-                        val v2 = PS.Data.Function.Module.apply
-                                   .app(PS.Data.Lazy.Module.force)
-                                   .app(PS.Data.Function.Module.apply
-                                          .app(PS.Data.Newtype.Module.unwrap
+        val nel = v;
+          val f1 = f;
+          object   {
+              val v1 = PS.Data.Lazy.Module.force.app(nel);
+            }
+            .run({
+              val v1 = this.v1;
+              when {
+                (v1 is PS.Data.NonEmpty.Module._Type_NonEmpty.NonEmpty) -> {
+                  val a = v1.value0;
+                  val _as = v1.value1;
+                  object   {
+                      val v2 = PS.Data.Function.Module.apply
+                                 .app(PS.Data.Lazy.Module.force)
+                                 .app(PS.Data.Function.Module.apply
+                                        .app(PS.Data.Newtype.Module.unwrap
+                                               .app(
+                                            PS.Data.List.Lazy.Types.Module.newtypeNonEmptyList
+                                          ))
+                                        .app(f1.app(a)));
+                    }
+                    .run({
+                      val v2 = this.v2;
+                      when {
+                        (v2 is PS.Data.NonEmpty.Module._Type_NonEmpty
+                                 .NonEmpty) -> {
+                          val b = v2.value0;
+                          val bs = v2.value1;
+                          PS.Data.List.Lazy.Types.Module.NonEmptyList
+                            .app(PS.Data.Lazy.Module.defer
+                                   .app({ v3 : Any ->
+                                 PS.Data.NonEmpty.Module.NonEmpty.app(b)
+                                   .app(PS.Data.Semigroup.Module.append
+                                          .app(
+                                            PS.Data.List.Lazy.Types.Module.semigroupList
+                                          )
+                                          .app(bs)
+                                          .app(PS.Control.Bind.Module.bind
                                                  .app(
-                                              PS.Data.List.Lazy.Types.Module.newtypeNonEmptyList
-                                            ))
-                                          .app(f1.app(a)));
-                      }
-                      .run({
-                        val v2 = this.v2;
-                        when {
-                          (v2 is PS.Data.NonEmpty.Module._Type_NonEmpty
-                                   .NonEmpty) -> {
-                            val b = v2.value0;
-                            val bs = v2.value1;
-                            PS.Data.List.Lazy.Types.Module.NonEmptyList
-                              .app(PS.Data.Lazy.Module.defer
-                                     .app({ v3 : Any ->
-                                   PS.Data.NonEmpty.Module.NonEmpty.app(b)
-                                     .app(PS.Data.Semigroup.Module.append
-                                            .app(
-                                              PS.Data.List.Lazy.Types.Module.semigroupList
-                                            )
-                                            .app(bs)
-                                            .app(PS.Control.Bind.Module.bind
-                                                   .app(
-                                                     PS.Data.List.Lazy.Types.Module.bindList
-                                                   )
-                                                   .app(_as)
-                                                   .app(
-                                        PS.Control.Semigroupoid.Module.compose
-                                          .app(
-                                            PS.Control.Semigroupoid.Module.semigroupoidFn
-                                          )
-                                          .app(
-                                            PS.Data.List.Lazy.Types.Module.toList
-                                          )
-                                          .app(f1))))
-                                }));
-                          }
-                          else -> (error("Error in Pattern Match") as Any)
-                        };
-                      });
-                  }
-                  else -> (error("Error in Pattern Match") as Any)
-                };
-              });
-          }
-        }
-      }
+                                                   PS.Data.List.Lazy.Types.Module.bindList
+                                                 )
+                                                 .app(_as)
+                                                 .app(
+                                      PS.Control.Semigroupoid.Module.compose
+                                        .app(
+                                          PS.Control.Semigroupoid.Module.semigroupoidFn
+                                        )
+                                        .app(
+                                          PS.Data.List.Lazy.Types.Module.toList)
+                                        .app(f1))))
+                              }));
+                        }
+                        else -> (error("Error in Pattern Match") as Any)
+                      };
+                    });
+                }
+                else -> (error("Error in Pattern Match") as Any)
+              };
+            });}
     });
   @JvmField
   val altNonEmptyList = PS.Control.Alt.Module.Alt

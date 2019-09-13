@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Int
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val fromNumberImpl = Foreign.Data.Int.fromNumberImpl;
   val toNumber = Foreign.Data.Int.toNumber;

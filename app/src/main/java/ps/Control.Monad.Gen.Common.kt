@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Monad.Gen.Common
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField
   val genTuple = { dictApply : Any ->
@@ -58,33 +60,28 @@ object Module  {
                   .app(0.0)
                   .app(1.0))
            .app({ v : Any ->
-             when {
-              else -> {
-                val n = v;
-                when {
-                  (PS.Data.Ord.Module.lessThan.app(PS.Data.Ord.Module.ordNumber)
-                     .app(n)
-                     .app(bias) == true) -> {
-                    PS.Data.Functor.Module.map
-                      .app(((((dictMonadGen as Map<String, Any>)["Monad0"]!!
-                                .app(Unit) as Map<String, Any>)["Bind1"]!!
-                               .app(Unit) as Map<String, Any>)["Apply0"]!!
-                              .app(Unit) as Map<String, Any>)["Functor0"]!!
-                             .app(Unit))
-                      .app(PS.Data.Maybe.Module.Just)
-                      .app(gen);
-                  }
-                  else -> {
-                    PS.Control.Applicative.Module.pure
-                      .app(((dictMonadGen as Map<String, Any>)["Monad0"]!!
-                              .app(Unit) as Map<String, Any>)["Applicative0"]!!
-                             .app(Unit))
-                      .app(PS.Data.Maybe.Module.Nothing);
-                  }
-                };
-              }
-            }
-          })
+            val n = v;
+              when {
+                (PS.Data.Ord.Module.lessThan.app(PS.Data.Ord.Module.ordNumber)
+                   .app(n)
+                   .app(bias) == true) -> {
+                  PS.Data.Functor.Module.map
+                    .app(((((dictMonadGen as Map<String, Any>)["Monad0"]!!
+                              .app(Unit) as Map<String, Any>)["Bind1"]!!
+                             .app(Unit) as Map<String, Any>)["Apply0"]!!
+                            .app(Unit) as Map<String, Any>)["Functor0"]!!
+                           .app(Unit))
+                    .app(PS.Data.Maybe.Module.Just)
+                    .app(gen);
+                }
+                else -> {
+                  PS.Control.Applicative.Module.pure
+                    .app(((dictMonadGen as Map<String, Any>)["Monad0"]!!
+                            .app(Unit) as Map<String, Any>)["Applicative0"]!!
+                           .app(Unit))
+                    .app(PS.Data.Maybe.Module.Nothing);
+                }
+              };})
       }
     }
   };
@@ -112,37 +109,31 @@ object Module  {
                     .app(0.0)
                     .app(1.0))
              .app({ v : Any ->
-               when {
-                else -> {
-                  val n = v;
-                  when {
-                    (PS.Data.Ord.Module.lessThan
-                       .app(PS.Data.Ord.Module.ordNumber)
-                       .app(n)
-                       .app(bias) == true) -> {
-                      PS.Data.Functor.Module.map
-                        .app(((((dictMonadGen as Map<String, Any>)["Monad0"]!!
-                                  .app(Unit) as Map<String, Any>)["Bind1"]!!
-                                 .app(Unit) as Map<String, Any>)["Apply0"]!!
-                                .app(Unit) as Map<String, Any>)["Functor0"]!!
-                               .app(Unit))
-                        .app(PS.Data.Either.Module.Left)
-                        .app(genA);
-                    }
-                    else -> {
-                      PS.Data.Functor.Module.map
-                        .app(((((dictMonadGen as Map<String, Any>)["Monad0"]!!
-                                  .app(Unit) as Map<String, Any>)["Bind1"]!!
-                                 .app(Unit) as Map<String, Any>)["Apply0"]!!
-                                .app(Unit) as Map<String, Any>)["Functor0"]!!
-                               .app(Unit))
-                        .app(PS.Data.Either.Module.Right)
-                        .app(genB);
-                    }
-                  };
-                }
-              }
-            })
+              val n = v;
+                when {
+                  (PS.Data.Ord.Module.lessThan.app(PS.Data.Ord.Module.ordNumber)
+                     .app(n)
+                     .app(bias) == true) -> {
+                    PS.Data.Functor.Module.map
+                      .app(((((dictMonadGen as Map<String, Any>)["Monad0"]!!
+                                .app(Unit) as Map<String, Any>)["Bind1"]!!
+                               .app(Unit) as Map<String, Any>)["Apply0"]!!
+                              .app(Unit) as Map<String, Any>)["Functor0"]!!
+                             .app(Unit))
+                      .app(PS.Data.Either.Module.Left)
+                      .app(genA);
+                  }
+                  else -> {
+                    PS.Data.Functor.Module.map
+                      .app(((((dictMonadGen as Map<String, Any>)["Monad0"]!!
+                                .app(Unit) as Map<String, Any>)["Bind1"]!!
+                               .app(Unit) as Map<String, Any>)["Apply0"]!!
+                              .app(Unit) as Map<String, Any>)["Functor0"]!!
+                             .app(Unit))
+                      .app(PS.Data.Either.Module.Right)
+                      .app(genB);
+                  }
+                };})
         }
       }
     }

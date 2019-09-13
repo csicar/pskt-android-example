@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Functor.Coproduct
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Coproduct = { x : Any -> x};
   @JvmField
@@ -35,13 +37,8 @@ object Module  {
   @JvmField
   val newtypeCoproduct = PS.Data.Newtype.Module.Newtype
                            .app({ n : Any ->
-                                when {
-                                 else -> {
-                                   val a = n;
-                                   a;
-                                 }
-                               }
-                             })
+                               val a = n;
+                                 a;})
                            .app(PS.Data.Functor.Coproduct.Module.Coproduct);
   @JvmField
   val left = { fa : Any ->
@@ -54,21 +51,15 @@ object Module  {
        PS.Data.Functor.Module.Functor
          .app({ f : Any ->
            { v : Any ->
-             when {
-              else -> {
-                val f1 = f;
-                val e = v;
-                PS.Data.Functor.Coproduct.Module.Coproduct
-                  .app(PS.Data.Bifunctor.Module.bimap
-                         .app(PS.Data.Either.Module.bifunctorEither)
-                         .app(PS.Data.Functor.Module.map.app(dictFunctor)
-                                .app(f1))
-                         .app(PS.Data.Functor.Module.map.app(dictFunctor1)
-                                .app(f1))
-                         .app(e));
-              }
-            }
-          }
+            val f1 = f;
+              val e = v;
+              PS.Data.Functor.Coproduct.Module.Coproduct
+                .app(PS.Data.Bifunctor.Module.bimap
+                       .app(PS.Data.Either.Module.bifunctorEither)
+                       .app(PS.Data.Functor.Module.map.app(dictFunctor).app(f1))
+                       .app(PS.Data.Functor.Module.map.app(dictFunctor1).app(f1)
+                       )
+                       .app(e));}
         })
     }
   };
@@ -85,33 +76,28 @@ object Module  {
            })
          .app({ f : Any ->
            { v : Any ->
-             when {
-              else -> {
-                val f1 = f;
-                val e = v;
-                PS.Data.Functor.Coproduct.Module.Coproduct
-                  .app(PS.Data.Bifunctor.Module.bimap
-                         .app(PS.Data.Either.Module.bifunctorEither)
-                         .app(PS.Data.FunctorWithIndex.Module.mapWithIndex
-                                .app(dictFunctorWithIndex)
-                                .app(PS.Control.Semigroupoid.Module.compose
-                                       .app(
-                                         PS.Control.Semigroupoid.Module.semigroupoidFn
-                                       )
-                                       .app(f1)
-                                       .app(PS.Data.Either.Module.Left)))
-                         .app(PS.Data.FunctorWithIndex.Module.mapWithIndex
-                                .app(dictFunctorWithIndex1)
-                                .app(PS.Control.Semigroupoid.Module.compose
-                                       .app(
-                                         PS.Control.Semigroupoid.Module.semigroupoidFn
-                                       )
-                                       .app(f1)
-                                       .app(PS.Data.Either.Module.Right)))
-                         .app(e));
-              }
-            }
-          }
+            val f1 = f;
+              val e = v;
+              PS.Data.Functor.Coproduct.Module.Coproduct
+                .app(PS.Data.Bifunctor.Module.bimap
+                       .app(PS.Data.Either.Module.bifunctorEither)
+                       .app(PS.Data.FunctorWithIndex.Module.mapWithIndex
+                              .app(dictFunctorWithIndex)
+                              .app(PS.Control.Semigroupoid.Module.compose
+                                     .app(
+                                       PS.Control.Semigroupoid.Module.semigroupoidFn
+                                     )
+                                     .app(f1)
+                                     .app(PS.Data.Either.Module.Left)))
+                       .app(PS.Data.FunctorWithIndex.Module.mapWithIndex
+                              .app(dictFunctorWithIndex1)
+                              .app(PS.Control.Semigroupoid.Module.compose
+                                     .app(
+                                       PS.Control.Semigroupoid.Module.semigroupoidFn
+                                     )
+                                     .app(f1)
+                                     .app(PS.Data.Either.Module.Right)))
+                       .app(e));}
         })
     }
   };
@@ -122,34 +108,29 @@ object Module  {
          .app({ dictEq : Any ->
            { v : Any ->
              { v1 : Any ->
-               when {
-                else -> {
-                  val x = v;
-                  val y = v1;
-                  when {
-                    (x is PS.Data.Either.Module._Type_Either
-                            .Left)&& (y is PS.Data.Either.Module._Type_Either
-                                             .Left) -> {
-                      val fa = x.value0;
-                      val ga = y.value0;
-                      PS.Data.Eq.Module.eq1.app(dictEq1).app(dictEq).app(fa)
-                        .app(ga);
-                    }
-                    (x is PS.Data.Either.Module._Type_Either
-                            .Right)&& (y is PS.Data.Either.Module._Type_Either
-                                              .Right) -> {
-                      val fa = x.value0;
-                      val ga = y.value0;
-                      PS.Data.Eq.Module.eq1.app(dictEq11).app(dictEq).app(fa)
-                        .app(ga);
-                    }
-                    else -> {
-                      false;
-                    }
-                  };
-                }
-              }
-            }
+              val x = v;
+                val y = v1;
+                when {
+                  (x is PS.Data.Either.Module._Type_Either
+                          .Left)&& (y is PS.Data.Either.Module._Type_Either
+                                           .Left) -> {
+                    val fa = x.value0;
+                    val ga = y.value0;
+                    PS.Data.Eq.Module.eq1.app(dictEq1).app(dictEq).app(fa)
+                      .app(ga);
+                  }
+                  (x is PS.Data.Either.Module._Type_Either
+                          .Right)&& (y is PS.Data.Either.Module._Type_Either
+                                            .Right) -> {
+                    val fa = x.value0;
+                    val ga = y.value0;
+                    PS.Data.Eq.Module.eq1.app(dictEq11).app(dictEq).app(fa)
+                      .app(ga);
+                  }
+                  else -> {
+                    false;
+                  }
+                };}
           }
         })
     }
@@ -179,40 +160,35 @@ object Module  {
          .app({ dictOrd : Any ->
            { v : Any ->
              { v1 : Any ->
-               when {
-                else -> {
-                  val x = v;
-                  val y = v1;
-                  when {
-                    (x is PS.Data.Either.Module._Type_Either
-                            .Left)&& (y is PS.Data.Either.Module._Type_Either
-                                             .Left) -> {
-                      val fa = x.value0;
-                      val ga = y.value0;
-                      PS.Data.Ord.Module.compare1.app(dictOrd1).app(dictOrd)
-                        .app(fa)
-                        .app(ga);
-                    }
-                    (x is PS.Data.Either.Module._Type_Either.Left) -> {
-                      PS.Data.Ordering.Module.LT;
-                    }
-                    (y is PS.Data.Either.Module._Type_Either.Left) -> {
-                      PS.Data.Ordering.Module.GT;
-                    }
-                    (x is PS.Data.Either.Module._Type_Either
-                            .Right)&& (y is PS.Data.Either.Module._Type_Either
-                                              .Right) -> {
-                      val fa = x.value0;
-                      val ga = y.value0;
-                      PS.Data.Ord.Module.compare1.app(dictOrd11).app(dictOrd)
-                        .app(fa)
-                        .app(ga);
-                    }
-                    else -> (error("Error in Pattern Match") as Any)
-                  };
-                }
-              }
-            }
+              val x = v;
+                val y = v1;
+                when {
+                  (x is PS.Data.Either.Module._Type_Either
+                          .Left)&& (y is PS.Data.Either.Module._Type_Either
+                                           .Left) -> {
+                    val fa = x.value0;
+                    val ga = y.value0;
+                    PS.Data.Ord.Module.compare1.app(dictOrd1).app(dictOrd)
+                      .app(fa)
+                      .app(ga);
+                  }
+                  (x is PS.Data.Either.Module._Type_Either.Left) -> {
+                    PS.Data.Ordering.Module.LT;
+                  }
+                  (y is PS.Data.Either.Module._Type_Either.Left) -> {
+                    PS.Data.Ordering.Module.GT;
+                  }
+                  (x is PS.Data.Either.Module._Type_Either
+                          .Right)&& (y is PS.Data.Either.Module._Type_Either
+                                            .Right) -> {
+                    val fa = x.value0;
+                    val ga = y.value0;
+                    PS.Data.Ord.Module.compare1.app(dictOrd11).app(dictOrd)
+                      .app(fa)
+                      .app(ga);
+                  }
+                  else -> (error("Error in Pattern Match") as Any)
+                };}
           }
         })
     }
@@ -617,20 +593,15 @@ object Module  {
   val bihoistCoproduct = { natF : Any ->
      { natG : Any ->
        { v : Any ->
-         when {
-          else -> {
-            val natF1 = natF;
-            val natG1 = natG;
-            val e = v;
-            PS.Data.Functor.Coproduct.Module.Coproduct
-              .app(PS.Data.Bifunctor.Module.bimap
-                     .app(PS.Data.Either.Module.bifunctorEither)
-                     .app(natF1)
-                     .app(natG1)
-                     .app(e));
-          }
-        }
-      }
+        val natF1 = natF;
+          val natG1 = natG;
+          val e = v;
+          PS.Data.Functor.Coproduct.Module.Coproduct
+            .app(PS.Data.Bifunctor.Module.bimap
+                   .app(PS.Data.Either.Module.bifunctorEither)
+                   .app(natF1)
+                   .app(natG1)
+                   .app(e));}
     }
   };
 }

@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Effect
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val pureE = Foreign.Effect.pureE;
   val bindE = Foreign.Effect.bindE;

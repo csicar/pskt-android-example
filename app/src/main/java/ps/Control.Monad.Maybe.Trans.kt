@@ -1,19 +1,16 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Monad.Maybe.Trans
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val MaybeT = { x : Any -> x};
-  @JvmField val runMaybeT = { v : Any -> when { else -> { val x = v; x; } }};
+  @JvmField val runMaybeT = { v : Any ->val x = v; x;};
   @JvmField
   val newtypeMaybeT = PS.Data.Newtype.Module.Newtype
                         .app({ n : Any ->
-                             when {
-                              else -> {
-                                val a = n;
-                                a;
-                              }
-                            }
-                          })
+                            val a = n;
+                              a;})
                         .app(PS.Control.Monad.Maybe.Trans.Module.MaybeT);
   @JvmField
   val monadTransMaybeT = PS.Control.Monad.Trans.Class.Module.MonadTrans
@@ -27,33 +24,23 @@ object Module  {
   @JvmField
   val mapMaybeT = { f : Any ->
      { v : Any ->
-       when {
-        else -> {
-          val f1 = f;
-          val m = v;
-          PS.Control.Monad.Maybe.Trans.Module.MaybeT.app(f1.app(m));
-        }
-      }
-    }
+      val f1 = f;
+        val m = v;
+        PS.Control.Monad.Maybe.Trans.Module.MaybeT.app(f1.app(m));}
   };
   @JvmField
   val functorMaybeT = { dictFunctor : Any ->
      PS.Data.Functor.Module.Functor
        .app({ f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val ma = v;
-              PS.Control.Monad.Maybe.Trans.Module.MaybeT
-                .app(PS.Data.Functor.Module.map.app(dictFunctor)
-                       .app(PS.Data.Functor.Module.map
-                              .app(PS.Data.Maybe.Module.functorMaybe)
-                              .app(f1))
-                       .app(ma));
-            }
-          }
-        }
+          val f1 = f;
+            val ma = v;
+            PS.Control.Monad.Maybe.Trans.Module.MaybeT
+              .app(PS.Data.Functor.Module.map.app(dictFunctor)
+                     .app(PS.Data.Functor.Module.map
+                            .app(PS.Data.Maybe.Module.functorMaybe)
+                            .app(f1))
+                     .app(ma));}
       })
   };
   @JvmField val monadMaybeT = (::__rec_monadMaybeT)();
@@ -76,39 +63,34 @@ object Module  {
          })
        .app({ v : Any ->
          { f : Any ->
-           when {
-            else -> {
-              val x = v;
-              val f1 = f;
-              PS.Control.Monad.Maybe.Trans.Module.MaybeT
-                .app(PS.Control.Bind.Module.bind
-                       .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit)
-                       )
-                       .app(x)
-                       .app({ v1 : Any ->
-                     when {
-                      (v1 is PS.Data.Maybe.Module._Type_Maybe.Nothing) -> {
-                        PS.Control.Applicative.Module.pure
-                          .app((dictMonad as Map<String, Any>)["Applicative0"]!!
-                                 .app(Unit))
-                          .app(PS.Data.Maybe.Module.Nothing);
-                      }
-                      (v1 is PS.Data.Maybe.Module._Type_Maybe.Just) -> {
-                        val y = v1.value0;
-                        object   {
-                            val v2 = f1.app(y);
-                          }
-                          .run({
-                            val v2 = this.v2;
-                            when { else -> { val m = v2; m; } };
-                          });
-                      }
-                      else -> (error("Error in Pattern Match") as Any)
+          val x = v;
+            val f1 = f;
+            PS.Control.Monad.Maybe.Trans.Module.MaybeT
+              .app(PS.Control.Bind.Module.bind
+                     .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
+                     .app(x)
+                     .app({ v1 : Any ->
+                   when {
+                    (v1 is PS.Data.Maybe.Module._Type_Maybe.Nothing) -> {
+                      PS.Control.Applicative.Module.pure
+                        .app((dictMonad as Map<String, Any>)["Applicative0"]!!
+                               .app(Unit))
+                        .app(PS.Data.Maybe.Module.Nothing);
                     }
-                  }));
-            }
-          }
-        }
+                    (v1 is PS.Data.Maybe.Module._Type_Maybe.Just) -> {
+                      val y = v1.value0;
+                      object   {
+                          val v2 = f1.app(y);
+                        }
+                        .run({
+                          val v2 = this.v2;
+                          val m = v2;
+                          m;
+                        });
+                    }
+                    else -> (error("Error in Pattern Match") as Any)
+                  }
+                }));}
       })
   };
   fun __rec_applyMaybeT(): Any = { dictMonad : Any ->
@@ -189,7 +171,8 @@ object Module  {
                  }
                  .run({
                   val v = this.v;
-                  when { else -> { val m = v; m; } };
+                  val m = v;
+                  m;
                 })
             }))
       })
@@ -227,47 +210,42 @@ object Module  {
                  }
                  .run({
                   val v = this.v;
-                  when {
-                    else -> {
-                      val m = v;
-                      PS.Control.Bind.Module.bind
-                        .app(((dictMonadRec as Map<String, Any>)["Monad0"]!!
-                                .app(Unit) as Map<String, Any>)["Bind1"]!!
-                               .app(Unit))
-                        .app(m)
-                        .app({ m_tick : Any ->
-                           PS.Control.Applicative.Module.pure
-                             .app(
-                               ((dictMonadRec as Map<String, Any>)["Monad0"]!!
-                                  .app(Unit
-                                 ) as Map<String, Any>)["Applicative0"]!!
-                                 .app(Unit))
-                             .app(when {
-                              (m_tick is PS.Data.Maybe.Module._Type_Maybe
-                                           .Nothing) -> {
-                                PS.Control.Monad.Rec.Class.Module.Done
-                                  .app(PS.Data.Maybe.Module.Nothing);
-                              }
-                              (m_tick is PS.Data.Maybe.Module._Type_Maybe
-                                           .Just)&& (m_tick
-                                                       .value0 is PS.Control.Monad.Rec.Class.Module._Type_Step
-                                                                    .Loop) -> {
-                                val a1 = m_tick.value0.value0;
-                                PS.Control.Monad.Rec.Class.Module.Loop.app(a1);
-                              }
-                              (m_tick is PS.Data.Maybe.Module._Type_Maybe
-                                           .Just)&& (m_tick
-                                                       .value0 is PS.Control.Monad.Rec.Class.Module._Type_Step
-                                                                    .Done) -> {
-                                val b = m_tick.value0.value0;
-                                PS.Control.Monad.Rec.Class.Module.Done
-                                  .app(PS.Data.Maybe.Module.Just.app(b));
-                              }
-                              else -> (error("Error in Pattern Match") as Any)
-                            })
-                        });
-                    }
-                  };
+                  val m = v;
+                  PS.Control.Bind.Module.bind
+                    .app(((dictMonadRec as Map<String, Any>)["Monad0"]!!
+                            .app(Unit) as Map<String, Any>)["Bind1"]!!
+                           .app(Unit))
+                    .app(m)
+                    .app({ m_tick : Any ->
+                       PS.Control.Applicative.Module.pure
+                         .app(((dictMonadRec as Map<String, Any>)["Monad0"]!!
+                                 .app(Unit
+                                ) as Map<String, Any>)["Applicative0"]!!
+                                .app(Unit))
+                         .app(when {
+                          (m_tick is PS.Data.Maybe.Module._Type_Maybe
+                                       .Nothing) -> {
+                            PS.Control.Monad.Rec.Class.Module.Done
+                              .app(PS.Data.Maybe.Module.Nothing);
+                          }
+                          (m_tick is PS.Data.Maybe.Module._Type_Maybe
+                                       .Just)&& (m_tick
+                                                   .value0 is PS.Control.Monad.Rec.Class.Module._Type_Step
+                                                                .Loop) -> {
+                            val a1 = m_tick.value0.value0;
+                            PS.Control.Monad.Rec.Class.Module.Loop.app(a1);
+                          }
+                          (m_tick is PS.Data.Maybe.Module._Type_Maybe
+                                       .Just)&& (m_tick
+                                                   .value0 is PS.Control.Monad.Rec.Class.Module._Type_Step
+                                                                .Done) -> {
+                            val b = m_tick.value0.value0;
+                            PS.Control.Monad.Rec.Class.Module.Done
+                              .app(PS.Data.Maybe.Module.Just.app(b));
+                          }
+                          else -> (error("Error in Pattern Match") as Any)
+                        })
+                    });
                 })
             }))
       })
@@ -354,37 +332,31 @@ object Module  {
                            .app(Unit))
                     .app(m)
                     .app({ v : Any ->
-                 when {
-                  else -> {
-                    val a = v;
-                    PS.Control.Applicative.Module.pure
-                      .app(
-                        (((dictMonadWriter as Map<String, Any>)["MonadTell0"]!!
-                            .app(Unit) as Map<String, Any>)["Monad0"]!!
-                           .app(Unit) as Map<String, Any>)["Applicative0"]!!
-                          .app(Unit))
-                      .app(when {
-                        (a is PS.Data.Maybe.Module._Type_Maybe.Nothing) -> {
-                          PS.Data.Tuple.Module.Tuple
-                            .app(PS.Data.Maybe.Module.Nothing)
-                            .app(PS.Control.Category.Module.identity
-                                   .app(PS.Control.Category.Module.categoryFn));
-                        }
-                        (a is PS.Data.Maybe.Module._Type_Maybe
-                                .Just)&& (a
-                                            .value0 is PS.Data.Tuple.Module._Type_Tuple
-                                                         .Tuple) -> {
-                          val v1 = a.value0.value0;
-                          val f = a.value0.value1;
-                          PS.Data.Tuple.Module.Tuple
-                            .app(PS.Data.Maybe.Module.Just.app(v1))
-                            .app(f);
-                        }
-                        else -> (error("Error in Pattern Match") as Any)
-                      });
-                  }
-                }
-              }))
+                val a = v;
+                  PS.Control.Applicative.Module.pure
+                    .app((((dictMonadWriter as Map<String, Any>)["MonadTell0"]!!
+                             .app(Unit) as Map<String, Any>)["Monad0"]!!
+                            .app(Unit) as Map<String, Any>)["Applicative0"]!!
+                           .app(Unit))
+                    .app(when {
+                      (a is PS.Data.Maybe.Module._Type_Maybe.Nothing) -> {
+                        PS.Data.Tuple.Module.Tuple
+                          .app(PS.Data.Maybe.Module.Nothing)
+                          .app(PS.Control.Category.Module.identity
+                                 .app(PS.Control.Category.Module.categoryFn));
+                      }
+                      (a is PS.Data.Maybe.Module._Type_Maybe
+                              .Just)&& (a
+                                          .value0 is PS.Data.Tuple.Module._Type_Tuple
+                                                       .Tuple) -> {
+                        val v1 = a.value0.value0;
+                        val f = a.value0.value1;
+                        PS.Data.Tuple.Module.Tuple
+                          .app(PS.Data.Maybe.Module.Just.app(v1))
+                          .app(f);
+                      }
+                      else -> (error("Error in Pattern Match") as Any)
+                    });}))
         }))
   };
   @JvmField
@@ -413,27 +385,23 @@ object Module  {
          })
        .app({ v : Any ->
          { h : Any ->
-           when {
-            else -> {
-              val m = v;
-              val h1 = h;
-              PS.Data.Function.Module.apply
-                .app(PS.Control.Monad.Maybe.Trans.Module.MaybeT)
-                .app(PS.Control.Monad.Error.Class.Module.catchError
-                       .app(dictMonadError)
-                       .app(m)
-                       .app({ a : Any ->
-                     object   {
-                         val v1 = h1.app(a);
-                       }
-                       .run({
-                        val v1 = this.v1;
-                        when { else -> { val b = v1; b; } };
-                      })
-                  }));
-            }
-          }
-        }
+          val m = v;
+            val h1 = h;
+            PS.Data.Function.Module.apply
+              .app(PS.Control.Monad.Maybe.Trans.Module.MaybeT)
+              .app(PS.Control.Monad.Error.Class.Module.catchError
+                     .app(dictMonadError)
+                     .app(m)
+                     .app({ a : Any ->
+                   object   {
+                       val v1 = h1.app(a);
+                     }
+                     .run({
+                      val v1 = this.v1;
+                      val b = v1;
+                      b;
+                    })
+                }));}
       })
   };
   @JvmField
@@ -448,38 +416,26 @@ object Module  {
          })
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val m1 = v;
-              val m2 = v1;
-              PS.Control.Monad.Maybe.Trans.Module.MaybeT
-                .app(PS.Control.Bind.Module.bind
-                       .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit)
-                       )
-                       .app(m1)
-                       .app({ v2 : Any ->
-                     when {
-                      else -> {
-                        val m = v2;
-                        when {
-                          (m is PS.Data.Maybe.Module._Type_Maybe.Nothing) -> {
-                            m2;
-                          }
-                          else -> {
-                            val ja = m;
-                            PS.Control.Applicative.Module.pure
-                              .app(
-                                (dictMonad as Map<String, Any>)["Applicative0"]!!
-                                  .app(Unit))
-                              .app(ja);
-                          }
-                        };
+          val m1 = v;
+            val m2 = v1;
+            PS.Control.Monad.Maybe.Trans.Module.MaybeT
+              .app(PS.Control.Bind.Module.bind
+                     .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
+                     .app(m1)
+                     .app({ v2 : Any ->
+                  val m = v2;
+                    when {
+                      (m is PS.Data.Maybe.Module._Type_Maybe.Nothing) -> {
+                        m2;
                       }
-                    }
-                  }));
-            }
-          }
-        }
+                      else -> {
+                        val ja = m;
+                        PS.Control.Applicative.Module.pure
+                          .app((dictMonad as Map<String, Any>)["Applicative0"]!!
+                                 .app(Unit))
+                          .app(ja);
+                      }
+                    };}));}
       })
   };
   @JvmField

@@ -1,38 +1,30 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Monoid.Multiplicative
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Multiplicative = { x : Any -> x};
   @JvmField
   val showMultiplicative = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val a = v;
-            (("(Multiplicative " as String) + (((PS.Data.Show.Module.show
-                                                   .app(dictShow)
-                                                   .app(a
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val a = v;
+          (("(Multiplicative " as String) + (((PS.Data.Show.Module.show
+                                                 .app(dictShow)
+                                                 .app(a
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField
   val semigroupMultiplicative = { dictSemiring : Any ->
      PS.Data.Semigroup.Module.Semigroup
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val a = v;
-              val b = v1;
-              PS.Data.Monoid.Multiplicative.Module.Multiplicative
-                .app(PS.Data.Semiring.Module.mul.app(dictSemiring).app(a).app(b)
-              );
-            }
-          }
-        }
+          val a = v;
+            val b = v1;
+            PS.Data.Monoid.Multiplicative.Module.Multiplicative
+              .app(PS.Data.Semiring.Module.mul.app(dictSemiring).app(a).app(b)
+            );}
       })
   };
   @JvmField val ordMultiplicative = { dictOrd : Any -> dictOrd};
@@ -50,13 +42,8 @@ object Module  {
   val functorMultiplicative = PS.Data.Functor.Module.Functor
                                 .app({ f : Any ->
        { m : Any ->
-         when {
-          else -> {
-            val v = m;
-            PS.Data.Monoid.Multiplicative.Module.Multiplicative.app(f.app(v));
-          }
-        }
-      }
+        val v = m;
+          PS.Data.Monoid.Multiplicative.Module.Multiplicative.app(f.app(v));}
     });
   @JvmField val eqMultiplicative = { dictEq : Any -> dictEq};
   @JvmField
@@ -83,14 +70,9 @@ object Module  {
                                 })
                               .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val f = v;
-            val x = v1;
-            PS.Data.Monoid.Multiplicative.Module.Multiplicative.app(f.app(x));
-          }
-        }
-      }
+        val f = v;
+          val x = v1;
+          PS.Data.Monoid.Multiplicative.Module.Multiplicative.app(f.app(x));}
     });
   @JvmField
   val bindMultiplicative = PS.Control.Bind.Module.Bind
@@ -99,14 +81,9 @@ object Module  {
                                })
                              .app({ v : Any ->
        { f : Any ->
-         when {
-          else -> {
-            val x = v;
-            val f1 = f;
-            f1.app(x);
-          }
-        }
-      }
+        val x = v;
+          val f1 = f;
+          f1.app(x);}
     });
   @JvmField
   val applicativeMultiplicative = PS.Control.Applicative.Module.Applicative

@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Ord.Unsafe
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val unsafeCompareImpl = Foreign.Data.Ord.Unsafe.unsafeCompareImpl;
   @JvmField

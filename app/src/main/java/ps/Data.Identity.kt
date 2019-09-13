@@ -1,22 +1,18 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Identity
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Identity = { x : Any -> x};
   @JvmField
   val showIdentity = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val x = v;
-            (("(Identity " as String) + (((PS.Data.Show.Module.show
-                                             .app(dictShow)
-                                             .app(x
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val x = v;
+          (("(Identity " as String) + (((PS.Data.Show.Module.show.app(dictShow)
+                                           .app(x
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField val semiringIdentity = { dictSemiring : Any -> dictSemiring};
   @JvmField val semigroupIdenity = { dictSemigroup : Any -> dictSemigroup};
@@ -25,13 +21,8 @@ object Module  {
   @JvmField
   val newtypeIdentity = PS.Data.Newtype.Module.Newtype
                           .app({ n : Any ->
-                               when {
-                                else -> {
-                                  val a = n;
-                                  a;
-                                }
-                              }
-                            })
+                              val a = n;
+                                a;})
                           .app(PS.Data.Identity.Module.Identity);
   @JvmField val monoidIdentity = { dictMonoid : Any -> dictMonoid};
   @JvmField val lazyIdentity = { dictLazy : Any -> dictLazy};
@@ -43,13 +34,8 @@ object Module  {
   val functorIdentity = PS.Data.Functor.Module.Functor
                           .app({ f : Any ->
        { m : Any ->
-         when {
-          else -> {
-            val v = m;
-            PS.Data.Identity.Module.Identity.app(f.app(v));
-          }
-        }
-      }
+        val v = m;
+          PS.Data.Identity.Module.Identity.app(f.app(v));}
     });
   @JvmField
   val functorWithIndexIdentity = PS.Data.FunctorWithIndex.Module.FunctorWithIndex
@@ -58,15 +44,10 @@ object Module  {
                                      })
                                    .app({ f : Any ->
        { v : Any ->
-         when {
-          else -> {
-            val f1 = f;
-            val a = v;
-            PS.Data.Identity.Module.Identity
-              .app(f1.app(PS.Data.Unit.Module.unit).app(a));
-          }
-        }
-      }
+        val f1 = f;
+          val a = v;
+          PS.Data.Identity.Module.Identity
+            .app(f1.app(PS.Data.Unit.Module.unit).app(a));}
     });
   @JvmField
   val invariantIdentity = PS.Data.Functor.Invariant.Module.Invariant
@@ -78,42 +59,27 @@ object Module  {
                            .app({ dictMonoid : Any ->
                                 { f : Any ->
                                   { v : Any ->
-                                    when {
-                                     else -> {
-                                       val f1 = f;
-                                       val x = v;
-                                       f1.app(x);
-                                     }
-                                   }
-                                 }
+                                   val f1 = f;
+                                     val x = v;
+                                     f1.app(x);}
                                }
                              })
                            .app({ f : Any ->
                                 { z : Any ->
                                   { v : Any ->
-                                    when {
-                                     else -> {
-                                       val f1 = f;
-                                       val z1 = z;
-                                       val x = v;
-                                       f1.app(z1).app(x);
-                                     }
-                                   }
-                                 }
+                                   val f1 = f;
+                                     val z1 = z;
+                                     val x = v;
+                                     f1.app(z1).app(x);}
                                }
                              })
                            .app({ f : Any ->
        { z : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val z1 = z;
-              val x = v;
-              f1.app(x).app(z1);
-            }
-          }
-        }
+          val f1 = f;
+            val z1 = z;
+            val x = v;
+            f1.app(x).app(z1);}
       }
     });
   @JvmField
@@ -124,45 +90,30 @@ object Module  {
                                     .app({ dictMonoid : Any ->
                                          { f : Any ->
                                            { v : Any ->
-                                             when {
-                                              else -> {
-                                                val f1 = f;
-                                                val x = v;
-                                                f1.app(PS.Data.Unit.Module.unit)
-                                                  .app(x);
-                                              }
-                                            }
-                                          }
+                                            val f1 = f;
+                                              val x = v;
+                                              f1.app(PS.Data.Unit.Module.unit)
+                                                .app(x);}
                                         }
                                       })
                                     .app({ f : Any ->
                                          { z : Any ->
                                            { v : Any ->
-                                             when {
-                                              else -> {
-                                                val f1 = f;
-                                                val z1 = z;
-                                                val x = v;
-                                                f1.app(PS.Data.Unit.Module.unit)
-                                                  .app(z1)
-                                                  .app(x);
-                                              }
-                                            }
-                                          }
+                                            val f1 = f;
+                                              val z1 = z;
+                                              val x = v;
+                                              f1.app(PS.Data.Unit.Module.unit)
+                                                .app(z1)
+                                                .app(x);}
                                         }
                                       })
                                     .app({ f : Any ->
        { z : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val z1 = z;
-              val x = v;
-              f1.app(PS.Data.Unit.Module.unit).app(x).app(z1);
-            }
-          }
-        }
+          val f1 = f;
+            val z1 = z;
+            val x = v;
+            f1.app(PS.Data.Unit.Module.unit).app(x).app(z1);}
       }
     });
   @JvmField
@@ -175,37 +126,27 @@ object Module  {
                                 })
                               .app({ dictApplicative : Any ->
                                    { v : Any ->
-                                     when {
-                                      else -> {
-                                        val x = v;
-                                        PS.Data.Functor.Module.map
-                                          .app(
-                                            ((dictApplicative as Map<String, Any>)["Apply0"]!!
-                                               .app(Unit
-                                              ) as Map<String, Any>)["Functor0"]!!
-                                              .app(Unit))
-                                          .app(PS.Data.Identity.Module.Identity)
-                                          .app(x);
-                                      }
-                                    }
-                                  }
+                                    val x = v;
+                                      PS.Data.Functor.Module.map
+                                        .app(
+                                          ((dictApplicative as Map<String, Any>)["Apply0"]!!
+                                             .app(Unit
+                                            ) as Map<String, Any>)["Functor0"]!!
+                                            .app(Unit))
+                                        .app(PS.Data.Identity.Module.Identity)
+                                        .app(x);}
                                 })
                               .app({ dictApplicative : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v;
-              PS.Data.Functor.Module.map
-                .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                        .app(Unit) as Map<String, Any>)["Functor0"]!!
-                       .app(Unit))
-                .app(PS.Data.Identity.Module.Identity)
-                .app(f1.app(x));
-            }
-          }
-        }
+          val f1 = f;
+            val x = v;
+            PS.Data.Functor.Module.map
+              .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                      .app(Unit) as Map<String, Any>)["Functor0"]!!
+                     .app(Unit))
+              .app(PS.Data.Identity.Module.Identity)
+              .app(f1.app(x));}
       }
     });
   @JvmField
@@ -222,19 +163,14 @@ object Module  {
                                        .app({ dictApplicative : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v;
-              PS.Data.Functor.Module.map
-                .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                        .app(Unit) as Map<String, Any>)["Functor0"]!!
-                       .app(Unit))
-                .app(PS.Data.Identity.Module.Identity)
-                .app(f1.app(PS.Data.Unit.Module.unit).app(x));
-            }
-          }
-        }
+          val f1 = f;
+            val x = v;
+            PS.Data.Functor.Module.map
+              .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                      .app(Unit) as Map<String, Any>)["Functor0"]!!
+                     .app(Unit))
+              .app(PS.Data.Identity.Module.Identity)
+              .app(f1.app(PS.Data.Unit.Module.unit).app(x));}
       }
     });
   @JvmField
@@ -244,25 +180,15 @@ object Module  {
                               })
                             .app({ dictSemigroup : Any ->
                                  { v : Any ->
-                                   when {
-                                    else -> {
-                                      val x = v;
-                                      x;
-                                    }
-                                  }
-                                }
+                                  val x = v;
+                                    x;}
                               })
                             .app({ dictSemigroup : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v;
-              f1.app(x);
-            }
-          }
-        }
+          val f1 = f;
+            val x = v;
+            f1.app(x);}
       }
     });
   @JvmField
@@ -275,34 +201,23 @@ object Module  {
                                  })
                                .app({ dictApply : Any ->
                                     { v : Any ->
-                                      when {
-                                       else -> {
-                                         val x = v;
-                                         PS.Data.Functor.Module.map
-                                           .app(
-                                             (dictApply as Map<String, Any>)["Functor0"]!!
-                                               .app(Unit))
-                                           .app(PS.Data.Identity.Module.Identity
-                                           )
-                                           .app(x);
-                                       }
-                                     }
-                                   }
+                                     val x = v;
+                                       PS.Data.Functor.Module.map
+                                         .app(
+                                           (dictApply as Map<String, Any>)["Functor0"]!!
+                                             .app(Unit))
+                                         .app(PS.Data.Identity.Module.Identity)
+                                         .app(x);}
                                  })
                                .app({ dictApply : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v;
-              PS.Data.Functor.Module.map
-                .app((dictApply as Map<String, Any>)["Functor0"]!!.app(Unit))
-                .app(PS.Data.Identity.Module.Identity)
-                .app(f1.app(x));
-            }
-          }
-        }
+          val f1 = f;
+            val x = v;
+            PS.Data.Functor.Module.map
+              .app((dictApply as Map<String, Any>)["Functor0"]!!.app(Unit))
+              .app(PS.Data.Identity.Module.Identity)
+              .app(f1.app(x));}
       }
     });
   @JvmField
@@ -340,13 +255,8 @@ object Module  {
                                PS.Data.Identity.Module.extendIdentity
                             })
                           .app({ v : Any ->
-       when {
-        else -> {
-          val x = v;
-          x;
-        }
-      }
-    });
+      val x = v;
+        x;});
   @JvmField
   val commutativeRingIdentity = { dictCommutativeRing : Any ->
      dictCommutativeRing
@@ -363,14 +273,9 @@ object Module  {
                           })
                         .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val f = v;
-            val x = v1;
-            PS.Data.Identity.Module.Identity.app(f.app(x));
-          }
-        }
-      }
+        val f = v;
+          val x = v1;
+          PS.Data.Identity.Module.Identity.app(f.app(x));}
     });
   @JvmField
   val bindIdentity = PS.Control.Bind.Module.Bind
@@ -379,14 +284,9 @@ object Module  {
                          })
                        .app({ v : Any ->
        { f : Any ->
-         when {
-          else -> {
-            val m = v;
-            val f1 = f;
-            f1.app(m);
-          }
-        }
-      }
+        val m = v;
+          val f1 = f;
+          f1.app(m);}
     });
   @JvmField
   val applicativeIdentity = PS.Control.Applicative.Module.Applicative

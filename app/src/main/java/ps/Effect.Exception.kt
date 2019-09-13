@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Effect.Exception
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val showErrorImpl = Foreign.Effect.Exception.showErrorImpl;
   val error = Foreign.Effect.Exception.error;

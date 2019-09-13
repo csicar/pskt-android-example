@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Lazy
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val defer = Foreign.Data.Lazy.defer;
   val force = Foreign.Data.Lazy.force;

@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Foldable
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val foldrArray = Foreign.Data.Foldable.foldrArray;
   val foldlArray = Foreign.Data.Foldable.foldlArray;
@@ -349,42 +351,27 @@ object Module  {
                                  .app({ dictMonoid : Any ->
                                       { f : Any ->
                                         { v : Any ->
-                                          when {
-                                           else -> {
-                                             val f1 = f;
-                                             val x = v;
-                                             f1.app(x);
-                                           }
-                                         }
-                                       }
+                                         val f1 = f;
+                                           val x = v;
+                                           f1.app(x);}
                                      }
                                    })
                                  .app({ f : Any ->
                                       { z : Any ->
                                         { v : Any ->
-                                          when {
-                                           else -> {
-                                             val f1 = f;
-                                             val z1 = z;
-                                             val x = v;
-                                             f1.app(z1).app(x);
-                                           }
-                                         }
-                                       }
+                                         val f1 = f;
+                                           val z1 = z;
+                                           val x = v;
+                                           f1.app(z1).app(x);}
                                      }
                                    })
                                  .app({ f : Any ->
        { z : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val z1 = z;
-              val x = v;
-              f1.app(x).app(z1);
-            }
-          }
-        }
+          val f1 = f;
+            val z1 = z;
+            val x = v;
+            f1.app(x).app(z1);}
       }
     });
   @JvmField
@@ -457,42 +444,27 @@ object Module  {
                        .app({ dictMonoid : Any ->
                             { f : Any ->
                               { v : Any ->
-                                when {
-                                 else -> {
-                                   val f1 = f;
-                                   val x = v;
-                                   f1.app(x);
-                                 }
-                               }
-                             }
+                               val f1 = f;
+                                 val x = v;
+                                 f1.app(x);}
                            }
                          })
                        .app({ f : Any ->
                             { z : Any ->
                               { v : Any ->
-                                when {
-                                 else -> {
-                                   val f1 = f;
-                                   val z1 = z;
-                                   val x = v;
-                                   f1.app(z1).app(x);
-                                 }
-                               }
-                             }
+                               val f1 = f;
+                                 val z1 = z;
+                                 val x = v;
+                                 f1.app(z1).app(x);}
                            }
                          })
                        .app({ f : Any ->
        { z : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val z1 = z;
-              val x = v;
-              f1.app(x).app(z1);
-            }
-          }
-        }
+          val f1 = f;
+            val z1 = z;
+            val x = v;
+            f1.app(x).app(z1);}
       }
     });
   @JvmField
@@ -500,42 +472,27 @@ object Module  {
                        .app({ dictMonoid : Any ->
                             { f : Any ->
                               { v : Any ->
-                                when {
-                                 else -> {
-                                   val f1 = f;
-                                   val x = v;
-                                   f1.app(x);
-                                 }
-                               }
-                             }
+                               val f1 = f;
+                                 val x = v;
+                                 f1.app(x);}
                            }
                          })
                        .app({ f : Any ->
                             { z : Any ->
                               { v : Any ->
-                                when {
-                                 else -> {
-                                   val f1 = f;
-                                   val z1 = z;
-                                   val x = v;
-                                   f1.app(z1).app(x);
-                                 }
-                               }
-                             }
+                               val f1 = f;
+                                 val z1 = z;
+                                 val x = v;
+                                 f1.app(z1).app(x);}
                            }
                          })
                        .app({ f : Any ->
        { z : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val z1 = z;
-              val x = v;
-              f1.app(x).app(z1);
-            }
-          }
-        }
+          val f1 = f;
+            val z1 = z;
+            val x = v;
+            f1.app(x).app(z1);}
       }
     });
   @JvmField
@@ -543,42 +500,27 @@ object Module  {
                        .app({ dictMonoid : Any ->
                             { f : Any ->
                               { v : Any ->
-                                when {
-                                 else -> {
-                                   val f1 = f;
-                                   val x = v;
-                                   f1.app(x);
-                                 }
-                               }
-                             }
+                               val f1 = f;
+                                 val x = v;
+                                 f1.app(x);}
                            }
                          })
                        .app({ f : Any ->
                             { z : Any ->
                               { v : Any ->
-                                when {
-                                 else -> {
-                                   val f1 = f;
-                                   val z1 = z;
-                                   val x = v;
-                                   f1.app(z1).app(x);
-                                 }
-                               }
-                             }
+                               val f1 = f;
+                                 val z1 = z;
+                                 val x = v;
+                                 f1.app(z1).app(x);}
                            }
                          })
                        .app({ f : Any ->
        { z : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val z1 = z;
-              val x = v;
-              f1.app(x).app(z1);
-            }
-          }
-        }
+          val f1 = f;
+            val z1 = z;
+            val x = v;
+            f1.app(x).app(z1);}
       }
     });
   @JvmField
@@ -586,42 +528,27 @@ object Module  {
                            .app({ dictMonoid : Any ->
                                 { f : Any ->
                                   { v : Any ->
-                                    when {
-                                     else -> {
-                                       val f1 = f;
-                                       val x = v;
-                                       f1.app(x);
-                                     }
-                                   }
-                                 }
+                                   val f1 = f;
+                                     val x = v;
+                                     f1.app(x);}
                                }
                              })
                            .app({ f : Any ->
                                 { z : Any ->
                                   { v : Any ->
-                                    when {
-                                     else -> {
-                                       val f1 = f;
-                                       val z1 = z;
-                                       val x = v;
-                                       f1.app(z1).app(x);
-                                     }
-                                   }
-                                 }
+                                   val f1 = f;
+                                     val z1 = z;
+                                     val x = v;
+                                     f1.app(z1).app(x);}
                                }
                              })
                            .app({ f : Any ->
        { z : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val z1 = z;
-              val x = v;
-              f1.app(x).app(z1);
-            }
-          }
-        }
+          val f1 = f;
+            val z1 = z;
+            val x = v;
+            f1.app(x).app(z1);}
       }
     });
   @JvmField
@@ -680,56 +607,39 @@ object Module  {
                         .app({ dictMonoid : Any ->
                              { f : Any ->
                                { v : Any ->
-                                 when {
-                                  else -> {
-                                    val f1 = f;
-                                    val x = v;
-                                    PS.Data.Foldable.Module.foldMap
-                                      .app(PS.Data.Foldable.Module.foldableMaybe
-                                      )
-                                      .app(dictMonoid)
-                                      .app(f1)
-                                      .app(x);
-                                  }
-                                }
-                              }
+                                val f1 = f;
+                                  val x = v;
+                                  PS.Data.Foldable.Module.foldMap
+                                    .app(PS.Data.Foldable.Module.foldableMaybe)
+                                    .app(dictMonoid)
+                                    .app(f1)
+                                    .app(x);}
                             }
                           })
                         .app({ f : Any ->
                              { z : Any ->
                                { v : Any ->
-                                 when {
-                                  else -> {
-                                    val f1 = f;
-                                    val z1 = z;
-                                    val x = v;
-                                    PS.Data.Foldable.Module.foldl
-                                      .app(PS.Data.Foldable.Module.foldableMaybe
-                                      )
-                                      .app(f1)
-                                      .app(z1)
-                                      .app(x);
-                                  }
-                                }
-                              }
+                                val f1 = f;
+                                  val z1 = z;
+                                  val x = v;
+                                  PS.Data.Foldable.Module.foldl
+                                    .app(PS.Data.Foldable.Module.foldableMaybe)
+                                    .app(f1)
+                                    .app(z1)
+                                    .app(x);}
                             }
                           })
                         .app({ f : Any ->
        { z : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val z1 = z;
-              val x = v;
-              PS.Data.Foldable.Module.foldr
-                .app(PS.Data.Foldable.Module.foldableMaybe)
-                .app(f1)
-                .app(z1)
-                .app(x);
-            }
-          }
-        }
+          val f1 = f;
+            val z1 = z;
+            val x = v;
+            PS.Data.Foldable.Module.foldr
+              .app(PS.Data.Foldable.Module.foldableMaybe)
+              .app(f1)
+              .app(z1)
+              .app(x);}
       }
     });
   @JvmField
@@ -737,54 +647,39 @@ object Module  {
                        .app({ dictMonoid : Any ->
                             { f : Any ->
                               { v : Any ->
-                                when {
-                                 else -> {
-                                   val f1 = f;
-                                   val x = v;
-                                   PS.Data.Foldable.Module.foldMap
-                                     .app(PS.Data.Foldable.Module.foldableMaybe)
-                                     .app(dictMonoid)
-                                     .app(f1)
-                                     .app(x);
-                                 }
-                               }
-                             }
+                               val f1 = f;
+                                 val x = v;
+                                 PS.Data.Foldable.Module.foldMap
+                                   .app(PS.Data.Foldable.Module.foldableMaybe)
+                                   .app(dictMonoid)
+                                   .app(f1)
+                                   .app(x);}
                            }
                          })
                        .app({ f : Any ->
                             { z : Any ->
                               { v : Any ->
-                                when {
-                                 else -> {
-                                   val f1 = f;
-                                   val z1 = z;
-                                   val x = v;
-                                   PS.Data.Foldable.Module.foldl
-                                     .app(PS.Data.Foldable.Module.foldableMaybe)
-                                     .app(f1)
-                                     .app(z1)
-                                     .app(x);
-                                 }
-                               }
-                             }
+                               val f1 = f;
+                                 val z1 = z;
+                                 val x = v;
+                                 PS.Data.Foldable.Module.foldl
+                                   .app(PS.Data.Foldable.Module.foldableMaybe)
+                                   .app(f1)
+                                   .app(z1)
+                                   .app(x);}
                            }
                          })
                        .app({ f : Any ->
        { z : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val z1 = z;
-              val x = v;
-              PS.Data.Foldable.Module.foldr
-                .app(PS.Data.Foldable.Module.foldableMaybe)
-                .app(f1)
-                .app(z1)
-                .app(x);
-            }
-          }
-        }
+          val f1 = f;
+            val z1 = z;
+            val x = v;
+            PS.Data.Foldable.Module.foldr
+              .app(PS.Data.Foldable.Module.foldableMaybe)
+              .app(f1)
+              .app(z1)
+              .app(x);}
       }
     });
   @JvmField

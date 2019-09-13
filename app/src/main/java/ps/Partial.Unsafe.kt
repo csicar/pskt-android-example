@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Partial.Unsafe
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val unsafePartial = Foreign.Partial.Unsafe.unsafePartial;
   @JvmField

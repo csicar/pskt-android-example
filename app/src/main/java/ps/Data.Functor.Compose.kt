@@ -1,32 +1,24 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Functor.Compose
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Compose = { x : Any -> x};
   @JvmField
   val showCompose = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val fga = v;
-            (("(Compose " as String) + (((PS.Data.Show.Module.show.app(dictShow)
-                                            .app(fga
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val fga = v;
+          (("(Compose " as String) + (((PS.Data.Show.Module.show.app(dictShow)
+                                          .app(fga
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField
   val newtypeCompose = PS.Data.Newtype.Module.Newtype
                          .app({ n : Any ->
-                              when {
-                               else -> {
-                                 val a = n;
-                                 a;
-                               }
-                             }
-                           })
+                             val a = n;
+                               a;})
                          .app(PS.Data.Functor.Compose.Module.Compose);
   @JvmField
   val functorCompose = { dictFunctor : Any ->
@@ -34,19 +26,14 @@ object Module  {
        PS.Data.Functor.Module.Functor
          .app({ f : Any ->
            { v : Any ->
-             when {
-              else -> {
-                val f1 = f;
-                val fga = v;
-                PS.Data.Function.Module.apply
-                  .app(PS.Data.Functor.Compose.Module.Compose)
-                  .app(PS.Data.Functor.Module.map.app(dictFunctor)
-                         .app(PS.Data.Functor.Module.map.app(dictFunctor1)
-                                .app(f1))
-                         .app(fga));
-              }
-            }
-          }
+            val f1 = f;
+              val fga = v;
+              PS.Data.Function.Module.apply
+                .app(PS.Data.Functor.Compose.Module.Compose)
+                .app(PS.Data.Functor.Module.map.app(dictFunctor)
+                       .app(PS.Data.Functor.Module.map.app(dictFunctor1).app(f1)
+                       )
+                       .app(fga));}
         })
     }
   };
@@ -63,25 +50,19 @@ object Module  {
            })
          .app({ f : Any ->
            { v : Any ->
-             when {
-              else -> {
-                val f1 = f;
-                val fga = v;
-                PS.Data.Function.Module.apply
-                  .app(PS.Data.Functor.Compose.Module.Compose)
-                  .app(PS.Data.FunctorWithIndex.Module.mapWithIndex
-                         .app(dictFunctorWithIndex)
-                         .app(PS.Control.Semigroupoid.Module.compose
-                                .app(
-                                  PS.Control.Semigroupoid.Module.semigroupoidFn)
-                                .app(
-                                  PS.Data.FunctorWithIndex.Module.mapWithIndex
-                                    .app(dictFunctorWithIndex1))
-                                .app(PS.Data.Tuple.Module.curry.app(f1)))
-                         .app(fga));
-              }
-            }
-          }
+            val f1 = f;
+              val fga = v;
+              PS.Data.Function.Module.apply
+                .app(PS.Data.Functor.Compose.Module.Compose)
+                .app(PS.Data.FunctorWithIndex.Module.mapWithIndex
+                       .app(dictFunctorWithIndex)
+                       .app(PS.Control.Semigroupoid.Module.compose
+                              .app(PS.Control.Semigroupoid.Module.semigroupoidFn
+                              )
+                              .app(PS.Data.FunctorWithIndex.Module.mapWithIndex
+                                     .app(dictFunctorWithIndex1))
+                              .app(PS.Data.Tuple.Module.curry.app(f1)))
+                       .app(fga));}
         })
     }
   };
@@ -92,56 +73,41 @@ object Module  {
          .app({ dictMonoid : Any ->
               { f : Any ->
                 { v : Any ->
-                  when {
-                   else -> {
-                     val f1 = f;
-                     val fga = v;
-                     PS.Data.Foldable.Module.foldMap.app(dictFoldable)
-                       .app(dictMonoid)
-                       .app(PS.Data.Foldable.Module.foldMap.app(dictFoldable1)
-                              .app(dictMonoid)
-                              .app(f1))
-                       .app(fga);
-                   }
-                 }
-               }
+                 val f1 = f;
+                   val fga = v;
+                   PS.Data.Foldable.Module.foldMap.app(dictFoldable)
+                     .app(dictMonoid)
+                     .app(PS.Data.Foldable.Module.foldMap.app(dictFoldable1)
+                            .app(dictMonoid)
+                            .app(f1))
+                     .app(fga);}
              }
            })
          .app({ f : Any ->
               { i : Any ->
                 { v : Any ->
-                  when {
-                   else -> {
-                     val f1 = f;
-                     val i1 = i;
-                     val fga = v;
-                     PS.Data.Foldable.Module.foldl.app(dictFoldable)
-                       .app(PS.Data.Foldable.Module.foldl.app(dictFoldable1)
-                              .app(f1))
-                       .app(i1)
-                       .app(fga);
-                   }
-                 }
-               }
+                 val f1 = f;
+                   val i1 = i;
+                   val fga = v;
+                   PS.Data.Foldable.Module.foldl.app(dictFoldable)
+                     .app(PS.Data.Foldable.Module.foldl.app(dictFoldable1)
+                            .app(f1))
+                     .app(i1)
+                     .app(fga);}
              }
            })
          .app({ f : Any ->
            { i : Any ->
              { v : Any ->
-               when {
-                else -> {
-                  val f1 = f;
-                  val i1 = i;
-                  val fga = v;
-                  PS.Data.Foldable.Module.foldr.app(dictFoldable)
-                    .app(PS.Data.Function.Module.flip
-                           .app(PS.Data.Foldable.Module.foldr.app(dictFoldable1)
-                                  .app(f1)))
-                    .app(i1)
-                    .app(fga);
-                }
-              }
-            }
+              val f1 = f;
+                val i1 = i;
+                val fga = v;
+                PS.Data.Foldable.Module.foldr.app(dictFoldable)
+                  .app(PS.Data.Function.Module.flip
+                         .app(PS.Data.Foldable.Module.foldr.app(dictFoldable1)
+                                .app(f1)))
+                  .app(i1)
+                  .app(fga);}
           }
         })
     }
@@ -160,73 +126,54 @@ object Module  {
          .app({ dictMonoid : Any ->
               { f : Any ->
                 { v : Any ->
-                  when {
-                   else -> {
-                     val f1 = f;
-                     val fga = v;
-                     PS.Data.FoldableWithIndex.Module.foldMapWithIndex
-                       .app(dictFoldableWithIndex)
-                       .app(dictMonoid)
-                       .app(PS.Control.Semigroupoid.Module.compose
-                              .app(PS.Control.Semigroupoid.Module.semigroupoidFn
-                              )
-                              .app(
-                                PS.Data.FoldableWithIndex.Module.foldMapWithIndex
-                                  .app(dictFoldableWithIndex1)
-                                  .app(dictMonoid))
-                              .app(PS.Data.Tuple.Module.curry.app(f1)))
-                       .app(fga);
-                   }
-                 }
-               }
+                 val f1 = f;
+                   val fga = v;
+                   PS.Data.FoldableWithIndex.Module.foldMapWithIndex
+                     .app(dictFoldableWithIndex)
+                     .app(dictMonoid)
+                     .app(PS.Control.Semigroupoid.Module.compose
+                            .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
+                            .app(
+                              PS.Data.FoldableWithIndex.Module.foldMapWithIndex
+                                .app(dictFoldableWithIndex1)
+                                .app(dictMonoid))
+                            .app(PS.Data.Tuple.Module.curry.app(f1)))
+                     .app(fga);}
              }
            })
          .app({ f : Any ->
               { i : Any ->
                 { v : Any ->
-                  when {
-                   else -> {
-                     val f1 = f;
-                     val i1 = i;
-                     val fga = v;
-                     PS.Data.FoldableWithIndex.Module.foldlWithIndex
-                       .app(dictFoldableWithIndex)
-                       .app(PS.Control.Semigroupoid.Module.compose
-                              .app(PS.Control.Semigroupoid.Module.semigroupoidFn
-                              )
-                              .app(
-                                PS.Data.FoldableWithIndex.Module.foldlWithIndex
-                                  .app(dictFoldableWithIndex1))
-                              .app(PS.Data.Tuple.Module.curry.app(f1)))
-                       .app(i1)
-                       .app(fga);
-                   }
-                 }
-               }
+                 val f1 = f;
+                   val i1 = i;
+                   val fga = v;
+                   PS.Data.FoldableWithIndex.Module.foldlWithIndex
+                     .app(dictFoldableWithIndex)
+                     .app(PS.Control.Semigroupoid.Module.compose
+                            .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
+                            .app(PS.Data.FoldableWithIndex.Module.foldlWithIndex
+                                   .app(dictFoldableWithIndex1))
+                            .app(PS.Data.Tuple.Module.curry.app(f1)))
+                     .app(i1)
+                     .app(fga);}
              }
            })
          .app({ f : Any ->
            { i : Any ->
              { v : Any ->
-               when {
-                else -> {
-                  val f1 = f;
-                  val i1 = i;
-                  val fga = v;
-                  PS.Data.FoldableWithIndex.Module.foldrWithIndex
-                    .app(dictFoldableWithIndex)
-                    .app({ a : Any ->
-                         PS.Data.Function.Module.flip
-                           .app(PS.Data.FoldableWithIndex.Module.foldrWithIndex
-                                  .app(dictFoldableWithIndex1)
-                                  .app(PS.Data.Tuple.Module.curry.app(f1).app(a)
-                          ))
-                      })
-                    .app(i1)
-                    .app(fga);
-                }
-              }
-            }
+              val f1 = f;
+                val i1 = i;
+                val fga = v;
+                PS.Data.FoldableWithIndex.Module.foldrWithIndex
+                  .app(dictFoldableWithIndex)
+                  .app({ a : Any ->
+                       PS.Data.Function.Module.flip
+                         .app(PS.Data.FoldableWithIndex.Module.foldrWithIndex
+                                .app(dictFoldableWithIndex1)
+                                .app(PS.Data.Tuple.Module.curry.app(f1).app(a)))
+                    })
+                  .app(i1)
+                  .app(fga);}
           }
         })
     }
@@ -261,28 +208,21 @@ object Module  {
          .app({ dictApplicative : Any ->
            { f : Any ->
              { v : Any ->
-               when {
-                else -> {
-                  val f1 = f;
-                  val fga = v;
-                  PS.Data.Function.Module.apply
-                    .app(PS.Data.Functor.Module.map
-                           .app(
-                             ((dictApplicative as Map<String, Any>)["Apply0"]!!
-                                .app(Unit) as Map<String, Any>)["Functor0"]!!
-                               .app(Unit))
-                           .app(PS.Data.Functor.Compose.Module.Compose))
-                    .app(PS.Data.Traversable.Module.traverse
-                           .app(dictTraversable)
-                           .app(dictApplicative)
-                           .app(PS.Data.Traversable.Module.traverse
-                                  .app(dictTraversable1)
-                                  .app(dictApplicative)
-                                  .app(f1))
-                           .app(fga));
-                }
-              }
-            }
+              val f1 = f;
+                val fga = v;
+                PS.Data.Function.Module.apply
+                  .app(PS.Data.Functor.Module.map
+                         .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                                 .app(Unit) as Map<String, Any>)["Functor0"]!!
+                                .app(Unit))
+                         .app(PS.Data.Functor.Compose.Module.Compose))
+                  .app(PS.Data.Traversable.Module.traverse.app(dictTraversable)
+                         .app(dictApplicative)
+                         .app(PS.Data.Traversable.Module.traverse
+                                .app(dictTraversable1)
+                                .app(dictApplicative)
+                                .app(f1))
+                         .app(fga));}
           }
         })
     }
@@ -321,33 +261,26 @@ object Module  {
          .app({ dictApplicative : Any ->
            { f : Any ->
              { v : Any ->
-               when {
-                else -> {
-                  val f1 = f;
-                  val fga = v;
-                  PS.Data.Function.Module.apply
-                    .app(PS.Data.Functor.Module.map
-                           .app(
-                             ((dictApplicative as Map<String, Any>)["Apply0"]!!
-                                .app(Unit) as Map<String, Any>)["Functor0"]!!
-                               .app(Unit))
-                           .app(PS.Data.Functor.Compose.Module.Compose))
-                    .app(PS.Data.TraversableWithIndex.Module.traverseWithIndex
-                           .app(dictTraversableWithIndex)
-                           .app(dictApplicative)
-                           .app(PS.Control.Semigroupoid.Module.compose
-                                  .app(
-                                    PS.Control.Semigroupoid.Module.semigroupoidFn
-                                  )
-                                  .app(
-                                    PS.Data.TraversableWithIndex.Module.traverseWithIndex
-                                      .app(dictTraversableWithIndex1)
-                                      .app(dictApplicative))
-                                  .app(PS.Data.Tuple.Module.curry.app(f1)))
-                           .app(fga));
-                }
-              }
-            }
+              val f1 = f;
+                val fga = v;
+                PS.Data.Function.Module.apply
+                  .app(PS.Data.Functor.Module.map
+                         .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                                 .app(Unit) as Map<String, Any>)["Functor0"]!!
+                                .app(Unit))
+                         .app(PS.Data.Functor.Compose.Module.Compose))
+                  .app(PS.Data.TraversableWithIndex.Module.traverseWithIndex
+                         .app(dictTraversableWithIndex)
+                         .app(dictApplicative)
+                         .app(PS.Control.Semigroupoid.Module.compose
+                                .app(
+                                  PS.Control.Semigroupoid.Module.semigroupoidFn)
+                                .app(
+                                  PS.Data.TraversableWithIndex.Module.traverseWithIndex
+                                    .app(dictTraversableWithIndex1)
+                                    .app(dictApplicative))
+                                .app(PS.Data.Tuple.Module.curry.app(f1)))
+                         .app(fga));}
           }
         })
     }
@@ -359,18 +292,13 @@ object Module  {
          PS.Data.Eq.Module.Eq
            .app({ v : Any ->
              { v1 : Any ->
-               when {
-                else -> {
-                  val fga1 = v;
-                  val fga2 = v1;
-                  PS.Data.Eq.Module.eq1.app(dictEq1)
-                    .app(PS.Data.Functor.App.Module.eqApp.app(dictEq11)
-                           .app(dictEq))
-                    .app(PS.Data.Functor.App.Module.hoistLiftApp.app(fga1))
-                    .app(PS.Data.Functor.App.Module.hoistLiftApp.app(fga2));
-                }
-              }
-            }
+              val fga1 = v;
+                val fga2 = v1;
+                PS.Data.Eq.Module.eq1.app(dictEq1)
+                  .app(PS.Data.Functor.App.Module.eqApp.app(dictEq11)
+                         .app(dictEq))
+                  .app(PS.Data.Functor.App.Module.hoistLiftApp.app(fga1))
+                  .app(PS.Data.Functor.App.Module.hoistLiftApp.app(fga2));}
           })
       }
     }
@@ -388,18 +316,13 @@ object Module  {
              })
            .app({ v : Any ->
              { v1 : Any ->
-               when {
-                else -> {
-                  val fga1 = v;
-                  val fga2 = v1;
-                  PS.Data.Ord.Module.compare1.app(dictOrd1)
-                    .app(PS.Data.Functor.App.Module.ordApp.app(dictOrd11)
-                           .app(dictOrd))
-                    .app(PS.Data.Functor.App.Module.hoistLiftApp.app(fga1))
-                    .app(PS.Data.Functor.App.Module.hoistLiftApp.app(fga2));
-                }
-              }
-            }
+              val fga1 = v;
+                val fga2 = v1;
+                PS.Data.Ord.Module.compare1.app(dictOrd1)
+                  .app(PS.Data.Functor.App.Module.ordApp.app(dictOrd11)
+                         .app(dictOrd))
+                  .app(PS.Data.Functor.App.Module.hoistLiftApp.app(fga1))
+                  .app(PS.Data.Functor.App.Module.hoistLiftApp.app(fga2));}
           })
       }
     }
@@ -438,19 +361,13 @@ object Module  {
      { natF : Any ->
        { natG : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val natF1 = natF;
-              val natG1 = natG;
-              val fga = v;
-              PS.Data.Functor.Compose.Module.Compose
-                .app(natF1
-                       .app(PS.Data.Functor.Module.map.app(dictFunctor)
-                              .app(natG1)
-                              .app(fga)));
-            }
-          }
-        }
+          val natF1 = natF;
+            val natG1 = natG;
+            val fga = v;
+            PS.Data.Functor.Compose.Module.Compose
+              .app(natF1
+                     .app(PS.Data.Functor.Module.map.app(dictFunctor).app(natG1)
+                            .app(fga)));}
       }
     }
   };
@@ -465,24 +382,18 @@ object Module  {
            })
          .app({ v : Any ->
            { v1 : Any ->
-             when {
-              else -> {
-                val f = v;
-                val x = v1;
-                PS.Data.Function.Module.apply
-                  .app(PS.Data.Functor.Compose.Module.Compose)
-                  .app(PS.Control.Apply.Module.apply.app(dictApply)
-                         .app(PS.Data.Functor.Module.map
-                                .app(
-                                  (dictApply as Map<String, Any>)["Functor0"]!!
-                                    .app(Unit))
-                                .app(PS.Control.Apply.Module.apply
-                                       .app(dictApply1))
-                                .app(f))
-                         .app(x));
-              }
-            }
-          }
+            val f = v;
+              val x = v1;
+              PS.Data.Function.Module.apply
+                .app(PS.Data.Functor.Compose.Module.Compose)
+                .app(PS.Control.Apply.Module.apply.app(dictApply)
+                       .app(PS.Data.Functor.Module.map
+                              .app((dictApply as Map<String, Any>)["Functor0"]!!
+                                     .app(Unit))
+                              .app(PS.Control.Apply.Module.apply.app(dictApply1)
+                              )
+                              .app(f))
+                       .app(x));}
         })
     }
   };
@@ -519,16 +430,11 @@ object Module  {
            })
          .app({ v : Any ->
            { v1 : Any ->
-             when {
-              else -> {
-                val a = v;
-                val b = v1;
-                PS.Data.Function.Module.apply
-                  .app(PS.Data.Functor.Compose.Module.Compose)
-                  .app(PS.Control.Alt.Module.alt.app(dictAlt).app(a).app(b));
-              }
-            }
-          }
+            val a = v;
+              val b = v1;
+              PS.Data.Function.Module.apply
+                .app(PS.Data.Functor.Compose.Module.Compose)
+                .app(PS.Control.Alt.Module.alt.app(dictAlt).app(a).app(b));}
         })
     }
   };

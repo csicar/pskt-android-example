@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.FunctorWithIndex
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val mapWithIndexArray = Foreign.Data.FunctorWithIndex.mapWithIndexArray;
   @JvmField

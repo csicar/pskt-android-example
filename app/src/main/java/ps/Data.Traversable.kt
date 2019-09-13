@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Traversable
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val traverseArrayImpl = Foreign.Data.Traversable.traverseArrayImpl;
   @JvmField
@@ -28,39 +30,29 @@ object Module  {
                                       })
                                     .app({ dictApplicative : Any ->
                                          { v : Any ->
-                                           when {
-                                            else -> {
-                                              val x = v;
-                                              PS.Data.Functor.Module.map
-                                                .app(
-                                                  ((dictApplicative as Map<String, Any>)["Apply0"]!!
-                                                     .app(Unit
-                                                    ) as Map<String, Any>)["Functor0"]!!
-                                                    .app(Unit))
-                                                .app(
-                                                  PS.Data.Monoid.Multiplicative.Module.Multiplicative
-                                                )
-                                                .app(x);
-                                            }
-                                          }
-                                        }
+                                          val x = v;
+                                            PS.Data.Functor.Module.map
+                                              .app(
+                                                ((dictApplicative as Map<String, Any>)["Apply0"]!!
+                                                   .app(Unit
+                                                  ) as Map<String, Any>)["Functor0"]!!
+                                                  .app(Unit))
+                                              .app(
+                                                PS.Data.Monoid.Multiplicative.Module.Multiplicative
+                                              )
+                                              .app(x);}
                                       })
                                     .app({ dictApplicative : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v;
-              PS.Data.Functor.Module.map
-                .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                        .app(Unit) as Map<String, Any>)["Functor0"]!!
-                       .app(Unit))
-                .app(PS.Data.Monoid.Multiplicative.Module.Multiplicative)
-                .app(f1.app(x));
-            }
-          }
-        }
+          val f1 = f;
+            val x = v;
+            PS.Data.Functor.Module.map
+              .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                      .app(Unit) as Map<String, Any>)["Functor0"]!!
+                     .app(Unit))
+              .app(PS.Data.Monoid.Multiplicative.Module.Multiplicative)
+              .app(f1.app(x));}
       }
     });
   @JvmField
@@ -130,37 +122,27 @@ object Module  {
                             })
                           .app({ dictApplicative : Any ->
                                { v : Any ->
-                                 when {
-                                  else -> {
-                                    val x = v;
-                                    PS.Data.Functor.Module.map
-                                      .app(
-                                        ((dictApplicative as Map<String, Any>)["Apply0"]!!
-                                           .app(Unit
-                                          ) as Map<String, Any>)["Functor0"]!!
-                                          .app(Unit))
-                                      .app(PS.Data.Monoid.Dual.Module.Dual)
-                                      .app(x);
-                                  }
-                                }
-                              }
+                                val x = v;
+                                  PS.Data.Functor.Module.map
+                                    .app(
+                                      ((dictApplicative as Map<String, Any>)["Apply0"]!!
+                                         .app(Unit
+                                        ) as Map<String, Any>)["Functor0"]!!
+                                        .app(Unit))
+                                    .app(PS.Data.Monoid.Dual.Module.Dual)
+                                    .app(x);}
                             })
                           .app({ dictApplicative : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v;
-              PS.Data.Functor.Module.map
-                .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                        .app(Unit) as Map<String, Any>)["Functor0"]!!
-                       .app(Unit))
-                .app(PS.Data.Monoid.Dual.Module.Dual)
-                .app(f1.app(x));
-            }
-          }
-        }
+          val f1 = f;
+            val x = v;
+            PS.Data.Functor.Module.map
+              .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                      .app(Unit) as Map<String, Any>)["Functor0"]!!
+                     .app(Unit))
+              .app(PS.Data.Monoid.Dual.Module.Dual)
+              .app(f1.app(x));}
       }
     });
   @JvmField
@@ -173,37 +155,27 @@ object Module  {
                             })
                           .app({ dictApplicative : Any ->
                                { v : Any ->
-                                 when {
-                                  else -> {
-                                    val x = v;
-                                    PS.Data.Functor.Module.map
-                                      .app(
-                                        ((dictApplicative as Map<String, Any>)["Apply0"]!!
-                                           .app(Unit
-                                          ) as Map<String, Any>)["Functor0"]!!
-                                          .app(Unit))
-                                      .app(PS.Data.Monoid.Disj.Module.Disj)
-                                      .app(x);
-                                  }
-                                }
-                              }
+                                val x = v;
+                                  PS.Data.Functor.Module.map
+                                    .app(
+                                      ((dictApplicative as Map<String, Any>)["Apply0"]!!
+                                         .app(Unit
+                                        ) as Map<String, Any>)["Functor0"]!!
+                                        .app(Unit))
+                                    .app(PS.Data.Monoid.Disj.Module.Disj)
+                                    .app(x);}
                             })
                           .app({ dictApplicative : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v;
-              PS.Data.Functor.Module.map
-                .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                        .app(Unit) as Map<String, Any>)["Functor0"]!!
-                       .app(Unit))
-                .app(PS.Data.Monoid.Disj.Module.Disj)
-                .app(f1.app(x));
-            }
-          }
-        }
+          val f1 = f;
+            val x = v;
+            PS.Data.Functor.Module.map
+              .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                      .app(Unit) as Map<String, Any>)["Functor0"]!!
+                     .app(Unit))
+              .app(PS.Data.Monoid.Disj.Module.Disj)
+              .app(f1.app(x));}
       }
     });
   @JvmField
@@ -216,37 +188,27 @@ object Module  {
                             })
                           .app({ dictApplicative : Any ->
                                { v : Any ->
-                                 when {
-                                  else -> {
-                                    val x = v;
-                                    PS.Data.Functor.Module.map
-                                      .app(
-                                        ((dictApplicative as Map<String, Any>)["Apply0"]!!
-                                           .app(Unit
-                                          ) as Map<String, Any>)["Functor0"]!!
-                                          .app(Unit))
-                                      .app(PS.Data.Monoid.Conj.Module.Conj)
-                                      .app(x);
-                                  }
-                                }
-                              }
+                                val x = v;
+                                  PS.Data.Functor.Module.map
+                                    .app(
+                                      ((dictApplicative as Map<String, Any>)["Apply0"]!!
+                                         .app(Unit
+                                        ) as Map<String, Any>)["Functor0"]!!
+                                        .app(Unit))
+                                    .app(PS.Data.Monoid.Conj.Module.Conj)
+                                    .app(x);}
                             })
                           .app({ dictApplicative : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v;
-              PS.Data.Functor.Module.map
-                .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                        .app(Unit) as Map<String, Any>)["Functor0"]!!
-                       .app(Unit))
-                .app(PS.Data.Monoid.Conj.Module.Conj)
-                .app(f1.app(x));
-            }
-          }
-        }
+          val f1 = f;
+            val x = v;
+            PS.Data.Functor.Module.map
+              .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                      .app(Unit) as Map<String, Any>)["Functor0"]!!
+                     .app(Unit))
+              .app(PS.Data.Monoid.Conj.Module.Conj)
+              .app(f1.app(x));}
       }
     });
   @JvmField
@@ -259,39 +221,29 @@ object Module  {
                                 })
                               .app({ dictApplicative : Any ->
                                    { v : Any ->
-                                     when {
-                                      else -> {
-                                        val x = v;
-                                        PS.Data.Functor.Module.map
-                                          .app(
-                                            ((dictApplicative as Map<String, Any>)["Apply0"]!!
-                                               .app(Unit
-                                              ) as Map<String, Any>)["Functor0"]!!
-                                              .app(Unit))
-                                          .app(
-                                            PS.Data.Monoid.Additive.Module.Additive
-                                          )
-                                          .app(x);
-                                      }
-                                    }
-                                  }
+                                    val x = v;
+                                      PS.Data.Functor.Module.map
+                                        .app(
+                                          ((dictApplicative as Map<String, Any>)["Apply0"]!!
+                                             .app(Unit
+                                            ) as Map<String, Any>)["Functor0"]!!
+                                            .app(Unit))
+                                        .app(
+                                          PS.Data.Monoid.Additive.Module.Additive
+                                        )
+                                        .app(x);}
                                 })
                               .app({ dictApplicative : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v;
-              PS.Data.Functor.Module.map
-                .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                        .app(Unit) as Map<String, Any>)["Functor0"]!!
-                       .app(Unit))
-                .app(PS.Data.Monoid.Additive.Module.Additive)
-                .app(f1.app(x));
-            }
-          }
-        }
+          val f1 = f;
+            val x = v;
+            PS.Data.Functor.Module.map
+              .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                      .app(Unit) as Map<String, Any>)["Functor0"]!!
+                     .app(Unit))
+              .app(PS.Data.Monoid.Additive.Module.Additive)
+              .app(f1.app(x));}
       }
     });
   @JvmField
@@ -343,46 +295,36 @@ object Module  {
                              })
                            .app({ dictApplicative : Any ->
                                 { v : Any ->
-                                  when {
-                                   else -> {
-                                     val x = v;
-                                     PS.Data.Functor.Module.map
-                                       .app(
-                                         ((dictApplicative as Map<String, Any>)["Apply0"]!!
-                                            .app(Unit
-                                           ) as Map<String, Any>)["Functor0"]!!
-                                           .app(Unit))
-                                       .app(PS.Data.Maybe.First.Module.First)
-                                       .app(PS.Data.Traversable.Module.sequence
-                                              .app(
-                                                PS.Data.Traversable.Module.traversableMaybe
-                                              )
-                                              .app(dictApplicative)
-                                              .app(x));
-                                   }
-                                 }
-                               }
+                                 val x = v;
+                                   PS.Data.Functor.Module.map
+                                     .app(
+                                       ((dictApplicative as Map<String, Any>)["Apply0"]!!
+                                          .app(Unit
+                                         ) as Map<String, Any>)["Functor0"]!!
+                                         .app(Unit))
+                                     .app(PS.Data.Maybe.First.Module.First)
+                                     .app(PS.Data.Traversable.Module.sequence
+                                            .app(
+                                              PS.Data.Traversable.Module.traversableMaybe
+                                            )
+                                            .app(dictApplicative)
+                                            .app(x));}
                              })
                            .app({ dictApplicative : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v;
-              PS.Data.Functor.Module.map
-                .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                        .app(Unit) as Map<String, Any>)["Functor0"]!!
-                       .app(Unit))
-                .app(PS.Data.Maybe.First.Module.First)
-                .app(PS.Data.Traversable.Module.traverse
-                       .app(PS.Data.Traversable.Module.traversableMaybe)
-                       .app(dictApplicative)
-                       .app(f1)
-                       .app(x));
-            }
-          }
-        }
+          val f1 = f;
+            val x = v;
+            PS.Data.Functor.Module.map
+              .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                      .app(Unit) as Map<String, Any>)["Functor0"]!!
+                     .app(Unit))
+              .app(PS.Data.Maybe.First.Module.First)
+              .app(PS.Data.Traversable.Module.traverse
+                     .app(PS.Data.Traversable.Module.traversableMaybe)
+                     .app(dictApplicative)
+                     .app(f1)
+                     .app(x));}
       }
     });
   @JvmField
@@ -395,46 +337,36 @@ object Module  {
                             })
                           .app({ dictApplicative : Any ->
                                { v : Any ->
-                                 when {
-                                  else -> {
-                                    val x = v;
-                                    PS.Data.Functor.Module.map
-                                      .app(
-                                        ((dictApplicative as Map<String, Any>)["Apply0"]!!
-                                           .app(Unit
-                                          ) as Map<String, Any>)["Functor0"]!!
-                                          .app(Unit))
-                                      .app(PS.Data.Maybe.Last.Module.Last)
-                                      .app(PS.Data.Traversable.Module.sequence
-                                             .app(
-                                               PS.Data.Traversable.Module.traversableMaybe
-                                             )
-                                             .app(dictApplicative)
-                                             .app(x));
-                                  }
-                                }
-                              }
+                                val x = v;
+                                  PS.Data.Functor.Module.map
+                                    .app(
+                                      ((dictApplicative as Map<String, Any>)["Apply0"]!!
+                                         .app(Unit
+                                        ) as Map<String, Any>)["Functor0"]!!
+                                        .app(Unit))
+                                    .app(PS.Data.Maybe.Last.Module.Last)
+                                    .app(PS.Data.Traversable.Module.sequence
+                                           .app(
+                                             PS.Data.Traversable.Module.traversableMaybe
+                                           )
+                                           .app(dictApplicative)
+                                           .app(x));}
                             })
                           .app({ dictApplicative : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v;
-              PS.Data.Functor.Module.map
-                .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                        .app(Unit) as Map<String, Any>)["Functor0"]!!
-                       .app(Unit))
-                .app(PS.Data.Maybe.Last.Module.Last)
-                .app(PS.Data.Traversable.Module.traverse
-                       .app(PS.Data.Traversable.Module.traversableMaybe)
-                       .app(dictApplicative)
-                       .app(f1)
-                       .app(x));
-            }
-          }
-        }
+          val f1 = f;
+            val x = v;
+            PS.Data.Functor.Module.map
+              .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                      .app(Unit) as Map<String, Any>)["Functor0"]!!
+                     .app(Unit))
+              .app(PS.Data.Maybe.Last.Module.Last)
+              .app(PS.Data.Traversable.Module.traverse
+                     .app(PS.Data.Traversable.Module.traversableMaybe)
+                     .app(dictApplicative)
+                     .app(f1)
+                     .app(x));}
       }
     });
   @JvmField

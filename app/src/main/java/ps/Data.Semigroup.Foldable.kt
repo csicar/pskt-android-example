@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Semigroup.Foldable
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val JoinWith = { x : Any -> x};
   @JvmField val Act = { x : Any -> x};
@@ -18,22 +20,17 @@ object Module  {
      PS.Data.Semigroup.Module.Semigroup
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val a = v;
-              val b = v1;
-              PS.Data.Function.Module.apply
-                .app(PS.Data.Semigroup.Foldable.Module.JoinWith)
-                .app({ j : Any ->
-                   PS.Data.Semigroup.Module.append.app(dictSemigroup)
-                     .app(a.app(j))
-                     .app(PS.Data.Semigroup.Module.append.app(dictSemigroup)
-                            .app(j)
-                            .app(b.app(j)))
-                });
-            }
-          }
-        }
+          val a = v;
+            val b = v1;
+            PS.Data.Function.Module.apply
+              .app(PS.Data.Semigroup.Foldable.Module.JoinWith)
+              .app({ j : Any ->
+                 PS.Data.Semigroup.Module.append.app(dictSemigroup)
+                   .app(a.app(j))
+                   .app(PS.Data.Semigroup.Module.append.app(dictSemigroup)
+                          .app(j)
+                          .app(b.app(j)))
+              });}
       })
   };
   @JvmField
@@ -41,20 +38,15 @@ object Module  {
      PS.Data.Semigroup.Module.Semigroup
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val a = v;
-              val b = v1;
-              PS.Data.Semigroup.Foldable.Module.Act
-                .app(PS.Control.Apply.Module.applySecond.app(dictApply).app(a)
-                       .app(b));
-            }
-          }
-        }
+          val a = v;
+            val b = v1;
+            PS.Data.Semigroup.Foldable.Module.Act
+              .app(PS.Control.Apply.Module.applySecond.app(dictApply).app(a)
+                     .app(b));}
       })
   };
-  @JvmField val joinee = { v : Any -> when { else -> { val x = v; x; } }};
-  @JvmField val getAct = { v : Any -> when { else -> { val f = v; f; } }};
+  @JvmField val joinee = { v : Any ->val x = v; x;};
+  @JvmField val getAct = { v : Any ->val f = v; f;};
   @JvmField
   val foldMap1 = { dict : Any ->
      (dict as Map<String, Any>)["foldMap1"]!!
@@ -184,14 +176,9 @@ object Module  {
                                     .app({ dictSemigroup : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v;
-              f1.app(x);
-            }
-          }
-        }
+          val f1 = f;
+            val x = v;
+            f1.app(x);}
       }
     });
   @JvmField val foldableMultiplicative = (::__rec_foldableMultiplicative)();
@@ -209,14 +196,9 @@ object Module  {
                                               .app({ dictSemigroup : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v;
-              f1.app(x);
-            }
-          }
-        }
+          val f1 = f;
+            val x = v;
+            f1.app(x);}
       }
     });
   @JvmField val fold1 = { dict : Any -> (dict as Map<String, Any>)["fold1"]!!};

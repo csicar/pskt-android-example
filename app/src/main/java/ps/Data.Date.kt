@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Date
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val canonicalDateImpl = Foreign.Data.Date.canonicalDateImpl;
   val calcWeekday = Foreign.Data.Date.calcWeekday;
@@ -622,143 +624,138 @@ object Module  {
   @JvmField
   val adjust = { v : Any ->
      { date : Any ->
-       when {
-        else -> {
-          val n = v;
-          val date1 = date;
-          object   {
-              val adj = (::__rec_adj)();
-              fun __rec_adj(): Any = { v1 : Any ->
-                 { v2 : Any ->
-                   when {
-                    (v1 == 0) -> {
-                      val dt = v2;
-                      PS.Data.Maybe.Module.Just.app(dt);
-                    }
-                    (v2 is PS.Data.Date.Module._Type_Date.Date) -> {
-                      val i = v1;
-                      val y = v2.value0;
-                      val m = v2.value1;
-                      val d = v2.value2;
-                      object   {
-                          val j = PS.Data.Semiring.Module.add
-                                    .app(PS.Data.Semiring.Module.semiringInt)
-                                    .app(i)
-                                    .app(PS.Data.Enum.Module.fromEnum
-                                           .app(
-                                             PS.Data.Date.Component.Module.boundedEnumDay
-                                           )
-                                           .app(d));
-                          val low = PS.Data.Ord.Module.lessThan
-                                      .app(PS.Data.Ord.Module.ordInt)
-                                      .app(j)
-                                      .app(1);
-                          val l = PS.Data.Date.Module.lastDayOfMonth.app(y)
-                                    .app(when {
-                              (low == true) -> {
-                                PS.Data.Maybe.Module.fromMaybe
-                                  .app(PS.Data.Date.Component.Module.December)
-                                  .app(PS.Data.Enum.Module.pred
+      val n = v;
+        val date1 = date;
+        object   {
+            val adj = (::__rec_adj)();
+            fun __rec_adj(): Any = { v1 : Any ->
+               { v2 : Any ->
+                 when {
+                  (v1 == 0) -> {
+                    val dt = v2;
+                    PS.Data.Maybe.Module.Just.app(dt);
+                  }
+                  (v2 is PS.Data.Date.Module._Type_Date.Date) -> {
+                    val i = v1;
+                    val y = v2.value0;
+                    val m = v2.value1;
+                    val d = v2.value2;
+                    object   {
+                        val j = PS.Data.Semiring.Module.add
+                                  .app(PS.Data.Semiring.Module.semiringInt)
+                                  .app(i)
+                                  .app(PS.Data.Enum.Module.fromEnum
                                          .app(
-                                           PS.Data.Date.Component.Module.enumMonth
+                                           PS.Data.Date.Component.Module.boundedEnumDay
                                          )
-                                         .app(m));
-                              }
-                              else -> {
-                                m;
-                              }
-                            });
-                          val hi = PS.Data.Ord.Module.greaterThan
-                                     .app(PS.Data.Ord.Module.ordInt)
+                                         .app(d));
+                        val low = PS.Data.Ord.Module.lessThan
+                                    .app(PS.Data.Ord.Module.ordInt)
+                                    .app(j)
+                                    .app(1);
+                        val l = PS.Data.Date.Module.lastDayOfMonth.app(y)
+                                  .app(when {
+                            (low == true) -> {
+                              PS.Data.Maybe.Module.fromMaybe
+                                .app(PS.Data.Date.Component.Module.December)
+                                .app(PS.Data.Enum.Module.pred
+                                       .app(
+                                         PS.Data.Date.Component.Module.enumMonth
+                                       )
+                                       .app(m));
+                            }
+                            else -> {
+                              m;
+                            }
+                          });
+                        val hi = PS.Data.Ord.Module.greaterThan
+                                   .app(PS.Data.Ord.Module.ordInt)
+                                   .app(j)
+                                   .app(PS.Data.Enum.Module.fromEnum
+                                          .app(
+                                            PS.Data.Date.Component.Module.boundedEnumDay
+                                          )
+                                          .app(l));
+                        val i_tick = when {
+                          (low as Boolean) -> {
+                            j;
+                          }
+                          (hi as Boolean) -> {
+                            PS.Data.Ring.Module.sub
+                              .app(PS.Data.Ring.Module.ringInt)
+                              .app(PS.Data.Ring.Module.sub
+                                     .app(PS.Data.Ring.Module.ringInt)
                                      .app(j)
                                      .app(PS.Data.Enum.Module.fromEnum
                                             .app(
                                               PS.Data.Date.Component.Module.boundedEnumDay
                                             )
-                                            .app(l));
-                          val i_tick = when {
-                            (low as Boolean) -> {
-                              j;
-                            }
-                            (hi as Boolean) -> {
-                              PS.Data.Ring.Module.sub
-                                .app(PS.Data.Ring.Module.ringInt)
-                                .app(PS.Data.Ring.Module.sub
-                                       .app(PS.Data.Ring.Module.ringInt)
-                                       .app(j)
-                                       .app(PS.Data.Enum.Module.fromEnum
-                                              .app(
-                                                PS.Data.Date.Component.Module.boundedEnumDay
-                                              )
-                                              .app(l)))
-                                .app(1);
-                            }
-                            (PS.Data.Boolean.Module.otherwise as Boolean) -> {
-                              0;
-                            }
-                            else -> (error("Error in Pattern Match") as Any)
-                          };
-                          val dt_tick = when {
-                            (low as Boolean) -> {
-                              PS.Control.Bind.Module.bindFlipped
-                                .app(PS.Data.Maybe.Module.bindMaybe)
-                                .app(PS.Data.Enum.Module.pred
-                                       .app(PS.Data.Date.Module.enumDate))
-                                .app(PS.Data.Functor.Module.map
-                                       .app(PS.Data.Maybe.Module.functorMaybe)
-                                       .app(PS.Data.Date.Module.Date.app(y)
-                                              .app(m))
-                                       .app(PS.Data.Enum.Module.toEnum
-                                              .app(
-                                                PS.Data.Date.Component.Module.boundedEnumDay
-                                              )
-                                              .app(1)));
-                            }
-                            (hi as Boolean) -> {
-                              PS.Data.Enum.Module.succ
-                                .app(PS.Data.Date.Module.enumDate)
-                                .app(PS.Data.Date.Module.Date.app(y).app(m)
-                                       .app(l));
-                            }
-                            (PS.Data.Boolean.Module.otherwise as Boolean) -> {
-                              PS.Data.Functor.Module.map
-                                .app(PS.Data.Maybe.Module.functorMaybe)
-                                .app(PS.Data.Date.Module.Date.app(y).app(m))
-                                .app(PS.Data.Enum.Module.toEnum
-                                       .app(
-                                         PS.Data.Date.Component.Module.boundedEnumDay
-                                       )
-                                       .app(j));
-                            }
-                            else -> (error("Error in Pattern Match") as Any)
-                          };
-                        }
-                        .run({
-                          val j = this.j;
-                          val low = this.low;
-                          val l = this.l;
-                          val hi = this.hi;
-                          val i_tick = this.i_tick;
-                          val dt_tick = this.dt_tick;
-                          PS.Control.Bind.Module.bindFlipped
-                            .app(PS.Data.Maybe.Module.bindMaybe)
-                            .app(__rec_adj().app(i_tick))
-                            .app(dt_tick);
-                        });
-                    }
-                    else -> (error("Error in Pattern Match") as Any)
+                                            .app(l)))
+                              .app(1);
+                          }
+                          (PS.Data.Boolean.Module.otherwise as Boolean) -> {
+                            0;
+                          }
+                          else -> (error("Error in Pattern Match") as Any)
+                        };
+                        val dt_tick = when {
+                          (low as Boolean) -> {
+                            PS.Control.Bind.Module.bindFlipped
+                              .app(PS.Data.Maybe.Module.bindMaybe)
+                              .app(PS.Data.Enum.Module.pred
+                                     .app(PS.Data.Date.Module.enumDate))
+                              .app(PS.Data.Functor.Module.map
+                                     .app(PS.Data.Maybe.Module.functorMaybe)
+                                     .app(PS.Data.Date.Module.Date.app(y).app(m)
+                                     )
+                                     .app(PS.Data.Enum.Module.toEnum
+                                            .app(
+                                              PS.Data.Date.Component.Module.boundedEnumDay
+                                            )
+                                            .app(1)));
+                          }
+                          (hi as Boolean) -> {
+                            PS.Data.Enum.Module.succ
+                              .app(PS.Data.Date.Module.enumDate)
+                              .app(PS.Data.Date.Module.Date.app(y).app(m).app(l)
+                            );
+                          }
+                          (PS.Data.Boolean.Module.otherwise as Boolean) -> {
+                            PS.Data.Functor.Module.map
+                              .app(PS.Data.Maybe.Module.functorMaybe)
+                              .app(PS.Data.Date.Module.Date.app(y).app(m))
+                              .app(PS.Data.Enum.Module.toEnum
+                                     .app(
+                                       PS.Data.Date.Component.Module.boundedEnumDay
+                                     )
+                                     .app(j));
+                          }
+                          else -> (error("Error in Pattern Match") as Any)
+                        };
+                      }
+                      .run({
+                        val j = this.j;
+                        val low = this.low;
+                        val l = this.l;
+                        val hi = this.hi;
+                        val i_tick = this.i_tick;
+                        val dt_tick = this.dt_tick;
+                        PS.Control.Bind.Module.bindFlipped
+                          .app(PS.Data.Maybe.Module.bindMaybe)
+                          .app(__rec_adj().app(i_tick))
+                          .app(dt_tick);
+                      });
                   }
+                  else -> (error("Error in Pattern Match") as Any)
                 }
-              };
-            }
-            .run({
-              val adj = this.adj;
-              PS.Control.Bind.Module.bind.app(PS.Data.Maybe.Module.bindMaybe)
-                .app(PS.Data.Int.Module.fromNumber.app(n))
-                .app(PS.Data.Function.Module.flip.app(adj).app(date1));
-            });
-        }
-      }
-    }
+              }
+            };
+          }
+          .run({
+            val adj = this.adj;
+            PS.Control.Bind.Module.bind.app(PS.Data.Maybe.Module.bindMaybe)
+              .app(PS.Data.Int.Module.fromNumber.app(n))
+              .app(PS.Data.Function.Module.flip.app(adj).app(date1));
+          });}
   };
 }

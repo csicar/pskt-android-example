@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Array.ST
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val empty = Foreign.Data.Array.ST.empty;
   val shiftImpl = Foreign.Data.Array.ST.shiftImpl;
@@ -35,22 +37,12 @@ object Module  {
   @JvmField
   val withArray = { f : Any ->
      { xs : Any ->
-       PS.Control.Bind.Module.bind
-         .app(PS.Control.Monad.ST.Internal.Module.bindST)
-         .app(PS.Data.Array.ST.Module.thaw.app(xs))
-         .app({ v : Any ->
-           when {
-            else -> {
-              val result = v;
-              PS.Control.Bind.Module.bind
-                .app(PS.Control.Monad.ST.Internal.Module.bindST)
-                .app(f.app(result))
-                .app({ v1 : Any ->
-                   PS.Data.Array.ST.Module.unsafeFreeze.app(result)
-                });
-            }
-          }
-        })
+       /* defer **/{
+        val v = PS.Data.Array.ST.Module.thaw.app(xs).appRun();
+        val result = v;
+        val v1 = f.app(result).appRun();
+        PS.Data.Array.ST.Module.unsafeFreeze.app(result).appRun();
+      }
     }
   };
   @JvmField
@@ -121,28 +113,23 @@ object Module  {
   val modify = { i : Any ->
      { f : Any ->
        { xs : Any ->
-         PS.Control.Bind.Module.bind
-           .app(PS.Control.Monad.ST.Internal.Module.bindST)
-           .app(PS.Data.Array.ST.Module.peek.app(i).app(xs))
-           .app({ v : Any ->
-             when {
-              else -> {
-                val entry = v;
-                when {
-                  (entry is PS.Data.Maybe.Module._Type_Maybe.Just) -> {
-                    val x = entry.value0;
-                    PS.Data.Array.ST.Module.poke.app(i).app(f.app(x)).app(xs);
-                  }
-                  (entry is PS.Data.Maybe.Module._Type_Maybe.Nothing) -> {
-                    PS.Control.Applicative.Module.pure
-                      .app(PS.Control.Monad.ST.Internal.Module.applicativeST)
-                      .app(false);
-                  }
-                  else -> (error("Error in Pattern Match") as Any)
-                };
+         /* defer **/{
+          val v = PS.Data.Array.ST.Module.peek.app(i).app(xs).appRun();
+          val entry = v;
+          when {
+              (entry is PS.Data.Maybe.Module._Type_Maybe.Just) -> {
+                val x = entry.value0;
+                PS.Data.Array.ST.Module.poke.app(i).app(f.app(x)).app(xs);
               }
+              (entry is PS.Data.Maybe.Module._Type_Maybe.Nothing) -> {
+                PS.Control.Applicative.Module.pure
+                  .app(PS.Control.Monad.ST.Internal.Module.applicativeST)
+                  .app(false);
+              }
+              else -> (error("Error in Pattern Match") as Any)
             }
-          })
+            .appRun();
+        }
       }
     }
   };

@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Comonad.Env.Trans
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val EnvT = { x : Any -> x};
   @JvmField
@@ -19,17 +21,12 @@ object Module  {
       }
     }
   };
-  @JvmField val runEnvT = { v : Any -> when { else -> { val x = v; x; } }};
+  @JvmField val runEnvT = { v : Any ->val x = v; x;};
   @JvmField
   val newtypeEnvT = PS.Data.Newtype.Module.Newtype
                       .app({ n : Any ->
-                           when {
-                            else -> {
-                              val a = n;
-                              a;
-                            }
-                          }
-                        })
+                          val a = n;
+                            a;})
                       .app(PS.Control.Comonad.Env.Trans.Module.EnvT);
   @JvmField
   val mapEnvT = { f : Any ->

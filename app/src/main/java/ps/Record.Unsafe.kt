@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Record.Unsafe
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val unsafeHas = Foreign.Record.Unsafe.unsafeHas;
   val unsafeGet = Foreign.Record.Unsafe.unsafeGet;

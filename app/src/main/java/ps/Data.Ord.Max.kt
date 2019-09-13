@@ -1,48 +1,35 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Ord.Max
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Max = { x : Any -> x};
   @JvmField
   val showMax = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val a = v;
-            (("(Max " as String) + (((PS.Data.Show.Module.show.app(dictShow)
-                                        .app(a
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val a = v;
+          (("(Max " as String) + (((PS.Data.Show.Module.show.app(dictShow)
+                                      .app(a
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField
   val semigroupMax = { dictOrd : Any ->
      PS.Data.Semigroup.Module.Semigroup
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val x = v;
-              val y = v1;
-              PS.Data.Ord.Max.Module.Max
-                .app(PS.Data.Ord.Module.max.app(dictOrd).app(x).app(y));
-            }
-          }
-        }
+          val x = v;
+            val y = v1;
+            PS.Data.Ord.Max.Module.Max
+              .app(PS.Data.Ord.Module.max.app(dictOrd).app(x).app(y));}
       })
   };
   @JvmField
   val newtypeMax = PS.Data.Newtype.Module.Newtype
                      .app({ n : Any ->
-                          when {
-                           else -> {
-                             val a = n;
-                             a;
-                           }
-                         }
-                       })
+                         val a = n;
+                           a;})
                      .app(PS.Data.Ord.Max.Module.Max);
   @JvmField
   val monoidMax = { dictBounded : Any ->
@@ -64,14 +51,9 @@ object Module  {
          })
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val x = v;
-              val y = v1;
-              PS.Data.Ord.Module.compare.app(dictOrd).app(x).app(y);
-            }
-          }
-        }
+          val x = v;
+            val y = v1;
+            PS.Data.Ord.Module.compare.app(dictOrd).app(x).app(y);}
       })
   };
 }

@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Enum
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val toCharCode = Foreign.Data.Enum.toCharCode;
   val fromCharCode = Foreign.Data.Enum.fromCharCode;
@@ -44,28 +46,18 @@ object Module  {
   @JvmField
   val showCardinality = PS.Data.Show.Module.Show
                           .app({ v : Any ->
-       when {
-        else -> {
-          val n = v;
-          (("(Cardinality " as String) + (((PS.Data.Show.Module.show
-                                              .app(PS.Data.Show.Module.showInt)
-                                              .app(n
-          ) as String) + (")" as String)) as String));
-        }
-      }
-    });
+      val n = v;
+        (("(Cardinality " as String) + (((PS.Data.Show.Module.show
+                                            .app(PS.Data.Show.Module.showInt)
+                                            .app(n
+        ) as String) + (")" as String)) as String));});
   @JvmField val pred = { dict : Any -> (dict as Map<String, Any>)["pred"]!!};
   @JvmField val ordCardinality = PS.Data.Ord.Module.ordInt;
   @JvmField
   val newtypeCardinality = PS.Data.Newtype.Module.Newtype
                              .app({ n : Any ->
-                                  when {
-                                   else -> {
-                                     val a = n;
-                                     a;
-                                   }
-                                 }
-                               })
+                                 val a = n;
+                                   a;})
                              .app(PS.Data.Enum.Module.Cardinality);
   @JvmField
   val fromEnum = { dict : Any ->

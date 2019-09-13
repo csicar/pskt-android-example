@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Comonad.Traced
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField
   val traced = PS.Control.Semigroupoid.Module.composeFlipped
@@ -9,13 +11,7 @@ object Module  {
                  .app(PS.Control.Comonad.Traced.Trans.Module.TracedT);
   @JvmField
   val runTraced = { v : Any ->
-     when {
-      else -> {
-        val t = v;
-        PS.Data.Newtype.Module.unwrap
-          .app(PS.Data.Identity.Module.newtypeIdentity)
-          .app(t);
-      }
-    }
-  };
+    val t = v;
+      PS.Data.Newtype.Module.unwrap.app(PS.Data.Identity.Module.newtypeIdentity)
+        .app(t);};
 }

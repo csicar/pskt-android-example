@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Bifunctor
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Bifunctor = { bimap : Any -> mapOf(("bimap" to bimap))};
   @JvmField val bimap = { dict : Any -> (dict as Map<String, Any>)["bimap"]!!};

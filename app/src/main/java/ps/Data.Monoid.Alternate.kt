@@ -1,37 +1,28 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Monoid.Alternate
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Alternate = { x : Any -> x};
   @JvmField
   val showAlternate = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val a = v;
-            (("(Alternate " as String) + (((PS.Data.Show.Module.show
-                                              .app(dictShow)
-                                              .app(a
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val a = v;
+          (("(Alternate " as String) + (((PS.Data.Show.Module.show.app(dictShow)
+                                            .app(a
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField
   val semigroupAlternate = { dictAlt : Any ->
      PS.Data.Semigroup.Module.Semigroup
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val a = v;
-              val b = v1;
-              PS.Data.Monoid.Alternate.Module.Alternate
-                .app(PS.Control.Alt.Module.alt.app(dictAlt).app(a).app(b));
-            }
-          }
-        }
+          val a = v;
+            val b = v1;
+            PS.Data.Monoid.Alternate.Module.Alternate
+              .app(PS.Control.Alt.Module.alt.app(dictAlt).app(a).app(b));}
       })
   };
   @JvmField val plusAlternate = { dictPlus : Any -> dictPlus};

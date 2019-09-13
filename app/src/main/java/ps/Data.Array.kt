@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Array
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val fromFoldableImpl = Foreign.Data.Array.fromFoldableImpl;
   val range = Foreign.Data.Array.range;
@@ -202,72 +204,51 @@ object Module  {
   val nubByEq = { eq : Any ->
      { xs : Any ->
        PS.Control.Monad.ST.Internal.Module.run
-         .app(PS.Control.Bind.Module.bind
-                .app(PS.Control.Monad.ST.Internal.Module.bindST)
-                .app(PS.Data.Array.ST.Module.empty)
-                .app({ v : Any ->
-             when {
-              else -> {
-                val arr = v;
-                PS.Control.Bind.Module.discard
-                  .app(PS.Control.Bind.Module.discardUnit)
-                  .app(PS.Control.Monad.ST.Internal.Module.bindST)
-                  .app(PS.Control.Monad.ST.Internal.Module.foreach.app(xs)
-                         .app({ x : Any ->
-                         PS.Control.Bind.Module.bind
-                           .app(PS.Control.Monad.ST.Internal.Module.bindST)
-                           .app(PS.Data.Functor.Module.map
-                                  .app(
-                                    PS.Control.Monad.ST.Internal.Module.functorST
-                                  )
-                                  .app(PS.Control.Semigroupoid.Module.compose
-                                         .app(
-                                           PS.Control.Semigroupoid.Module.semigroupoidFn
-                                         )
-                                         .app(PS.Data.HeytingAlgebra.Module.not
-                                                .app(
+         .app(/* defer **/{
+          val v = PS.Data.Array.ST.Module.empty.appRun();
+          val arr = v;
+          PS.Control.Monad.ST.Internal.Module.foreach.app(xs)
+            .app({ x : Any ->
+                 /* defer **/{
+                  val v1 = PS.Data.Functor.Module.map
+                             .app(PS.Control.Monad.ST.Internal.Module.functorST)
+                             .app(PS.Control.Semigroupoid.Module.compose
+                                    .app(
+                                      PS.Control.Semigroupoid.Module.semigroupoidFn
+                                    )
+                                    .app(PS.Data.HeytingAlgebra.Module.not
+                                           .app(
+                                        PS.Data.HeytingAlgebra.Module.heytingAlgebraBoolean
+                                      ))
+                                    .app(PS.Data.Foldable.Module.any
+                                           .app(
+                                             PS.Data.Foldable.Module.foldableArray
+                                           )
+                                           .app(
                                              PS.Data.HeytingAlgebra.Module.heytingAlgebraBoolean
-                                           ))
-                                         .app(PS.Data.Foldable.Module.any
-                                                .app(
-                                                  PS.Data.Foldable.Module.foldableArray
-                                                )
-                                                .app(
-                                                  PS.Data.HeytingAlgebra.Module.heytingAlgebraBoolean
-                                                )
-                                                .app({ v1 : Any ->
-                                           eq.app(v1).app(x)
-                                        })))
-                                  .app(PS.Data.Array.ST.Module.unsafeFreeze
-                                         .app(arr)))
-                           .app({ v1 : Any ->
-                             when {
-                              else -> {
-                                val e = v1;
-                                PS.Data.Function.Module.apply
-                                  .app(PS.Control.Applicative.Module._when
-                                         .app(
-                                           PS.Control.Monad.ST.Internal.Module.applicativeST
-                                         )
-                                         .app(e))
-                                  .app(PS.Data.Function.Module.apply
-                                         .app(PS.Data.Functor.Module.void
-                                                .app(
-                                             PS.Control.Monad.ST.Internal.Module.functorST
-                                           ))
-                                         .app(PS.Data.Array.ST.Module.push
-                                                .app(x)
-                                                .app(arr)));
-                              }
-                            }
-                          })
-                      }))
-                  .app({ _ : Any ->
-                     PS.Data.Array.ST.Module.unsafeFreeze.app(arr)
-                  });
-              }
-            }
-          }))
+                                           )
+                                           .app({ v1 : Any ->
+                                      eq.app(v1).app(x)
+                                   })))
+                             .app(PS.Data.Array.ST.Module.unsafeFreeze.app(arr))
+                             .appRun();
+                  val e = v1;
+                  PS.Data.Function.Module.apply
+                    .app(PS.Control.Applicative.Module._when
+                           .app(
+                             PS.Control.Monad.ST.Internal.Module.applicativeST)
+                           .app(e))
+                    .app(PS.Data.Function.Module.apply
+                           .app(PS.Data.Functor.Module.void
+                                  .app(
+                               PS.Control.Monad.ST.Internal.Module.functorST))
+                           .app(PS.Data.Array.ST.Module.push.app(x).app(arr)))
+                    .appRun();
+                }
+              })
+            .appRun();
+          PS.Data.Array.ST.Module.unsafeFreeze.app(arr).appRun();
+        })
     }
   };
   @JvmField
@@ -482,123 +463,52 @@ object Module  {
   @JvmField
   val unzip = { xs : Any ->
      PS.Control.Monad.ST.Internal.Module.run
-       .app(PS.Control.Bind.Module.bind
-              .app(PS.Control.Monad.ST.Internal.Module.bindST)
-              .app(PS.Data.Array.ST.Module.empty)
-              .app({ v : Any ->
-           when {
-            else -> {
-              val fsts = v;
-              PS.Control.Bind.Module.bind
-                .app(PS.Control.Monad.ST.Internal.Module.bindST)
-                .app(PS.Data.Array.ST.Module.empty)
-                .app({ v1 : Any ->
-                   when {
-                    else -> {
-                      val snds = v1;
-                      PS.Control.Bind.Module.bind
-                        .app(PS.Control.Monad.ST.Internal.Module.bindST)
-                        .app(PS.Data.Array.ST.Iterator.Module.iterator
-                               .app({ v2 : Any ->
-                               PS.Data.Array.Module.index.app(xs).app(v2)
-                            }))
-                        .app({ v2 : Any ->
-                           when {
-                            else -> {
-                              val iter = v2;
-                              PS.Control.Bind.Module.discard
-                                .app(PS.Control.Bind.Module.discardUnit)
-                                .app(PS.Control.Monad.ST.Internal.Module.bindST)
-                                .app(PS.Data.Array.ST.Iterator.Module.iterate
-                                       .app(iter)
-                                       .app({ v3 : Any ->
-                                       when {
-                                        (v3 is PS.Data.Tuple.Module._Type_Tuple
-                                                 .Tuple) -> {
-                                          val fst = v3.value0;
-                                          val snd = v3.value1;
-                                          PS.Control.Bind.Module.discard
-                                            .app(
-                                              PS.Control.Bind.Module.discardUnit
-                                            )
-                                            .app(
-                                              PS.Control.Monad.ST.Internal.Module.bindST
-                                            )
-                                            .app(PS.Data.Function.Module.apply
-                                                   .app(
-                                                     PS.Data.Functor.Module.void
-                                                       .app(
-                                                       PS.Control.Monad.ST.Internal.Module.functorST
-                                                     ))
-                                                   .app(
-                                                PS.Data.Array.ST.Module.push
-                                                  .app(fst)
-                                                  .app(fsts)))
-                                            .app({ _ : Any ->
-                                               PS.Data.Function.Module.apply
-                                                 .app(
-                                                   PS.Data.Functor.Module.void
-                                                     .app(
-                                                     PS.Control.Monad.ST.Internal.Module.functorST
-                                                   ))
-                                                 .app(
-                                                PS.Data.Array.ST.Module.push
-                                                  .app(snd)
-                                                  .app(snds))
-                                            });
-                                        }
-                                        else -> (error("Error in Pattern Match"
-                                        ) as Any)
-                                      }
-                                    }))
-                                .app({ _ : Any ->
-                                   PS.Control.Bind.Module.bind
-                                     .app(
-                                       PS.Control.Monad.ST.Internal.Module.bindST
-                                     )
-                                     .app(PS.Data.Array.ST.Module.unsafeFreeze
-                                            .app(fsts))
-                                     .app({ v3 : Any ->
-                                       when {
-                                        else -> {
-                                          val fsts_tick = v3;
-                                          PS.Control.Bind.Module.bind
-                                            .app(
-                                              PS.Control.Monad.ST.Internal.Module.bindST
-                                            )
-                                            .app(
-                                              PS.Data.Array.ST.Module.unsafeFreeze
-                                                .app(snds))
-                                            .app({ v4 : Any ->
-                                               when {
-                                                else -> {
-                                                  val snds_tick = v4;
-                                                  PS.Data.Function.Module.apply
-                                                    .app(
-                                                      PS.Control.Applicative.Module.pure
-                                                        .app(
-                                                        PS.Control.Monad.ST.Internal.Module.applicativeST
-                                                      ))
-                                                    .app(
-                                                    PS.Data.Tuple.Module.Tuple
-                                                      .app(fsts_tick)
-                                                      .app(snds_tick));
-                                                }
-                                              }
-                                            });
-                                        }
-                                      }
-                                    })
-                                });
-                            }
-                          }
-                        });
-                    }
-                  }
-                });
-            }
-          }
-        }))
+       .app(/* defer **/{
+        val v = PS.Data.Array.ST.Module.empty.appRun();
+        val fsts = v;
+        val v1 = PS.Data.Array.ST.Module.empty.appRun();
+        val snds = v1;
+        val v2 = PS.Data.Array.ST.Iterator.Module.iterator
+                   .app({ v2 : Any ->
+                        PS.Data.Array.Module.index.app(xs).app(v2)
+                     })
+                   .appRun();
+        val iter = v2;
+        PS.Data.Array.ST.Iterator.Module.iterate.app(iter)
+          .app({ v3 : Any ->
+               when {
+                (v3 is PS.Data.Tuple.Module._Type_Tuple.Tuple) -> {
+                  val fst = v3.value0;
+                  val snd = v3.value1;
+                  /* defer **/{
+                    PS.Data.Function.Module.apply
+                      .app(PS.Data.Functor.Module.void
+                             .app(PS.Control.Monad.ST.Internal.Module.functorST)
+                      )
+                      .app(PS.Data.Array.ST.Module.push.app(fst).app(fsts))
+                      .appRun();
+                    PS.Data.Function.Module.apply
+                      .app(PS.Data.Functor.Module.void
+                             .app(PS.Control.Monad.ST.Internal.Module.functorST)
+                      )
+                      .app(PS.Data.Array.ST.Module.push.app(snd).app(snds))
+                      .appRun();
+                  };
+                }
+                else -> (error("Error in Pattern Match") as Any)
+              }
+            })
+          .appRun();
+        val v3 = PS.Data.Array.ST.Module.unsafeFreeze.app(fsts).appRun();
+        val fsts_tick = v3;
+        val v4 = PS.Data.Array.ST.Module.unsafeFreeze.app(snds).appRun();
+        val snds_tick = v4;
+        PS.Data.Function.Module.apply
+          .app(PS.Control.Applicative.Module.pure
+                 .app(PS.Control.Monad.ST.Internal.Module.applicativeST))
+          .app(PS.Data.Tuple.Module.Tuple.app(fsts_tick).app(snds_tick))
+          .appRun();
+      })
   };
   @JvmField val head = { xs : Any -> PS.Data.Array.Module.index.app(xs).app(0)};
   @JvmField
@@ -641,115 +551,85 @@ object Module  {
                                   .app(PS.Data.Ord.Module.ordInt)
                                   .app(PS.Data.Tuple.Module.fst))
                            .app(PS.Control.Monad.ST.Internal.Module.run
-                                  .app(PS.Control.Bind.Module.bind
-                                         .app(
-                                           PS.Control.Monad.ST.Internal.Module.bindST
-                                         )
-                                         .app(PS.Data.Function.Module.apply
-                                                .app(
-                                                  PS.Data.Array.ST.Module.unsafeThaw
-                                                )
-                                                .app(
-                                             PS.Data.Array.Module.singleton
-                                               .app(x)))
-                                         .app({ v1 : Any ->
-                             when {
-                              else -> {
-                                val result = v1;
-                                PS.Control.Bind.Module.discard
-                                  .app(PS.Control.Bind.Module.discardUnit)
-                                  .app(
-                                    PS.Control.Monad.ST.Internal.Module.bindST)
-                                  .app(
-                                    PS.Control.Monad.ST.Internal.Module.foreach
-                                      .app(indexedAndSorted)
-                                      .app({ v2 : Any ->
-                                         when {
-                                          (v2 is PS.Data.Tuple.Module._Type_Tuple
-                                                   .Tuple) -> {
-                                            val pair = v2;
-                                            val i = v2.value0;
-                                            val x_tick = v2.value1;
-                                            PS.Control.Bind.Module.bind
-                                              .app(
-                                                PS.Control.Monad.ST.Internal.Module.bindST
-                                              )
-                                              .app(PS.Data.Functor.Module.map
+                                  .app(/* defer **/{
+                          val v1 = PS.Data.Function.Module.apply
+                                     .app(PS.Data.Array.ST.Module.unsafeThaw)
+                                     .app(PS.Data.Array.Module.singleton.app(x))
+                                     .appRun();
+                          val result = v1;
+                          PS.Control.Monad.ST.Internal.Module.foreach
+                            .app(indexedAndSorted)
+                            .app({ v2 : Any ->
+                                 when {
+                                  (v2 is PS.Data.Tuple.Module._Type_Tuple
+                                           .Tuple) -> {
+                                    val pair = v2;
+                                    val i = v2.value0;
+                                    val x_tick = v2.value1;
+                                    /* defer **/{
+                                      val v3 = PS.Data.Functor.Module.map
+                                                 .app(
+                                                   PS.Control.Monad.ST.Internal.Module.functorST
+                                                 )
+                                                 .app(
+                                                   PS.Control.Semigroupoid.Module.compose
                                                      .app(
-                                                       PS.Control.Monad.ST.Internal.Module.functorST
+                                                       PS.Control.Semigroupoid.Module.semigroupoidFn
                                                      )
                                                      .app(
-                                                       PS.Control.Semigroupoid.Module.compose
-                                                         .app(
-                                                           PS.Control.Semigroupoid.Module.semigroupoidFn
-                                                         )
-                                                         .app(
-                                                           PS.Data.Tuple.Module.snd
-                                                         )
-                                                         .app(
-                                                         PS.Partial.Unsafe.Module.unsafePartial
-                                                           .app(
-                                                           { dictPartial : Any ->
-                                                              PS.Control.Semigroupoid.Module.compose
-                                                                .app(
-                                                                  PS.Control.Semigroupoid.Module.semigroupoidFn
-                                                                )
-                                                                .app(
-                                                                  PS.Data.Maybe.Module.fromJust
-                                                                    .app(Unit))
-                                                                .app(
-                                                               PS.Data.Array.Module.last
-                                                             )
-                                                           })))
+                                                       PS.Data.Tuple.Module.snd)
                                                      .app(
-                                                  PS.Data.Array.ST.Module.unsafeFreeze
-                                                    .app(result)))
-                                              .app({ v3 : Any ->
-                                                 when {
-                                                  else -> {
-                                                    val lst = v3;
-                                                    PS.Data.Function.Module.apply
-                                                      .app(
-                                                        PS.Control.Applicative.Module._when
-                                                          .app(
-                                                            PS.Control.Monad.ST.Internal.Module.applicativeST
-                                                          )
-                                                          .app(
-                                                          PS.Data.Eq.Module.notEq
+                                                     PS.Partial.Unsafe.Module.unsafePartial
+                                                       .app(
+                                                       { dictPartial : Any ->
+                                                          PS.Control.Semigroupoid.Module.compose
                                                             .app(
-                                                              PS.Data.Ordering.Module.eqOrdering
+                                                              PS.Control.Semigroupoid.Module.semigroupoidFn
                                                             )
-                                                            .app(comp.app(lst)
-                                                                   .app(x_tick))
                                                             .app(
-                                                            PS.Data.Ordering.Module.EQ
-                                                          )))
+                                                              PS.Data.Maybe.Module.fromJust
+                                                                .app(Unit))
+                                                            .app(
+                                                           PS.Data.Array.Module.last
+                                                         )
+                                                       })))
+                                                 .app(
+                                                   PS.Data.Array.ST.Module.unsafeFreeze
+                                                     .app(result))
+                                                 .appRun();
+                                      val lst = v3;
+                                      PS.Data.Function.Module.apply
+                                        .app(PS.Control.Applicative.Module._when
+                                               .app(
+                                                 PS.Control.Monad.ST.Internal.Module.applicativeST
+                                               )
+                                               .app(PS.Data.Eq.Module.notEq
                                                       .app(
-                                                      PS.Data.Function.Module.apply
-                                                        .app(
-                                                          PS.Data.Functor.Module.void
-                                                            .app(
-                                                            PS.Control.Monad.ST.Internal.Module.functorST
-                                                          ))
-                                                        .app(
-                                                        PS.Data.Array.ST.Module.push
-                                                          .app(pair)
-                                                          .app(result)));
-                                                  }
-                                                }
-                                              });
-                                          }
-                                          else -> (error(
-                                            "Error in Pattern Match") as Any)
-                                        }
-                                      }))
-                                  .app({ _ : Any ->
-                                     PS.Data.Array.ST.Module.unsafeFreeze
-                                       .app(result)
-                                  });
-                              }
-                            }
-                          }))));
+                                                        PS.Data.Ordering.Module.eqOrdering
+                                                      )
+                                                      .app(comp.app(lst)
+                                                             .app(x_tick))
+                                                      .app(
+                                              PS.Data.Ordering.Module.EQ)))
+                                        .app(PS.Data.Function.Module.apply
+                                               .app(PS.Data.Functor.Module.void
+                                                      .app(
+                                                   PS.Control.Monad.ST.Internal.Module.functorST
+                                                 ))
+                                               .app(PS.Data.Array.ST.Module.push
+                                                      .app(pair)
+                                                      .app(result)))
+                                        .appRun();
+                                    };
+                                  }
+                                  else -> (error("Error in Pattern Match"
+                                  ) as Any)
+                                }
+                              })
+                            .appRun();
+                          PS.Data.Array.ST.Module.unsafeFreeze.app(result)
+                            .appRun();
+                        })));
                 }
                 else -> (error("Error in Pattern Match") as Any)
               };
@@ -765,97 +645,40 @@ object Module  {
   val groupBy = { op : Any ->
      { xs : Any ->
        PS.Control.Monad.ST.Internal.Module.run
-         .app(PS.Control.Bind.Module.bind
-                .app(PS.Control.Monad.ST.Internal.Module.bindST)
-                .app(PS.Data.Array.ST.Module.empty)
-                .app({ v : Any ->
-             when {
-              else -> {
-                val result = v;
-                PS.Control.Bind.Module.bind
-                  .app(PS.Control.Monad.ST.Internal.Module.bindST)
-                  .app(PS.Data.Array.ST.Iterator.Module.iterator
-                         .app({ v1 : Any ->
-                         PS.Data.Array.Module.index.app(xs).app(v1)
-                      }))
-                  .app({ v1 : Any ->
-                     when {
-                      else -> {
-                        val iter = v1;
-                        PS.Control.Bind.Module.discard
-                          .app(PS.Control.Bind.Module.discardUnit)
-                          .app(PS.Control.Monad.ST.Internal.Module.bindST)
-                          .app(PS.Data.Array.ST.Iterator.Module.iterate
-                                 .app(iter)
-                                 .app({ x : Any ->
-                                 PS.Data.Functor.Module.void
-                                   .app(
-                                     PS.Control.Monad.ST.Internal.Module.functorST
-                                   )
-                                   .app(PS.Control.Bind.Module.bind
-                                          .app(
-                                            PS.Control.Monad.ST.Internal.Module.bindST
-                                          )
-                                          .app(PS.Data.Array.ST.Module.empty)
-                                          .app({ v2 : Any ->
-                                       when {
-                                        else -> {
-                                          val sub = v2;
-                                          PS.Control.Bind.Module.bind
-                                            .app(
-                                              PS.Control.Monad.ST.Internal.Module.bindST
-                                            )
-                                            .app(PS.Data.Array.ST.Module.push
-                                                   .app(x)
-                                                   .app(sub))
-                                            .app({ v3 : Any ->
-                                               PS.Control.Bind.Module.discard
-                                                 .app(
-                                                   PS.Control.Bind.Module.discardUnit
-                                                 )
-                                                 .app(
-                                                   PS.Control.Monad.ST.Internal.Module.bindST
-                                                 )
-                                                 .app(
-                                                   PS.Data.Array.ST.Iterator.Module.pushWhile
-                                                     .app(op.app(x))
-                                                     .app(iter)
-                                                     .app(sub))
-                                                 .app({ _ : Any ->
-                                                   PS.Control.Bind.Module.bind
-                                                     .app(
-                                                       PS.Control.Monad.ST.Internal.Module.bindST
-                                                     )
-                                                     .app(
-                                                       PS.Data.Array.ST.Module.unsafeFreeze
-                                                         .app(sub))
-                                                     .app({ v4 : Any ->
-                                                       when {
-                                                        else -> {
-                                                          val grp = v4;
-                                                          PS.Data.Array.ST.Module.push
-                                                            .app(
-                                                              PS.Unsafe.Coerce.Module.unsafeCoerce
-                                                                .app(grp))
-                                                            .app(result);
-                                                        }
-                                                      }
-                                                    })
-                                                })
-                                            });
-                                        }
-                                      }
-                                    }))
-                              }))
-                          .app({ _ : Any ->
-                             PS.Data.Array.ST.Module.unsafeFreeze.app(result)
-                          });
-                      }
-                    }
-                  });
-              }
-            }
-          }))
+         .app(/* defer **/{
+          val v = PS.Data.Array.ST.Module.empty.appRun();
+          val result = v;
+          val v1 = PS.Data.Array.ST.Iterator.Module.iterator
+                     .app({ v1 : Any ->
+                          PS.Data.Array.Module.index.app(xs).app(v1)
+                       })
+                     .appRun();
+          val iter = v1;
+          PS.Data.Array.ST.Iterator.Module.iterate.app(iter)
+            .app({ x : Any ->
+                 PS.Data.Functor.Module.void
+                   .app(PS.Control.Monad.ST.Internal.Module.functorST)
+                   .app(/* defer **/{
+                    val v2 = PS.Data.Array.ST.Module.empty.appRun();
+                    val sub = v2;
+                    val v3 = PS.Data.Array.ST.Module.push.app(x).app(sub)
+                               .appRun();
+                    PS.Data.Array.ST.Iterator.Module.pushWhile.app(op.app(x))
+                      .app(iter)
+                      .app(sub)
+                      .appRun();
+                    val v4 = PS.Data.Array.ST.Module.unsafeFreeze.app(sub)
+                               .appRun();
+                    val grp = v4;
+                    PS.Data.Array.ST.Module.push
+                      .app(PS.Unsafe.Coerce.Module.unsafeCoerce.app(grp))
+                      .app(result)
+                      .appRun();
+                  })
+              })
+            .appRun();
+          PS.Data.Array.ST.Module.unsafeFreeze.app(result).appRun();
+        })
     }
   };
   @JvmField
@@ -916,26 +739,21 @@ object Module  {
                                     .app(i1)
                                })))
                          .app({ v : Any ->
-                            when {
-                             else -> {
-                               val res_tick = v;
-                               PS.Control.Applicative.Module.pure
-                                 .app(
-                                   ((dictMonadRec as Map<String, Any>)["Monad0"]!!
-                                      .app(Unit
-                                     ) as Map<String, Any>)["Applicative0"]!!
-                                     .app(Unit))
-                                 .app(PS.Control.Monad.Rec.Class.Module.Loop
-                                        .app(mapOf(("a" to res_tick),  
-                                     ("b" to PS.Data.Semiring.Module.add
-                                               .app(
-                                                 PS.Data.Semiring.Module.semiringInt
-                                               )
-                                               .app(i1)
-                                               .app(1)))));
-                             }
-                           }
-                         });
+                           val res_tick = v;
+                             PS.Control.Applicative.Module.pure
+                               .app(
+                                 ((dictMonadRec as Map<String, Any>)["Monad0"]!!
+                                    .app(Unit
+                                   ) as Map<String, Any>)["Applicative0"]!!
+                                   .app(Unit))
+                               .app(PS.Control.Monad.Rec.Class.Module.Loop
+                                      .app(mapOf(("a" to res_tick),  
+                                   ("b" to PS.Data.Semiring.Module.add
+                                             .app(
+                                               PS.Data.Semiring.Module.semiringInt
+                                             )
+                                             .app(i1)
+                                             .app(1)))));});
                      }
                      else -> (error("Error in Pattern Match") as Any)
                    }

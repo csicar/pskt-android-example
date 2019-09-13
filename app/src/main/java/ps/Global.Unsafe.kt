@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Global.Unsafe
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val unsafeStringify = Foreign.Global.Unsafe.unsafeStringify;
   val unsafeToFixed = Foreign.Global.Unsafe.unsafeToFixed;

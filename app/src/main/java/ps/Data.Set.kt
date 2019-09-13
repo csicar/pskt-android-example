@@ -1,33 +1,25 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Set
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Set = { x : Any -> x};
   @JvmField
   val union = { dictOrd : Any ->
      { v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val m1 = v;
-            val m2 = v1;
-            PS.Data.Set.Module.Set
-              .app(PS.Data.Map.Internal.Module.union.app(dictOrd).app(m1)
-                     .app(m2));
-          }
-        }
-      }
+        val m1 = v;
+          val m2 = v1;
+          PS.Data.Set.Module.Set
+            .app(PS.Data.Map.Internal.Module.union.app(dictOrd).app(m1).app(m2)
+          );}
     }
   };
   @JvmField
   val toList = { v : Any ->
-     when {
-      else -> {
-        val m = v;
-        PS.Data.Map.Internal.Module.keys.app(m);
-      }
-    }
-  };
+    val m = v;
+      PS.Data.Map.Internal.Module.keys.app(m);};
   @JvmField
   val toUnfoldable = { dictUnfoldable : Any ->
      PS.Control.Semigroupoid.Module.compose
@@ -37,13 +29,8 @@ object Module  {
   };
   @JvmField
   val size = { v : Any ->
-     when {
-      else -> {
-        val m = v;
-        PS.Data.Map.Internal.Module.size.app(m);
-      }
-    }
-  };
+    val m = v;
+      PS.Data.Map.Internal.Module.size.app(m);};
   @JvmField
   val singleton = { a : Any ->
      PS.Data.Set.Module.Set
@@ -72,40 +59,25 @@ object Module  {
   val member = { dictOrd : Any ->
      { a : Any ->
        { v : Any ->
-         when {
-          else -> {
-            val a1 = a;
-            val m = v;
-            PS.Data.Map.Internal.Module.member.app(dictOrd).app(a1).app(m);
-          }
-        }
-      }
+        val a1 = a;
+          val m = v;
+          PS.Data.Map.Internal.Module.member.app(dictOrd).app(a1).app(m);}
     }
   };
   @JvmField
   val isEmpty = { v : Any ->
-     when {
-      else -> {
-        val m = v;
-        PS.Data.Map.Internal.Module.isEmpty.app(m);
-      }
-    }
-  };
+    val m = v;
+      PS.Data.Map.Internal.Module.isEmpty.app(m);};
   @JvmField
   val insert = { dictOrd : Any ->
      { a : Any ->
        { v : Any ->
-         when {
-          else -> {
-            val a1 = a;
-            val m = v;
-            PS.Data.Set.Module.Set
-              .app(PS.Data.Map.Internal.Module.insert.app(dictOrd).app(a1)
-                     .app(PS.Data.Unit.Module.unit)
-                     .app(m));
-          }
-        }
-      }
+        val a1 = a;
+          val m = v;
+          PS.Data.Set.Module.Set
+            .app(PS.Data.Map.Internal.Module.insert.app(dictOrd).app(a1)
+                   .app(PS.Data.Unit.Module.unit)
+                   .app(m));}
     }
   };
   @JvmField
@@ -149,49 +121,34 @@ object Module  {
     });
   @JvmField
   val findMin = { v : Any ->
-     when {
-      else -> {
-        val m = v;
-        PS.Data.Functor.Module.map.app(PS.Data.Maybe.Module.functorMaybe)
-          .app({ v1 : Any ->
-               (v1 as Map<String, Any>)["key"]!!
-            })
-          .app(PS.Data.Map.Internal.Module.findMin.app(m));
-      }
-    }
-  };
+    val m = v;
+      PS.Data.Functor.Module.map.app(PS.Data.Maybe.Module.functorMaybe)
+        .app({ v1 : Any ->
+             (v1 as Map<String, Any>)["key"]!!
+          })
+        .app(PS.Data.Map.Internal.Module.findMin.app(m));};
   @JvmField
   val findMax = { v : Any ->
-     when {
-      else -> {
-        val m = v;
-        PS.Data.Functor.Module.map.app(PS.Data.Maybe.Module.functorMaybe)
-          .app({ v1 : Any ->
-               (v1 as Map<String, Any>)["key"]!!
-            })
-          .app(PS.Data.Map.Internal.Module.findMax.app(m));
-      }
-    }
-  };
+    val m = v;
+      PS.Data.Functor.Module.map.app(PS.Data.Maybe.Module.functorMaybe)
+        .app({ v1 : Any ->
+             (v1 as Map<String, Any>)["key"]!!
+          })
+        .app(PS.Data.Map.Internal.Module.findMax.app(m));};
   @JvmField
   val filter = { dictOrd : Any ->
      { f : Any ->
        { v : Any ->
-         when {
-          else -> {
-            val f1 = f;
-            val s = v;
-            PS.Data.Set.Module.Set
-              .app(PS.Data.Map.Internal.Module.filterWithKey.app(dictOrd)
-                     .app({ k : Any ->
-                          { v1 : Any ->
-                            f1.app(k)
-                         }
-                       })
-                     .app(s));
-          }
-        }
-      }
+        val f1 = f;
+          val s = v;
+          PS.Data.Set.Module.Set
+            .app(PS.Data.Map.Internal.Module.filterWithKey.app(dictOrd)
+                   .app({ k : Any ->
+                        { v1 : Any ->
+                          f1.app(k)
+                       }
+                     })
+                   .app(s));}
     }
   };
   @JvmField
@@ -199,18 +156,13 @@ object Module  {
      PS.Data.Eq.Module.Eq
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val m1 = v;
-              val m2 = v1;
-              PS.Data.Eq.Module.eq
-                .app(PS.Data.Map.Internal.Module.eqMap.app(dictEq)
-                       .app(PS.Data.Eq.Module.eqUnit))
-                .app(m1)
-                .app(m2);
-            }
-          }
-        }
+          val m1 = v;
+            val m2 = v1;
+            PS.Data.Eq.Module.eq
+              .app(PS.Data.Map.Internal.Module.eqMap.app(dictEq)
+                     .app(PS.Data.Eq.Module.eqUnit))
+              .app(m1)
+              .app(m2);}
       })
   };
   @JvmField
@@ -308,25 +260,22 @@ object Module  {
                                     when {
                                       (v is PS.Data.Ordering.Module._Type_Ordering
                                               .EQ) -> {
-                                        PS.Control.Bind.Module.bind
-                                          .app(
-                                            PS.Control.Monad.ST.Internal.Module.bindST
-                                          )
-                                          .app(PS.Data.Array.ST.Module.push
-                                                 .app(
-                                                   PS.Data.Array.Module.unsafeIndex
-                                                     .app(Unit)
-                                                     .app(ls)
-                                                     .app(l))
-                                                 .app(acc))
-                                          .app({ v1 : Any ->
-                                             PS.Data.Function.Module.apply
-                                               .app(
-                                                 PS.Control.Applicative.Module.pure
-                                                   .app(
-                                                   PS.Control.Monad.ST.Internal.Module.applicativeST
-                                                 ))
-                                               .app(
+                                        /* defer **/{
+                                          val v1 = PS.Data.Array.ST.Module.push
+                                                     .app(
+                                                       PS.Data.Array.Module.unsafeIndex
+                                                         .app(Unit)
+                                                         .app(ls)
+                                                         .app(l))
+                                                     .app(acc)
+                                                     .appRun();
+                                          PS.Data.Function.Module.apply
+                                            .app(
+                                              PS.Control.Applicative.Module.pure
+                                                .app(
+                                                PS.Control.Monad.ST.Internal.Module.applicativeST
+                                              ))
+                                            .app(
                                               PS.Control.Monad.Rec.Class.Module.Loop
                                                 .app(mapOf(
                                                   ("a" to PS.Data.Semiring.Module.add
@@ -341,7 +290,8 @@ object Module  {
                                                             )
                                                             .app(r)
                                                             .app(1)))))
-                                          });
+                                            .appRun();
+                                        };
                                       }
                                       (v is PS.Data.Ordering.Module._Type_Ordering
                                               .LT) -> {
@@ -480,16 +430,11 @@ object Module  {
   val delete = { dictOrd : Any ->
      { a : Any ->
        { v : Any ->
-         when {
-          else -> {
-            val a1 = a;
-            val m = v;
-            PS.Data.Set.Module.Set
-              .app(PS.Data.Map.Internal.Module.delete.app(dictOrd).app(a1)
-                     .app(m));
-          }
-        }
-      }
+        val a1 = a;
+          val m = v;
+          PS.Data.Set.Module.Set
+            .app(PS.Data.Map.Internal.Module.delete.app(dictOrd).app(a1).app(m)
+          );}
     }
   };
   @JvmField
@@ -531,11 +476,6 @@ object Module  {
   };
   @JvmField
   val checkValid = { v : Any ->
-     when {
-      else -> {
-        val m = v;
-        PS.Data.Map.Internal.Module.checkValid.app(m);
-      }
-    }
-  };
+    val m = v;
+      PS.Data.Map.Internal.Module.checkValid.app(m);};
 }

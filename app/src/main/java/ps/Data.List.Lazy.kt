@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.List.Lazy
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Pattern = { x : Any -> x};
   @JvmField val zipWith = (::__rec_zipWith)();
@@ -271,77 +273,70 @@ object Module  {
   val stripPrefix = { dictEq : Any ->
      { v : Any ->
        { s : Any ->
-         when {
-          else -> {
-            val p_tick = v;
-            val s1 = s;
-            object   {
-                val go = { prefix : Any ->
-                   { input : Any ->
-                     object   {
-                         val v1 = PS.Data.List.Lazy.Types.Module.step
-                                    .app(prefix);
-                       }
-                       .run({
-                        val v1 = this.v1;
-                        when {
-                          (v1 is PS.Data.List.Lazy.Types.Module._Type_Step
-                                   .Nil) -> {
-                            PS.Data.Function.Module.apply
-                              .app(PS.Data.Maybe.Module.Just)
-                              .app(PS.Control.Monad.Rec.Class.Module.Done
-                                     .app(input));
-                          }
-                          (v1 is PS.Data.List.Lazy.Types.Module._Type_Step
-                                   .Cons) -> {
-                            val p = v1.value0;
-                            val ps = v1.value1;
-                            object   {
-                                val v2 = PS.Data.List.Lazy.Types.Module.step
-                                           .app(input);
-                              }
-                              .run({
-                                val v2 = this.v2;
-                                when {
-                                  (v2 is PS.Data.List.Lazy.Types.Module._Type_Step
-                                           .Cons)&& (PS.Data.Eq.Module.eq
-                                                       .app(dictEq)
-                                                       .app(p)
-                                                       .app(v2
-                                                              .value0
-                                  ) as Boolean) -> {
-                                    val i = v2.value0;
-                                    val _is = v2.value1;
-                                    PS.Data.Function.Module.apply
-                                      .app(PS.Data.Maybe.Module.Just)
-                                      .app(
-                                      PS.Control.Monad.Rec.Class.Module.Loop
-                                        .app(mapOf(("a" to ps),  ("b" to _is)))
-                                    );
-                                  }
-                                  else -> {
-                                    PS.Data.Maybe.Module.Nothing;
-                                  }
-                                };
-                              });
-                          }
-                          else -> (error("Error in Pattern Match") as Any)
-                        };
-                      })
-                  }
-                };
-              }
-              .run({
-                val go = this.go;
-                PS.Control.Monad.Rec.Class.Module.tailRecM2
-                  .app(PS.Control.Monad.Rec.Class.Module.monadRecMaybe)
-                  .app(go)
-                  .app(p_tick)
-                  .app(s1);
-              });
-          }
-        }
-      }
+        val p_tick = v;
+          val s1 = s;
+          object   {
+              val go = { prefix : Any ->
+                 { input : Any ->
+                   object   {
+                       val v1 = PS.Data.List.Lazy.Types.Module.step.app(prefix);
+                     }
+                     .run({
+                      val v1 = this.v1;
+                      when {
+                        (v1 is PS.Data.List.Lazy.Types.Module._Type_Step
+                                 .Nil) -> {
+                          PS.Data.Function.Module.apply
+                            .app(PS.Data.Maybe.Module.Just)
+                            .app(PS.Control.Monad.Rec.Class.Module.Done
+                                   .app(input));
+                        }
+                        (v1 is PS.Data.List.Lazy.Types.Module._Type_Step
+                                 .Cons) -> {
+                          val p = v1.value0;
+                          val ps = v1.value1;
+                          object   {
+                              val v2 = PS.Data.List.Lazy.Types.Module.step
+                                         .app(input);
+                            }
+                            .run({
+                              val v2 = this.v2;
+                              when {
+                                (v2 is PS.Data.List.Lazy.Types.Module._Type_Step
+                                         .Cons)&& (PS.Data.Eq.Module.eq
+                                                     .app(dictEq)
+                                                     .app(p)
+                                                     .app(v2
+                                                            .value0
+                                ) as Boolean) -> {
+                                  val i = v2.value0;
+                                  val _is = v2.value1;
+                                  PS.Data.Function.Module.apply
+                                    .app(PS.Data.Maybe.Module.Just)
+                                    .app(PS.Control.Monad.Rec.Class.Module.Loop
+                                           .app(mapOf(("a" to ps),  ("b" to _is)
+                                      )));
+                                }
+                                else -> {
+                                  PS.Data.Maybe.Module.Nothing;
+                                }
+                              };
+                            });
+                        }
+                        else -> (error("Error in Pattern Match") as Any)
+                      };
+                    })
+                }
+              };
+            }
+            .run({
+              val go = this.go;
+              PS.Control.Monad.Rec.Class.Module.tailRecM2
+                .app(PS.Control.Monad.Rec.Class.Module.monadRecMaybe)
+                .app(go)
+                .app(p_tick)
+                .app(s1);
+            });}
     }
   };
   @JvmField val span = (::__rec_span)();
@@ -407,18 +402,13 @@ object Module  {
   val showPattern = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val s = v;
-            (("(Pattern " as String) + (((PS.Data.Show.Module.show
-                                            .app(
-                                              PS.Data.List.Lazy.Types.Module.showList
-                                                .app(dictShow))
-                                            .app(s
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val s = v;
+          (("(Pattern " as String) + (((PS.Data.Show.Module.show
+                                          .app(
+                                            PS.Data.List.Lazy.Types.Module.showList
+                                              .app(dictShow))
+                                          .app(s
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField val scanrLazy = (::__rec_scanrLazy)();
   fun __rec_scanrLazy(): Any = { f : Any ->
@@ -495,35 +485,24 @@ object Module  {
               .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
               .app(m1)
               .app({ v : Any ->
-                 when {
-                  else -> {
-                    val a = v;
-                    PS.Control.Bind.Module.bind
-                      .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
-                      .app(PS.Data.List.Lazy.Module.replicateM.app(dictMonad)
-                             .app(PS.Data.Ring.Module.sub
-                                    .app(PS.Data.Ring.Module.ringInt)
-                                    .app(n1)
-                                    .app(PS.Data.Semiring.Module.one
-                                           .app(
-                                   PS.Data.Semiring.Module.semiringInt)))
-                             .app(m1))
-                      .app({ v1 : Any ->
-                         when {
-                          else -> {
-                            val _as = v1;
-                            PS.Control.Applicative.Module.pure
-                              .app(
-                                (dictMonad as Map<String, Any>)["Applicative0"]!!
-                                  .app(Unit))
-                              .app(PS.Data.List.Lazy.Types.Module.cons.app(a)
-                                     .app(_as));
-                          }
-                        }
-                      });
-                  }
-                }
-              });
+                val a = v;
+                  PS.Control.Bind.Module.bind
+                    .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
+                    .app(PS.Data.List.Lazy.Module.replicateM.app(dictMonad)
+                           .app(PS.Data.Ring.Module.sub
+                                  .app(PS.Data.Ring.Module.ringInt)
+                                  .app(n1)
+                                  .app(PS.Data.Semiring.Module.one
+                                         .app(
+                                 PS.Data.Semiring.Module.semiringInt)))
+                           .app(m1))
+                    .app({ v1 : Any ->
+                      val _as = v1;
+                        PS.Control.Applicative.Module.pure
+                          .app((dictMonad as Map<String, Any>)["Applicative0"]!!
+                                 .app(Unit))
+                          .app(PS.Data.List.Lazy.Types.Module.cons.app(a)
+                                 .app(_as));});});
           }
           else -> (error("Error in Pattern Match") as Any)
         }
@@ -666,13 +645,8 @@ object Module  {
   @JvmField
   val newtypePattern = PS.Data.Newtype.Module.Newtype
                          .app({ n : Any ->
-                              when {
-                               else -> {
-                                 val a = n;
-                                 a;
-                               }
-                             }
-                           })
+                             val a = n;
+                               a;})
                          .app(PS.Data.List.Lazy.Module.Pattern);
   @JvmField val mapMaybe = (::__rec_mapMaybe)();
   fun __rec_mapMaybe(): Any = { f : Any ->
@@ -1214,27 +1188,22 @@ object Module  {
               PS.Control.Bind.Module.bind.app(PS.Data.Maybe.Module.bindMaybe)
                 .app(PS.Data.List.Lazy.Module.uncons.app(list))
                 .app({ v : Any ->
-                  when {
-                   else -> {
-                     val o = v;
-                     when {
-                       (fn.app((o as Map<String, Any>)["head"]!!) == true) -> {
-                         PS.Control.Applicative.Module.pure
-                           .app(PS.Data.Maybe.Module.applicativeMaybe)
-                           .app(n);
-                       }
-                       else -> {
-                         __rec_go()
-                           .app(PS.Data.Semiring.Module.add
-                                  .app(PS.Data.Semiring.Module.semiringInt)
-                                  .app(n)
-                                  .app(1))
-                           .app((o as Map<String, Any>)["tail"]!!);
-                       }
-                     };
-                   }
-                 }
-               })
+                 val o = v;
+                   when {
+                     (fn.app((o as Map<String, Any>)["head"]!!) == true) -> {
+                       PS.Control.Applicative.Module.pure
+                         .app(PS.Data.Maybe.Module.applicativeMaybe)
+                         .app(n);
+                     }
+                     else -> {
+                       __rec_go()
+                         .app(PS.Data.Semiring.Module.add
+                                .app(PS.Data.Semiring.Module.semiringInt)
+                                .app(n)
+                                .app(1))
+                         .app((o as Map<String, Any>)["tail"]!!);
+                     }
+                   };})
            }
          };
        }
@@ -1284,38 +1253,28 @@ object Module  {
                   .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
                   .app(p.app(x))
                   .app({ v1 : Any ->
-                     when {
-                      else -> {
-                        val b = v1;
-                        PS.Control.Bind.Module.bind
-                          .app((dictMonad as Map<String, Any>)["Bind1"]!!
-                                 .app(Unit))
-                          .app(PS.Data.List.Lazy.Module.filterM.app(dictMonad)
-                                 .app(p)
-                                 .app(xs))
-                          .app({ v2 : Any ->
-                             when {
-                              else -> {
-                                val xs_tick = v2;
-                                PS.Control.Applicative.Module.pure
-                                  .app(
-                                    (dictMonad as Map<String, Any>)["Applicative0"]!!
-                                      .app(Unit))
-                                  .app(when {
-                                    (b == true) -> {
-                                      PS.Data.List.Lazy.Types.Module.cons.app(x)
-                                        .app(xs_tick);
-                                    }
-                                    else -> {
-                                      xs_tick;
-                                    }
-                                  });
-                              }
-                            }
-                          });
-                      }
-                    }
-                  });
+                    val b = v1;
+                      PS.Control.Bind.Module.bind
+                        .app((dictMonad as Map<String, Any>)["Bind1"]!!
+                               .app(Unit))
+                        .app(PS.Data.List.Lazy.Module.filterM.app(dictMonad)
+                               .app(p)
+                               .app(xs))
+                        .app({ v2 : Any ->
+                          val xs_tick = v2;
+                            PS.Control.Applicative.Module.pure
+                              .app(
+                                (dictMonad as Map<String, Any>)["Applicative0"]!!
+                                  .app(Unit))
+                              .app(when {
+                                (b == true) -> {
+                                  PS.Data.List.Lazy.Types.Module.cons.app(x)
+                                    .app(xs_tick);
+                                }
+                                else -> {
+                                  xs_tick;
+                                }
+                              });});});
               }
               else -> (error("Error in Pattern Match") as Any)
             };
@@ -1433,17 +1392,12 @@ object Module  {
      PS.Data.Eq.Module.Eq
        .app({ x : Any ->
          { y : Any ->
-           when {
-            else -> {
-              val l = x;
-              val r = y;
-              PS.Data.Eq.Module.eq
-                .app(PS.Data.List.Lazy.Types.Module.eqList.app(dictEq))
-                .app(l)
-                .app(r);
-            }
-          }
-        }
+          val l = x;
+            val r = y;
+            PS.Data.Eq.Module.eq
+              .app(PS.Data.List.Lazy.Types.Module.eqList.app(dictEq))
+              .app(l)
+              .app(r);}
       })
   };
   @JvmField
@@ -1455,17 +1409,12 @@ object Module  {
          })
        .app({ x : Any ->
          { y : Any ->
-           when {
-            else -> {
-              val l = x;
-              val r = y;
-              PS.Data.Ord.Module.compare
-                .app(PS.Data.List.Lazy.Types.Module.ordList.app(dictOrd))
-                .app(l)
-                .app(r);
-            }
-          }
-        }
+          val l = x;
+            val r = y;
+            PS.Data.Ord.Module.compare
+              .app(PS.Data.List.Lazy.Types.Module.ordList.app(dictOrd))
+              .app(l)
+              .app(r);}
       })
   };
   @JvmField

@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Bind
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val arrayBind = Foreign.Control.Bind.arrayBind;
   @JvmField val Discard = { discard : Any -> mapOf(("discard" to discard))};

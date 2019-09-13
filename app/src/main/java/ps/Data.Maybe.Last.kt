@@ -1,23 +1,20 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Maybe.Last
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Last = { x : Any -> x};
   @JvmField
   val showLast = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val a = v;
-            (("(Last " as String) + (((PS.Data.Show.Module.show
-                                         .app(PS.Data.Maybe.Module.showMaybe
-                                                .app(dictShow))
-                                         .app(a
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val a = v;
+          (("(Last " as String) + (((PS.Data.Show.Module.show
+                                       .app(PS.Data.Maybe.Module.showMaybe
+                                              .app(dictShow))
+                                       .app(a
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField
   val semigroupLast = PS.Data.Semigroup.Module.Semigroup
@@ -44,13 +41,8 @@ object Module  {
   @JvmField
   val newtypeLast = PS.Data.Newtype.Module.Newtype
                       .app({ n : Any ->
-                           when {
-                            else -> {
-                              val a = n;
-                              a;
-                            }
-                          }
-                        })
+                          val a = n;
+                            a;})
                       .app(PS.Data.Maybe.Last.Module.Last);
   @JvmField
   val monoidLast = PS.Data.Monoid.Module.Monoid

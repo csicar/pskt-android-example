@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Interval.Duration
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   sealed class _Type_DurationComponent ()  {
     object Second : _Type_DurationComponent() {};
@@ -56,32 +58,22 @@ object Module  {
   @JvmField
   val showDuration = PS.Data.Show.Module.Show
                        .app({ v : Any ->
-       when {
-        else -> {
-          val d = v;
-          (("(Duration " as String) + (((PS.Data.Show.Module.show
-                                           .app(
-                                             PS.Data.Map.Internal.Module.showMap
-                                               .app(
-                                                 PS.Data.Interval.Duration.Module.showDurationComponent
-                                               )
-                                               .app(
-                                               PS.Data.Show.Module.showNumber))
-                                           .app(d
-          ) as String) + (")" as String)) as String));
-        }
-      }
-    });
+      val d = v;
+        (("(Duration " as String) + (((PS.Data.Show.Module.show
+                                         .app(
+                                           PS.Data.Map.Internal.Module.showMap
+                                             .app(
+                                               PS.Data.Interval.Duration.Module.showDurationComponent
+                                             )
+                                             .app(PS.Data.Show.Module.showNumber
+                                           ))
+                                         .app(d
+        ) as String) + (")" as String)) as String));});
   @JvmField
   val newtypeDuration = PS.Data.Newtype.Module.Newtype
                           .app({ n : Any ->
-                               when {
-                                else -> {
-                                  val a = n;
-                                  a;
-                                }
-                              }
-                            })
+                              val a = n;
+                                a;})
                           .app(PS.Data.Interval.Duration.Module.Duration);
   @JvmField
   val eqDurationComponent = PS.Data.Eq.Module.Eq
@@ -242,20 +234,15 @@ object Module  {
   val semigroupDuration = PS.Data.Semigroup.Module.Semigroup
                             .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val a = v;
-            val b = v1;
-            PS.Data.Interval.Duration.Module.Duration
-              .app(PS.Data.Map.Internal.Module.unionWith
-                     .app(PS.Data.Interval.Duration.Module.ordDurationComponent)
-                     .app(PS.Data.Semiring.Module.add
-                            .app(PS.Data.Semiring.Module.semiringNumber))
-                     .app(a)
-                     .app(b));
-          }
-        }
-      }
+        val a = v;
+          val b = v1;
+          PS.Data.Interval.Duration.Module.Duration
+            .app(PS.Data.Map.Internal.Module.unionWith
+                   .app(PS.Data.Interval.Duration.Module.ordDurationComponent)
+                   .app(PS.Data.Semiring.Module.add
+                          .app(PS.Data.Semiring.Module.semiringNumber))
+                   .app(a)
+                   .app(b));}
     });
   @JvmField
   val monoidDuration = PS.Data.Monoid.Module.Monoid
@@ -271,19 +258,14 @@ object Module  {
   val eqDuration = PS.Data.Eq.Module.Eq
                      .app({ x : Any ->
        { y : Any ->
-         when {
-          else -> {
-            val l = x;
-            val r = y;
-            PS.Data.Eq.Module.eq
-              .app(PS.Data.Map.Internal.Module.eqMap
-                     .app(PS.Data.Interval.Duration.Module.eqDurationComponent)
-                     .app(PS.Data.Eq.Module.eqNumber))
-              .app(l)
-              .app(r);
-          }
-        }
-      }
+        val l = x;
+          val r = y;
+          PS.Data.Eq.Module.eq
+            .app(PS.Data.Map.Internal.Module.eqMap
+                   .app(PS.Data.Interval.Duration.Module.eqDurationComponent)
+                   .app(PS.Data.Eq.Module.eqNumber))
+            .app(l)
+            .app(r);}
     });
   @JvmField
   val ordDuration = PS.Data.Ord.Module.Ord
@@ -292,19 +274,14 @@ object Module  {
                         })
                       .app({ x : Any ->
        { y : Any ->
-         when {
-          else -> {
-            val l = x;
-            val r = y;
-            PS.Data.Ord.Module.compare
-              .app(PS.Data.Map.Internal.Module.ordMap
-                     .app(PS.Data.Interval.Duration.Module.ordDurationComponent)
-                     .app(PS.Data.Ord.Module.ordNumber))
-              .app(l)
-              .app(r);
-          }
-        }
-      }
+        val l = x;
+          val r = y;
+          PS.Data.Ord.Module.compare
+            .app(PS.Data.Map.Internal.Module.ordMap
+                   .app(PS.Data.Interval.Duration.Module.ordDurationComponent)
+                   .app(PS.Data.Ord.Module.ordNumber))
+            .app(l)
+            .app(r);}
     });
   @JvmField
   val durationFromComponent = { k : Any ->

@@ -1,19 +1,16 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Monad.Writer.Trans
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val WriterT = { x : Any -> x};
-  @JvmField val runWriterT = { v : Any -> when { else -> { val x = v; x; } }};
+  @JvmField val runWriterT = { v : Any ->val x = v; x;};
   @JvmField
   val newtypeWriterT = PS.Data.Newtype.Module.Newtype
                          .app({ n : Any ->
-                              when {
-                               else -> {
-                                 val a = n;
-                                 a;
-                               }
-                             }
-                           })
+                             val a = n;
+                               a;})
                          .app(PS.Control.Monad.Writer.Trans.Module.WriterT);
   @JvmField
   val monadTransWriterT = { dictMonoid : Any ->
@@ -25,34 +22,24 @@ object Module  {
                     .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
                     .app(m)
                     .app({ v : Any ->
-                 when {
-                  else -> {
-                    val a = v;
-                    PS.Data.Function.Module.apply
-                      .app(PS.Control.Applicative.Module.pure
-                             .app(
-                          (dictMonad as Map<String, Any>)["Applicative0"]!!
-                            .app(Unit)))
-                      .app(PS.Data.Tuple.Module.Tuple.app(a)
-                             .app(PS.Data.Monoid.Module.mempty.app(dictMonoid))
-                    );
-                  }
-                }
-              }))
+                val a = v;
+                  PS.Data.Function.Module.apply
+                    .app(PS.Control.Applicative.Module.pure
+                           .app(
+                        (dictMonad as Map<String, Any>)["Applicative0"]!!
+                          .app(Unit)))
+                    .app(PS.Data.Tuple.Module.Tuple.app(a)
+                           .app(PS.Data.Monoid.Module.mempty.app(dictMonoid)));}
+            ))
         }
       })
   };
   @JvmField
   val mapWriterT = { f : Any ->
      { v : Any ->
-       when {
-        else -> {
-          val f1 = f;
-          val m = v;
-          PS.Control.Monad.Writer.Trans.Module.WriterT.app(f1.app(m));
-        }
-      }
-    }
+      val f1 = f;
+        val m = v;
+        PS.Control.Monad.Writer.Trans.Module.WriterT.app(f1.app(m));}
   };
   @JvmField
   val functorWriterT = { dictFunctor : Any ->
@@ -76,15 +63,10 @@ object Module  {
   @JvmField
   val execWriterT = { dictFunctor : Any ->
      { v : Any ->
-       when {
-        else -> {
-          val m = v;
-          PS.Data.Functor.Module.map.app(dictFunctor)
-            .app(PS.Data.Tuple.Module.snd)
-            .app(m);
-        }
-      }
-    }
+      val m = v;
+        PS.Data.Functor.Module.map.app(dictFunctor)
+          .app(PS.Data.Tuple.Module.snd)
+          .app(m);}
   };
   @JvmField
   val applyWriterT = { dictSemigroup : Any ->
@@ -96,49 +78,42 @@ object Module  {
            })
          .app({ v : Any ->
            { v1 : Any ->
-             when {
-              else -> {
-                val f = v;
-                val v2 = v1;
-                PS.Control.Monad.Writer.Trans.Module.WriterT
-                  .app(object   {
-                           val k = { v3 : Any ->
-                              { v4 : Any ->
-                                when {
-                                 (v3 is PS.Data.Tuple.Module._Type_Tuple
-                                          .Tuple)&&
-                                 (v4 is PS.Data.Tuple.Module._Type_Tuple
-                                          .Tuple) -> {
-                                   val a = v3.value0;
-                                   val w = v3.value1;
-                                   val b = v4.value0;
-                                   val w_tick = v4.value1;
-                                   PS.Data.Tuple.Module.Tuple.app(a.app(b))
-                                     .app(PS.Data.Semigroup.Module.append
-                                            .app(dictSemigroup)
-                                            .app(w)
-                                            .app(w_tick));
-                                 }
-                                 else -> (error("Error in Pattern Match"
-                                 ) as Any)
+            val f = v;
+              val v2 = v1;
+              PS.Control.Monad.Writer.Trans.Module.WriterT
+                .app(object   {
+                         val k = { v3 : Any ->
+                            { v4 : Any ->
+                              when {
+                               (v3 is PS.Data.Tuple.Module._Type_Tuple
+                                        .Tuple)&&
+                               (v4 is PS.Data.Tuple.Module._Type_Tuple
+                                        .Tuple) -> {
+                                 val a = v3.value0;
+                                 val w = v3.value1;
+                                 val b = v4.value0;
+                                 val w_tick = v4.value1;
+                                 PS.Data.Tuple.Module.Tuple.app(a.app(b))
+                                   .app(PS.Data.Semigroup.Module.append
+                                          .app(dictSemigroup)
+                                          .app(w)
+                                          .app(w_tick));
                                }
+                               else -> (error("Error in Pattern Match") as Any)
                              }
-                           };
-                         }
-                         .run({
-                      val k = this.k;
-                      PS.Control.Apply.Module.apply.app(dictApply)
-                        .app(PS.Data.Functor.Module.map
-                               .app(
-                                 (dictApply as Map<String, Any>)["Functor0"]!!
-                                   .app(Unit))
-                               .app(k)
-                               .app(f))
-                        .app(v2);
-                    }));
-              }
-            }
-          }
+                           }
+                         };
+                       }
+                       .run({
+                    val k = this.k;
+                    PS.Control.Apply.Module.apply.app(dictApply)
+                      .app(PS.Data.Functor.Module.map
+                             .app((dictApply as Map<String, Any>)["Functor0"]!!
+                                    .app(Unit))
+                             .app(k)
+                             .app(f))
+                      .app(v2);
+                  }));}
         })
     }
   };
@@ -153,60 +128,49 @@ object Module  {
            })
          .app({ v : Any ->
            { k : Any ->
-             when {
-              else -> {
-                val m = v;
-                val k1 = k;
-                PS.Data.Function.Module.apply
-                  .app(PS.Control.Monad.Writer.Trans.Module.WriterT)
-                  .app(PS.Control.Bind.Module.bind.app(dictBind).app(m)
-                         .app({ v1 : Any ->
-                       when {
-                        (v1 is PS.Data.Tuple.Module._Type_Tuple.Tuple) -> {
-                          val a = v1.value0;
-                          val w = v1.value1;
-                          object   {
-                              val v2 = k1.app(a);
-                            }
-                            .run({
-                              val v2 = this.v2;
-                              when {
-                                else -> {
-                                  val wt = v2;
-                                  PS.Data.Functor.Module.map
-                                    .app(
-                                      ((dictBind as Map<String, Any>)["Apply0"]!!
-                                         .app(Unit
-                                        ) as Map<String, Any>)["Functor0"]!!
-                                        .app(Unit))
-                                    .app({ v3 : Any ->
-                                         when {
-                                          (v3 is PS.Data.Tuple.Module._Type_Tuple
-                                                   .Tuple) -> {
-                                            val b = v3.value0;
-                                            val w_tick = v3.value1;
-                                            PS.Data.Tuple.Module.Tuple.app(b)
-                                              .app(
-                                              PS.Data.Semigroup.Module.append
-                                                .app(dictSemigroup)
-                                                .app(w)
-                                                .app(w_tick));
-                                          }
-                                          else -> (error(
-                                            "Error in Pattern Match") as Any)
-                                        }
-                                      })
-                                    .app(wt);
-                                }
-                              };
-                            });
-                        }
-                        else -> (error("Error in Pattern Match") as Any)
+            val m = v;
+              val k1 = k;
+              PS.Data.Function.Module.apply
+                .app(PS.Control.Monad.Writer.Trans.Module.WriterT)
+                .app(PS.Control.Bind.Module.bind.app(dictBind).app(m)
+                       .app({ v1 : Any ->
+                     when {
+                      (v1 is PS.Data.Tuple.Module._Type_Tuple.Tuple) -> {
+                        val a = v1.value0;
+                        val w = v1.value1;
+                        object   {
+                            val v2 = k1.app(a);
+                          }
+                          .run({
+                            val v2 = this.v2;
+                            val wt = v2;
+                            PS.Data.Functor.Module.map
+                              .app(((dictBind as Map<String, Any>)["Apply0"]!!
+                                      .app(Unit
+                                     ) as Map<String, Any>)["Functor0"]!!
+                                     .app(Unit))
+                              .app({ v3 : Any ->
+                                   when {
+                                    (v3 is PS.Data.Tuple.Module._Type_Tuple
+                                             .Tuple) -> {
+                                      val b = v3.value0;
+                                      val w_tick = v3.value1;
+                                      PS.Data.Tuple.Module.Tuple.app(b)
+                                        .app(PS.Data.Semigroup.Module.append
+                                               .app(dictSemigroup)
+                                               .app(w)
+                                               .app(w_tick));
+                                    }
+                                    else -> (error("Error in Pattern Match"
+                                    ) as Any)
+                                  }
+                                })
+                              .app(wt);
+                          });
                       }
-                    }));
-              }
-            }
-          }
+                      else -> (error("Error in Pattern Match") as Any)
+                    }
+                  }));}
         })
     }
   };
@@ -308,7 +272,8 @@ object Module  {
                    }
                    .run({
                     val v = this.v;
-                    when { else -> { val b = v; b; } };
+                    val b = v;
+                    b;
                   })
               }))
         })
@@ -355,66 +320,62 @@ object Module  {
                          }
                          .run({
                            val v1 = this.v1;
-                           when {
-                             else -> {
-                               val wt = v1;
-                               PS.Control.Bind.Module.bind
-                                 .app(
-                                   ((dictMonadRec as Map<String, Any>)["Monad0"]!!
-                                      .app(Unit) as Map<String, Any>)["Bind1"]!!
-                                     .app(Unit))
-                                 .app(wt)
-                                 .app({ v2 : Any ->
-                                    when {
-                                     (v2 is PS.Data.Tuple.Module._Type_Tuple
-                                              .Tuple) -> {
-                                       val m = v2.value0;
-                                       val w1 = v2.value1;
-                                       PS.Control.Applicative.Module.pure
-                                         .app(
-                                           ((dictMonadRec as Map<String, Any>)["Monad0"]!!
-                                              .app(Unit
-                                             ) as Map<String, Any>)["Applicative0"]!!
-                                             .app(Unit))
-                                         .app(when {
-                                           (m is PS.Control.Monad.Rec.Class.Module._Type_Step
-                                                   .Loop) -> {
-                                             val x = m.value0;
-                                             PS.Control.Monad.Rec.Class.Module.Loop
-                                               .app(PS.Data.Tuple.Module.Tuple
-                                                      .app(x)
-                                                      .app(
-                                                 PS.Data.Semigroup.Module.append
-                                                   .app(
-                                                     (dictMonoid as Map<String, Any>)["Semigroup0"]!!
-                                                       .app(Unit))
-                                                   .app(w)
-                                                   .app(w1)));
-                                           }
-                                           (m is PS.Control.Monad.Rec.Class.Module._Type_Step
-                                                   .Done) -> {
-                                             val y = m.value0;
-                                             PS.Control.Monad.Rec.Class.Module.Done
-                                               .app(PS.Data.Tuple.Module.Tuple
-                                                      .app(y)
-                                                      .app(
-                                                 PS.Data.Semigroup.Module.append
-                                                   .app(
-                                                     (dictMonoid as Map<String, Any>)["Semigroup0"]!!
-                                                       .app(Unit))
-                                                   .app(w)
-                                                   .app(w1)));
-                                           }
-                                           else -> (error(
-                                             "Error in Pattern Match") as Any)
-                                         });
-                                     }
-                                     else -> (error("Error in Pattern Match"
-                                     ) as Any)
-                                   }
-                                 });
-                             }
-                           };
+                           val wt = v1;
+                           PS.Control.Bind.Module.bind
+                             .app(
+                               ((dictMonadRec as Map<String, Any>)["Monad0"]!!
+                                  .app(Unit) as Map<String, Any>)["Bind1"]!!
+                                 .app(Unit))
+                             .app(wt)
+                             .app({ v2 : Any ->
+                                when {
+                                 (v2 is PS.Data.Tuple.Module._Type_Tuple
+                                          .Tuple) -> {
+                                   val m = v2.value0;
+                                   val w1 = v2.value1;
+                                   PS.Control.Applicative.Module.pure
+                                     .app(
+                                       ((dictMonadRec as Map<String, Any>)["Monad0"]!!
+                                          .app(Unit
+                                         ) as Map<String, Any>)["Applicative0"]!!
+                                         .app(Unit))
+                                     .app(when {
+                                       (m is PS.Control.Monad.Rec.Class.Module._Type_Step
+                                               .Loop) -> {
+                                         val x = m.value0;
+                                         PS.Control.Monad.Rec.Class.Module.Loop
+                                           .app(PS.Data.Tuple.Module.Tuple
+                                                  .app(x)
+                                                  .app(
+                                             PS.Data.Semigroup.Module.append
+                                               .app(
+                                                 (dictMonoid as Map<String, Any>)["Semigroup0"]!!
+                                                   .app(Unit))
+                                               .app(w)
+                                               .app(w1)));
+                                       }
+                                       (m is PS.Control.Monad.Rec.Class.Module._Type_Step
+                                               .Done) -> {
+                                         val y = m.value0;
+                                         PS.Control.Monad.Rec.Class.Module.Done
+                                           .app(PS.Data.Tuple.Module.Tuple
+                                                  .app(y)
+                                                  .app(
+                                             PS.Data.Semigroup.Module.append
+                                               .app(
+                                                 (dictMonoid as Map<String, Any>)["Semigroup0"]!!
+                                                   .app(Unit))
+                                               .app(w)
+                                               .app(w1)));
+                                       }
+                                       else -> (error("Error in Pattern Match"
+                                       ) as Any)
+                                     });
+                                 }
+                                 else -> (error("Error in Pattern Match"
+                                 ) as Any)
+                               }
+                             });
                          });
                      }
                      else -> (error("Error in Pattern Match") as Any)
@@ -485,66 +446,54 @@ object Module  {
                 .app(dictMonad)
            })
          .app({ v : Any ->
-              when {
-               else -> {
-                 val m = v;
-                 PS.Control.Monad.Writer.Trans.Module.WriterT
-                   .app(PS.Control.Bind.Module.bind
-                          .app((dictMonad as Map<String, Any>)["Bind1"]!!
-                                 .app(Unit))
-                          .app(m)
-                          .app({ v1 : Any ->
-                        when {
-                         (v1 is PS.Data.Tuple.Module._Type_Tuple.Tuple) -> {
-                           val a = v1.value0;
-                           val w = v1.value1;
-                           PS.Data.Function.Module.apply
-                             .app(PS.Control.Applicative.Module.pure
-                                    .app(
-                                 (dictMonad as Map<String, Any>)["Applicative0"]!!
-                                   .app(Unit)))
-                             .app(PS.Data.Tuple.Module.Tuple
-                                    .app(PS.Data.Tuple.Module.Tuple.app(a)
-                                           .app(w))
-                                    .app(w));
-                         }
-                         else -> (error("Error in Pattern Match") as Any)
+             val m = v;
+               PS.Control.Monad.Writer.Trans.Module.WriterT
+                 .app(PS.Control.Bind.Module.bind
+                        .app((dictMonad as Map<String, Any>)["Bind1"]!!
+                               .app(Unit))
+                        .app(m)
+                        .app({ v1 : Any ->
+                      when {
+                       (v1 is PS.Data.Tuple.Module._Type_Tuple.Tuple) -> {
+                         val a = v1.value0;
+                         val w = v1.value1;
+                         PS.Data.Function.Module.apply
+                           .app(PS.Control.Applicative.Module.pure
+                                  .app(
+                               (dictMonad as Map<String, Any>)["Applicative0"]!!
+                                 .app(Unit)))
+                           .app(PS.Data.Tuple.Module.Tuple
+                                  .app(PS.Data.Tuple.Module.Tuple.app(a).app(w))
+                                  .app(w));
                        }
-                     }));
-               }
-             }
-           })
+                       else -> (error("Error in Pattern Match") as Any)
+                     }
+                   }));})
          .app({ v : Any ->
-           when {
-            else -> {
-              val m = v;
-              PS.Control.Monad.Writer.Trans.Module.WriterT
-                .app(PS.Control.Bind.Module.bind
-                       .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit)
-                       )
-                       .app(m)
-                       .app({ v1 : Any ->
-                     when {
-                      (v1 is PS.Data.Tuple.Module._Type_Tuple
-                               .Tuple)&& (v1
-                                            .value0 is PS.Data.Tuple.Module._Type_Tuple
-                                                         .Tuple) -> {
-                        val a = v1.value0.value0;
-                        val f = v1.value0.value1;
-                        val w = v1.value1;
-                        PS.Data.Function.Module.apply
-                          .app(PS.Control.Applicative.Module.pure
-                                 .app(
-                              (dictMonad as Map<String, Any>)["Applicative0"]!!
-                                .app(Unit)))
-                          .app(PS.Data.Tuple.Module.Tuple.app(a).app(f.app(w)));
-                      }
-                      else -> (error("Error in Pattern Match") as Any)
+          val m = v;
+            PS.Control.Monad.Writer.Trans.Module.WriterT
+              .app(PS.Control.Bind.Module.bind
+                     .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
+                     .app(m)
+                     .app({ v1 : Any ->
+                   when {
+                    (v1 is PS.Data.Tuple.Module._Type_Tuple
+                             .Tuple)&& (v1
+                                          .value0 is PS.Data.Tuple.Module._Type_Tuple
+                                                       .Tuple) -> {
+                      val a = v1.value0.value0;
+                      val f = v1.value0.value1;
+                      val w = v1.value1;
+                      PS.Data.Function.Module.apply
+                        .app(PS.Control.Applicative.Module.pure
+                               .app(
+                            (dictMonad as Map<String, Any>)["Applicative0"]!!
+                              .app(Unit)))
+                        .app(PS.Data.Tuple.Module.Tuple.app(a).app(f.app(w)));
                     }
-                  }));
-            }
-          }
-        })
+                    else -> (error("Error in Pattern Match") as Any)
+                  }
+                }));})
     }
   };
   @JvmField
@@ -578,27 +527,23 @@ object Module  {
            })
          .app({ v : Any ->
            { h : Any ->
-             when {
-              else -> {
-                val m = v;
-                val h1 = h;
-                PS.Data.Function.Module.apply
-                  .app(PS.Control.Monad.Writer.Trans.Module.WriterT)
-                  .app(PS.Control.Monad.Error.Class.Module.catchError
-                         .app(dictMonadError)
-                         .app(m)
-                         .app({ e : Any ->
-                       object   {
-                           val v1 = h1.app(e);
-                         }
-                         .run({
-                          val v1 = this.v1;
-                          when { else -> { val a = v1; a; } };
-                        })
-                    }));
-              }
-            }
-          }
+            val m = v;
+              val h1 = h;
+              PS.Data.Function.Module.apply
+                .app(PS.Control.Monad.Writer.Trans.Module.WriterT)
+                .app(PS.Control.Monad.Error.Class.Module.catchError
+                       .app(dictMonadError)
+                       .app(m)
+                       .app({ e : Any ->
+                     object   {
+                         val v1 = h1.app(e);
+                       }
+                       .run({
+                        val v1 = this.v1;
+                        val a = v1;
+                        a;
+                      })
+                  }));}
         })
     }
   };
@@ -611,15 +556,10 @@ object Module  {
          })
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val m = v;
-              val n = v1;
-              PS.Control.Monad.Writer.Trans.Module.WriterT
-                .app(PS.Control.Alt.Module.alt.app(dictAlt).app(m).app(n));
-            }
-          }
-        }
+          val m = v;
+            val n = v1;
+            PS.Control.Monad.Writer.Trans.Module.WriterT
+              .app(PS.Control.Alt.Module.alt.app(dictAlt).app(m).app(n));}
       })
   };
   @JvmField

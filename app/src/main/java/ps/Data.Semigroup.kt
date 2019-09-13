@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Semigroup
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val concatString = Foreign.Data.Semigroup.concatString;
   val concatArray = Foreign.Data.Semigroup.concatArray;

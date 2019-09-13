@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Functor.App
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val App = { x : Any -> x};
   @JvmField
@@ -12,15 +14,10 @@ object Module  {
   val showApp = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val fa = v;
-            (("(App " as String) + (((PS.Data.Show.Module.show.app(dictShow)
-                                        .app(fa
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val fa = v;
+          (("(App " as String) + (((PS.Data.Show.Module.show.app(dictShow)
+                                      .app(fa
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField
   val semigroupApp = { dictApply : Any ->
@@ -28,19 +25,13 @@ object Module  {
        PS.Data.Semigroup.Module.Semigroup
          .app({ v : Any ->
            { v1 : Any ->
-             when {
-              else -> {
-                val fa1 = v;
-                val fa2 = v1;
-                PS.Data.Functor.App.Module.App
-                  .app(PS.Control.Apply.Module.lift2.app(dictApply)
-                         .app(PS.Data.Semigroup.Module.append.app(dictSemigroup)
-                         )
-                         .app(fa1)
-                         .app(fa2));
-              }
-            }
-          }
+            val fa1 = v;
+              val fa2 = v1;
+              PS.Data.Functor.App.Module.App
+                .app(PS.Control.Apply.Module.lift2.app(dictApply)
+                       .app(PS.Data.Semigroup.Module.append.app(dictSemigroup))
+                       .app(fa1)
+                       .app(fa2));}
         })
     }
   };
@@ -48,13 +39,8 @@ object Module  {
   @JvmField
   val newtypeApp = PS.Data.Newtype.Module.Newtype
                      .app({ n : Any ->
-                          when {
-                           else -> {
-                             val a = n;
-                             a;
-                           }
-                         }
-                       })
+                         val a = n;
+                           a;})
                      .app(PS.Data.Functor.App.Module.App);
   @JvmField
   val monoidApp = { dictApplicative : Any ->
@@ -80,14 +66,9 @@ object Module  {
   @JvmField
   val hoistApp = { f : Any ->
      { v : Any ->
-       when {
-        else -> {
-          val f1 = f;
-          val fa = v;
-          PS.Data.Functor.App.Module.App.app(f1.app(fa));
-        }
-      }
-    }
+      val f1 = f;
+        val fa = v;
+        PS.Data.Functor.App.Module.App.app(f1.app(fa));}
   };
   @JvmField
   val functorWithIndexApp = { dictFunctorWithIndex : Any ->
@@ -106,14 +87,9 @@ object Module  {
        PS.Data.Eq.Module.Eq
          .app({ x : Any ->
            { y : Any ->
-             when {
-              else -> {
-                val l = x;
-                val r = y;
-                PS.Data.Eq.Module.eq1.app(dictEq1).app(dictEq).app(l).app(r);
-              }
-            }
-          }
+            val l = x;
+              val r = y;
+              PS.Data.Eq.Module.eq1.app(dictEq1).app(dictEq).app(l).app(r);}
         })
     }
   };
@@ -128,15 +104,10 @@ object Module  {
            })
          .app({ x : Any ->
            { y : Any ->
-             when {
-              else -> {
-                val l = x;
-                val r = y;
-                PS.Data.Ord.Module.compare1.app(dictOrd1).app(dictOrd).app(l)
-                  .app(r);
-              }
-            }
-          }
+            val l = x;
+              val r = y;
+              PS.Data.Ord.Module.compare1.app(dictOrd1).app(dictOrd).app(l)
+                .app(r);}
         })
     }
   };

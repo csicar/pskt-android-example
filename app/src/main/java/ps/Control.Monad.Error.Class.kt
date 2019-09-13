@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Monad.Error.Class
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField
   val MonadThrow = { Monad0 : Any ->
@@ -165,53 +167,41 @@ object Module  {
                     .app(Unit))
              .app(acquire)
              .app({ v : Any ->
-               when {
-                else -> {
-                  val resource = v;
-                  PS.Control.Bind.Module.bind
-                    .app((((dictMonadError as Map<String, Any>)["MonadThrow0"]!!
-                             .app(Unit) as Map<String, Any>)["Monad0"]!!
-                            .app(Unit) as Map<String, Any>)["Bind1"]!!
-                           .app(Unit))
-                    .app(PS.Data.Function.Module.apply
-                           .app(PS.Control.Monad.Error.Class.Module._try
-                                  .app(dictMonadError))
-                           .app(kleisli.app(resource)))
-                    .app({ v1 : Any ->
-                       when {
-                        else -> {
-                          val result = v1;
-                          PS.Control.Bind.Module.discard
-                            .app(PS.Control.Bind.Module.discardUnit)
-                            .app(
-                              (((dictMonadError as Map<String, Any>)["MonadThrow0"]!!
-                                  .app(Unit) as Map<String, Any>)["Monad0"]!!
-                                 .app(Unit) as Map<String, Any>)["Bind1"]!!
-                                .app(Unit))
-                            .app(release.app(resource))
-                            .app({ _ : Any ->
-                               PS.Data.Either.Module.either
-                                 .app(
-                                   PS.Control.Monad.Error.Class.Module.throwError
-                                     .app(
-                                     (dictMonadError as Map<String, Any>)["MonadThrow0"]!!
-                                       .app(Unit)))
-                                 .app(PS.Control.Applicative.Module.pure
-                                        .app(
-                                     (((dictMonadError as Map<String, Any>)["MonadThrow0"]!!
-                                         .app(Unit
-                                        ) as Map<String, Any>)["Monad0"]!!
-                                        .app(Unit
-                                       ) as Map<String, Any>)["Applicative0"]!!
-                                       .app(Unit)))
-                                 .app(result)
-                            });
-                        }
-                      }
-                    });
-                }
-              }
-            })
+              val resource = v;
+                PS.Control.Bind.Module.bind
+                  .app((((dictMonadError as Map<String, Any>)["MonadThrow0"]!!
+                           .app(Unit) as Map<String, Any>)["Monad0"]!!
+                          .app(Unit) as Map<String, Any>)["Bind1"]!!
+                         .app(Unit))
+                  .app(PS.Data.Function.Module.apply
+                         .app(PS.Control.Monad.Error.Class.Module._try
+                                .app(dictMonadError))
+                         .app(kleisli.app(resource)))
+                  .app({ v1 : Any ->
+                    val result = v1;
+                      PS.Control.Bind.Module.discard
+                        .app(PS.Control.Bind.Module.discardUnit)
+                        .app(
+                          (((dictMonadError as Map<String, Any>)["MonadThrow0"]!!
+                              .app(Unit) as Map<String, Any>)["Monad0"]!!
+                             .app(Unit) as Map<String, Any>)["Bind1"]!!
+                            .app(Unit))
+                        .app(release.app(resource))
+                        .app({ _ : Any ->
+                           PS.Data.Either.Module.either
+                             .app(PS.Control.Monad.Error.Class.Module.throwError
+                                    .app(
+                                 (dictMonadError as Map<String, Any>)["MonadThrow0"]!!
+                                   .app(Unit)))
+                             .app(PS.Control.Applicative.Module.pure
+                                    .app(
+                                 (((dictMonadError as Map<String, Any>)["MonadThrow0"]!!
+                                     .app(Unit) as Map<String, Any>)["Monad0"]!!
+                                    .app(Unit
+                                   ) as Map<String, Any>)["Applicative0"]!!
+                                   .app(Unit)))
+                             .app(result)
+                        });});})
         }
       }
     }

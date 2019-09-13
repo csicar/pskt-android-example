@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Functor.Contravariant
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Contravariant = { cmap : Any -> mapOf(("cmap" to cmap))};
   @JvmField val cmap = { dict : Any -> (dict as Map<String, Any>)["cmap"]!!};

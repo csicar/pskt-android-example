@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Interval.Duration.Iso
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   sealed class _Type_Error ()  {
     object IsEmpty : _Type_Error() {};
@@ -17,30 +19,17 @@ object Module  {
      _Type_Error.InvalidFractionalUse(value0)
   };
   @JvmField val IsoDuration = { x : Any -> x};
-  @JvmField
-  val unIsoDuration = { v : Any ->
-     when {
-      else -> {
-        val a = v;
-        a;
-      }
-    }
-  };
+  @JvmField val unIsoDuration = { v : Any ->val a = v; a;};
   @JvmField
   val showIsoDuration = PS.Data.Show.Module.Show
                           .app({ v : Any ->
-       when {
-        else -> {
-          val d = v;
-          (("(IsoDuration " as String) + (((PS.Data.Show.Module.show
-                                              .app(
-                                                PS.Data.Interval.Duration.Module.showDuration
-                                              )
-                                              .app(d
-          ) as String) + (")" as String)) as String));
-        }
-      }
-    });
+      val d = v;
+        (("(IsoDuration " as String) + (((PS.Data.Show.Module.show
+                                            .app(
+                                              PS.Data.Interval.Duration.Module.showDuration
+                                            )
+                                            .app(d
+        ) as String) + (")" as String)) as String));});
   @JvmField
   val showError = PS.Data.Show.Module.Show
                     .app({ v : Any ->
@@ -112,17 +101,11 @@ object Module  {
   val eqIsoDuration = PS.Data.Eq.Module.Eq
                         .app({ x : Any ->
        { y : Any ->
-         when {
-          else -> {
-            val l = x;
-            val r = y;
-            PS.Data.Eq.Module.eq
-              .app(PS.Data.Interval.Duration.Module.eqDuration)
-              .app(l)
-              .app(r);
-          }
-        }
-      }
+        val l = x;
+          val r = y;
+          PS.Data.Eq.Module.eq.app(PS.Data.Interval.Duration.Module.eqDuration)
+            .app(l)
+            .app(r);}
     });
   @JvmField
   val ordIsoDuration = PS.Data.Ord.Module.Ord
@@ -131,17 +114,12 @@ object Module  {
                            })
                          .app({ x : Any ->
        { y : Any ->
-         when {
-          else -> {
-            val l = x;
-            val r = y;
-            PS.Data.Ord.Module.compare
-              .app(PS.Data.Interval.Duration.Module.ordDuration)
-              .app(l)
-              .app(r);
-          }
-        }
-      }
+        val l = x;
+          val r = y;
+          PS.Data.Ord.Module.compare
+            .app(PS.Data.Interval.Duration.Module.ordDuration)
+            .app(l)
+            .app(r);}
     });
   @JvmField
   val eqError = PS.Data.Eq.Module.Eq
@@ -439,32 +417,27 @@ object Module  {
   };
   @JvmField
   val checkValidIsoDuration = { v : Any ->
-     when {
-      else -> {
-        val asMap = v;
-        object   {
-            val check = PS.Data.Foldable.Module.fold
-                          .app(PS.Data.Foldable.Module.foldableArray)
-                          .app(PS.Data.Monoid.Module.monoidFn
-                                 .app(PS.Data.List.Types.Module.monoidList))
-                          .app(listOf(
-                PS.Data.Interval.Duration.Iso.Module.checkWeekUsage,  
-                PS.Data.Interval.Duration.Iso.Module.checkEmptiness,  
-                PS.Data.Interval.Duration.Iso.Module.checkFractionalUse,  
-                PS.Data.Interval.Duration.Iso.Module.checkNegativeValues));
-            val asList = PS.Data.List.Module.reverse
-                           .app(PS.Data.Map.Internal.Module.toUnfoldable
-                                  .app(PS.Data.List.Types.Module.unfoldableList)
-                                  .app(asMap));
-          }
-          .run({
-            val check = this.check;
-            val asList = this.asList;
-            check.app(mapOf(("asList" to asList),  ("asMap" to asMap)));
-          });
-      }
-    }
-  };
+    val asMap = v;
+      object   {
+          val check = PS.Data.Foldable.Module.fold
+                        .app(PS.Data.Foldable.Module.foldableArray)
+                        .app(PS.Data.Monoid.Module.monoidFn
+                               .app(PS.Data.List.Types.Module.monoidList))
+                        .app(listOf(
+              PS.Data.Interval.Duration.Iso.Module.checkWeekUsage,  
+              PS.Data.Interval.Duration.Iso.Module.checkEmptiness,  
+              PS.Data.Interval.Duration.Iso.Module.checkFractionalUse,  
+              PS.Data.Interval.Duration.Iso.Module.checkNegativeValues));
+          val asList = PS.Data.List.Module.reverse
+                         .app(PS.Data.Map.Internal.Module.toUnfoldable
+                                .app(PS.Data.List.Types.Module.unfoldableList)
+                                .app(asMap));
+        }
+        .run({
+          val check = this.check;
+          val asList = this.asList;
+          check.app(mapOf(("asList" to asList),  ("asMap" to asMap)));
+        });};
   @JvmField
   val mkIsoDuration = { d : Any ->
      object   {

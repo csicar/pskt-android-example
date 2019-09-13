@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Functor.Product
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Product = { x : Any -> x};
   @JvmField
@@ -35,13 +37,8 @@ object Module  {
   @JvmField
   val newtypeProduct = PS.Data.Newtype.Module.Newtype
                          .app({ n : Any ->
-                              when {
-                               else -> {
-                                 val a = n;
-                                 a;
-                               }
-                             }
-                           })
+                             val a = n;
+                               a;})
                          .app(PS.Data.Functor.Product.Module.Product);
   @JvmField
   val functorProduct = { dictFunctor : Any ->
@@ -49,21 +46,15 @@ object Module  {
        PS.Data.Functor.Module.Functor
          .app({ f : Any ->
            { v : Any ->
-             when {
-              else -> {
-                val f1 = f;
-                val fga = v;
-                PS.Data.Functor.Product.Module.Product
-                  .app(PS.Data.Bifunctor.Module.bimap
-                         .app(PS.Data.Tuple.Module.bifunctorTuple)
-                         .app(PS.Data.Functor.Module.map.app(dictFunctor)
-                                .app(f1))
-                         .app(PS.Data.Functor.Module.map.app(dictFunctor1)
-                                .app(f1))
-                         .app(fga));
-              }
-            }
-          }
+            val f1 = f;
+              val fga = v;
+              PS.Data.Functor.Product.Module.Product
+                .app(PS.Data.Bifunctor.Module.bimap
+                       .app(PS.Data.Tuple.Module.bifunctorTuple)
+                       .app(PS.Data.Functor.Module.map.app(dictFunctor).app(f1))
+                       .app(PS.Data.Functor.Module.map.app(dictFunctor1).app(f1)
+                       )
+                       .app(fga));}
         })
     }
   };
@@ -80,33 +71,28 @@ object Module  {
            })
          .app({ f : Any ->
            { v : Any ->
-             when {
-              else -> {
-                val f1 = f;
-                val fga = v;
-                PS.Data.Functor.Product.Module.Product
-                  .app(PS.Data.Bifunctor.Module.bimap
-                         .app(PS.Data.Tuple.Module.bifunctorTuple)
-                         .app(PS.Data.FunctorWithIndex.Module.mapWithIndex
-                                .app(dictFunctorWithIndex)
-                                .app(PS.Control.Semigroupoid.Module.compose
-                                       .app(
-                                         PS.Control.Semigroupoid.Module.semigroupoidFn
-                                       )
-                                       .app(f1)
-                                       .app(PS.Data.Either.Module.Left)))
-                         .app(PS.Data.FunctorWithIndex.Module.mapWithIndex
-                                .app(dictFunctorWithIndex1)
-                                .app(PS.Control.Semigroupoid.Module.compose
-                                       .app(
-                                         PS.Control.Semigroupoid.Module.semigroupoidFn
-                                       )
-                                       .app(f1)
-                                       .app(PS.Data.Either.Module.Right)))
-                         .app(fga));
-              }
-            }
-          }
+            val f1 = f;
+              val fga = v;
+              PS.Data.Functor.Product.Module.Product
+                .app(PS.Data.Bifunctor.Module.bimap
+                       .app(PS.Data.Tuple.Module.bifunctorTuple)
+                       .app(PS.Data.FunctorWithIndex.Module.mapWithIndex
+                              .app(dictFunctorWithIndex)
+                              .app(PS.Control.Semigroupoid.Module.compose
+                                     .app(
+                                       PS.Control.Semigroupoid.Module.semigroupoidFn
+                                     )
+                                     .app(f1)
+                                     .app(PS.Data.Either.Module.Left)))
+                       .app(PS.Data.FunctorWithIndex.Module.mapWithIndex
+                              .app(dictFunctorWithIndex1)
+                              .app(PS.Control.Semigroupoid.Module.compose
+                                     .app(
+                                       PS.Control.Semigroupoid.Module.semigroupoidFn
+                                     )
+                                     .app(f1)
+                                     .app(PS.Data.Either.Module.Right)))
+                       .app(fga));}
         })
     }
   };
@@ -552,20 +538,15 @@ object Module  {
   val bihoistProduct = { natF : Any ->
      { natG : Any ->
        { v : Any ->
-         when {
-          else -> {
-            val natF1 = natF;
-            val natG1 = natG;
-            val e = v;
-            PS.Data.Functor.Product.Module.Product
-              .app(PS.Data.Bifunctor.Module.bimap
-                     .app(PS.Data.Tuple.Module.bifunctorTuple)
-                     .app(natF1)
-                     .app(natG1)
-                     .app(e));
-          }
-        }
-      }
+        val natF1 = natF;
+          val natG1 = natG;
+          val e = v;
+          PS.Data.Functor.Product.Module.Product
+            .app(PS.Data.Bifunctor.Module.bimap
+                   .app(PS.Data.Tuple.Module.bifunctorTuple)
+                   .app(natF1)
+                   .app(natG1)
+                   .app(e));}
     }
   };
   @JvmField

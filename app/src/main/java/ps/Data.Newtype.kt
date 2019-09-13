@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Newtype
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField
   val Newtype = { unwrap : Any ->
@@ -201,91 +203,51 @@ object Module  {
   @JvmField
   val newtypeMultiplicative = PS.Data.Newtype.Module.Newtype
                                 .app({ v : Any ->
-                                     when {
-                                      else -> {
-                                        val a = v;
-                                        a;
-                                      }
-                                    }
-                                  })
+                                    val a = v;
+                                      a;})
                                 .app(
     PS.Data.Monoid.Multiplicative.Module.Multiplicative);
   @JvmField
   val newtypeLast = PS.Data.Newtype.Module.Newtype
                       .app({ v : Any ->
-                           when {
-                            else -> {
-                              val a = v;
-                              a;
-                            }
-                          }
-                        })
+                          val a = v;
+                            a;})
                       .app(PS.Data.Semigroup.Last.Module.Last);
   @JvmField
   val newtypeFirst = PS.Data.Newtype.Module.Newtype
                        .app({ v : Any ->
-                            when {
-                             else -> {
-                               val a = v;
-                               a;
-                             }
-                           }
-                         })
+                           val a = v;
+                             a;})
                        .app(PS.Data.Semigroup.First.Module.First);
   @JvmField
   val newtypeEndo = PS.Data.Newtype.Module.Newtype
                       .app({ v : Any ->
-                           when {
-                            else -> {
-                              val a = v;
-                              a;
-                            }
-                          }
-                        })
+                          val a = v;
+                            a;})
                       .app(PS.Data.Monoid.Endo.Module.Endo);
   @JvmField
   val newtypeDual = PS.Data.Newtype.Module.Newtype
                       .app({ v : Any ->
-                           when {
-                            else -> {
-                              val a = v;
-                              a;
-                            }
-                          }
-                        })
+                          val a = v;
+                            a;})
                       .app(PS.Data.Monoid.Dual.Module.Dual);
   @JvmField
   val newtypeDisj = PS.Data.Newtype.Module.Newtype
                       .app({ v : Any ->
-                           when {
-                            else -> {
-                              val a = v;
-                              a;
-                            }
-                          }
-                        })
+                          val a = v;
+                            a;})
                       .app(PS.Data.Monoid.Disj.Module.Disj);
   @JvmField
   val newtypeConj = PS.Data.Newtype.Module.Newtype
                       .app({ v : Any ->
-                           when {
-                            else -> {
-                              val a = v;
-                              a;
-                            }
-                          }
-                        })
+                          val a = v;
+                            a;})
                       .app(PS.Data.Monoid.Conj.Module.Conj);
   @JvmField
   val newtypeAdditive = PS.Data.Newtype.Module.Newtype
                           .app({ v : Any ->
-                               when {
-                                else -> {
-                                  val a = v;
-                                  a;
-                                }
-                              }
-                            })
+                              val a = v;
+                                a;})
                           .app(PS.Data.Monoid.Additive.Module.Additive);
   @JvmField
   val collect = { dictFunctor : Any ->

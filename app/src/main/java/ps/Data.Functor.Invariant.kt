@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Functor.Invariant
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Invariant = { imap : Any -> mapOf(("imap" to imap))};
   @JvmField
@@ -8,15 +10,9 @@ object Module  {
                                   .app({ f : Any ->
        { v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v1;
-              PS.Data.Monoid.Multiplicative.Module.Multiplicative
-                .app(f1.app(x));
-            }
-          }
-        }
+          val f1 = f;
+            val x = v1;
+            PS.Data.Monoid.Multiplicative.Module.Multiplicative.app(f1.app(x));}
       }
     });
   @JvmField
@@ -24,23 +20,17 @@ object Module  {
                         .app({ ab : Any ->
        { ba : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val ab1 = ab;
-              val ba1 = ba;
-              val f = v;
-              PS.Data.Monoid.Endo.Module.Endo
-                .app(PS.Control.Semigroupoid.Module.compose
-                       .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
-                       .app(ab1)
-                       .app(PS.Control.Semigroupoid.Module.compose
-                              .app(PS.Control.Semigroupoid.Module.semigroupoidFn
-                              )
-                              .app(f)
-                              .app(ba1)));
-            }
-          }
-        }
+          val ab1 = ab;
+            val ba1 = ba;
+            val f = v;
+            PS.Data.Monoid.Endo.Module.Endo
+              .app(PS.Control.Semigroupoid.Module.compose
+                     .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
+                     .app(ab1)
+                     .app(PS.Control.Semigroupoid.Module.compose
+                            .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
+                            .app(f)
+                            .app(ba1)));}
       }
     });
   @JvmField
@@ -48,14 +38,9 @@ object Module  {
                         .app({ f : Any ->
        { v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v1;
-              PS.Data.Monoid.Dual.Module.Dual.app(f1.app(x));
-            }
-          }
-        }
+          val f1 = f;
+            val x = v1;
+            PS.Data.Monoid.Dual.Module.Dual.app(f1.app(x));}
       }
     });
   @JvmField
@@ -63,14 +48,9 @@ object Module  {
                         .app({ f : Any ->
        { v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v1;
-              PS.Data.Monoid.Disj.Module.Disj.app(f1.app(x));
-            }
-          }
-        }
+          val f1 = f;
+            val x = v1;
+            PS.Data.Monoid.Disj.Module.Disj.app(f1.app(x));}
       }
     });
   @JvmField
@@ -78,14 +58,9 @@ object Module  {
                         .app({ f : Any ->
        { v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v1;
-              PS.Data.Monoid.Conj.Module.Conj.app(f1.app(x));
-            }
-          }
-        }
+          val f1 = f;
+            val x = v1;
+            PS.Data.Monoid.Conj.Module.Conj.app(f1.app(x));}
       }
     });
   @JvmField
@@ -93,14 +68,9 @@ object Module  {
                             .app({ f : Any ->
        { v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val x = v1;
-              PS.Data.Monoid.Additive.Module.Additive.app(f1.app(x));
-            }
-          }
-        }
+          val f1 = f;
+            val x = v1;
+            PS.Data.Monoid.Additive.Module.Additive.app(f1.app(x));}
       }
     });
   @JvmField

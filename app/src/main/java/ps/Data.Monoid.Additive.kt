@@ -1,38 +1,29 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Monoid.Additive
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Additive = { x : Any -> x};
   @JvmField
   val showAdditive = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val a = v;
-            (("(Additive " as String) + (((PS.Data.Show.Module.show
-                                             .app(dictShow)
-                                             .app(a
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val a = v;
+          (("(Additive " as String) + (((PS.Data.Show.Module.show.app(dictShow)
+                                           .app(a
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField
   val semigroupAdditive = { dictSemiring : Any ->
      PS.Data.Semigroup.Module.Semigroup
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val a = v;
-              val b = v1;
-              PS.Data.Monoid.Additive.Module.Additive
-                .app(PS.Data.Semiring.Module.add.app(dictSemiring).app(a).app(b)
-              );
-            }
-          }
-        }
+          val a = v;
+            val b = v1;
+            PS.Data.Monoid.Additive.Module.Additive
+              .app(PS.Data.Semiring.Module.add.app(dictSemiring).app(a).app(b)
+            );}
       })
   };
   @JvmField val ordAdditive = { dictOrd : Any -> dictOrd};
@@ -49,13 +40,8 @@ object Module  {
   val functorAdditive = PS.Data.Functor.Module.Functor
                           .app({ f : Any ->
        { m : Any ->
-         when {
-          else -> {
-            val v = m;
-            PS.Data.Monoid.Additive.Module.Additive.app(f.app(v));
-          }
-        }
-      }
+        val v = m;
+          PS.Data.Monoid.Additive.Module.Additive.app(f.app(v));}
     });
   @JvmField val eqAdditive = { dictEq : Any -> dictEq};
   @JvmField
@@ -81,14 +67,9 @@ object Module  {
                           })
                         .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val f = v;
-            val x = v1;
-            PS.Data.Monoid.Additive.Module.Additive.app(f.app(x));
-          }
-        }
-      }
+        val f = v;
+          val x = v1;
+          PS.Data.Monoid.Additive.Module.Additive.app(f.app(x));}
     });
   @JvmField
   val bindAdditive = PS.Control.Bind.Module.Bind
@@ -97,14 +78,9 @@ object Module  {
                          })
                        .app({ v : Any ->
        { f : Any ->
-         when {
-          else -> {
-            val x = v;
-            val f1 = f;
-            f1.app(x);
-          }
-        }
-      }
+        val x = v;
+          val f1 = f;
+          f1.app(x);}
     });
   @JvmField
   val applicativeAdditive = PS.Control.Applicative.Module.Applicative

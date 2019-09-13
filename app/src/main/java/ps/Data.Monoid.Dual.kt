@@ -1,37 +1,29 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Monoid.Dual
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Dual = { x : Any -> x};
   @JvmField
   val showDual = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val a = v;
-            (("(Dual " as String) + (((PS.Data.Show.Module.show.app(dictShow)
-                                         .app(a
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val a = v;
+          (("(Dual " as String) + (((PS.Data.Show.Module.show.app(dictShow)
+                                       .app(a
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField
   val semigroupDual = { dictSemigroup : Any ->
      PS.Data.Semigroup.Module.Semigroup
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val x = v;
-              val y = v1;
-              PS.Data.Monoid.Dual.Module.Dual
-                .app(PS.Data.Semigroup.Module.append.app(dictSemigroup).app(y)
-                       .app(x));
-            }
-          }
-        }
+          val x = v;
+            val y = v1;
+            PS.Data.Monoid.Dual.Module.Dual
+              .app(PS.Data.Semigroup.Module.append.app(dictSemigroup).app(y)
+                     .app(x));}
       })
   };
   @JvmField val ordDual = { dictOrd : Any -> dictOrd};
@@ -49,13 +41,8 @@ object Module  {
   val functorDual = PS.Data.Functor.Module.Functor
                       .app({ f : Any ->
        { m : Any ->
-         when {
-          else -> {
-            val v = m;
-            PS.Data.Monoid.Dual.Module.Dual.app(f.app(v));
-          }
-        }
-      }
+        val v = m;
+          PS.Data.Monoid.Dual.Module.Dual.app(f.app(v));}
     });
   @JvmField val eqDual = { dictEq : Any -> dictEq};
   @JvmField
@@ -80,14 +67,9 @@ object Module  {
                       })
                     .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val f = v;
-            val x = v1;
-            PS.Data.Monoid.Dual.Module.Dual.app(f.app(x));
-          }
-        }
-      }
+        val f = v;
+          val x = v1;
+          PS.Data.Monoid.Dual.Module.Dual.app(f.app(x));}
     });
   @JvmField
   val bindDual = PS.Control.Bind.Module.Bind
@@ -96,14 +78,9 @@ object Module  {
                      })
                    .app({ v : Any ->
        { f : Any ->
-         when {
-          else -> {
-            val x = v;
-            val f1 = f;
-            f1.app(x);
-          }
-        }
-      }
+        val x = v;
+          val f1 = f;
+          f1.app(x);}
     });
   @JvmField
   val applicativeDual = PS.Control.Applicative.Module.Applicative

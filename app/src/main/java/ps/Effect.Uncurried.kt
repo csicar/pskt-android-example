@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Effect.Uncurried
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val mkEffectFn1 = Foreign.Effect.Uncurried.mkEffectFn1;
   val mkEffectFn2 = Foreign.Effect.Uncurried.mkEffectFn2;

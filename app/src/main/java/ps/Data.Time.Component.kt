@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Time.Component
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Second = { x : Any -> x};
   @JvmField val Minute = { x : Any -> x};
@@ -9,55 +11,35 @@ object Module  {
   @JvmField
   val showSecond = PS.Data.Show.Module.Show
                      .app({ v : Any ->
-       when {
-        else -> {
-          val m = v;
-          (("(Second " as String) + (((PS.Data.Show.Module.show
-                                         .app(PS.Data.Show.Module.showInt)
-                                         .app(m
-          ) as String) + (")" as String)) as String));
-        }
-      }
-    });
+      val m = v;
+        (("(Second " as String) + (((PS.Data.Show.Module.show
+                                       .app(PS.Data.Show.Module.showInt)
+                                       .app(m
+        ) as String) + (")" as String)) as String));});
   @JvmField
   val showMinute = PS.Data.Show.Module.Show
                      .app({ v : Any ->
-       when {
-        else -> {
-          val m = v;
-          (("(Minute " as String) + (((PS.Data.Show.Module.show
-                                         .app(PS.Data.Show.Module.showInt)
-                                         .app(m
-          ) as String) + (")" as String)) as String));
-        }
-      }
-    });
+      val m = v;
+        (("(Minute " as String) + (((PS.Data.Show.Module.show
+                                       .app(PS.Data.Show.Module.showInt)
+                                       .app(m
+        ) as String) + (")" as String)) as String));});
   @JvmField
   val showMillisecond = PS.Data.Show.Module.Show
                           .app({ v : Any ->
-       when {
-        else -> {
-          val m = v;
-          (("(Millisecond " as String) + (((PS.Data.Show.Module.show
-                                              .app(PS.Data.Show.Module.showInt)
-                                              .app(m
-          ) as String) + (")" as String)) as String));
-        }
-      }
-    });
+      val m = v;
+        (("(Millisecond " as String) + (((PS.Data.Show.Module.show
+                                            .app(PS.Data.Show.Module.showInt)
+                                            .app(m
+        ) as String) + (")" as String)) as String));});
   @JvmField
   val showHour = PS.Data.Show.Module.Show
                    .app({ v : Any ->
-       when {
-        else -> {
-          val h = v;
-          (("(Hour " as String) + (((PS.Data.Show.Module.show
-                                       .app(PS.Data.Show.Module.showInt)
-                                       .app(h
-          ) as String) + (")" as String)) as String));
-        }
-      }
-    });
+      val h = v;
+        (("(Hour " as String) + (((PS.Data.Show.Module.show
+                                     .app(PS.Data.Show.Module.showInt)
+                                     .app(h
+        ) as String) + (")" as String)) as String));});
   @JvmField val ordSecond = PS.Data.Ord.Module.ordInt;
   @JvmField val ordMinute = PS.Data.Ord.Module.ordInt;
   @JvmField val ordMillisecond = PS.Data.Ord.Module.ordInt;
@@ -108,13 +90,8 @@ object Module  {
                                          .app(PS.Data.Enum.Module.Cardinality
                                                 .app(60))
                                          .app({ v : Any ->
-                                              when {
-                                               else -> {
-                                                 val n = v;
-                                                 n;
-                                               }
-                                             }
-                                           })
+                                             val n = v;
+                                               n;})
                                          .app({ n : Any ->
        when {
         (PS.Data.HeytingAlgebra.Module.conj
@@ -195,13 +172,8 @@ object Module  {
                                          .app(PS.Data.Enum.Module.Cardinality
                                                 .app(60))
                                          .app({ v : Any ->
-                                              when {
-                                               else -> {
-                                                 val n = v;
-                                                 n;
-                                               }
-                                             }
-                                           })
+                                             val n = v;
+                                               n;})
                                          .app({ n : Any ->
        when {
         (PS.Data.HeytingAlgebra.Module.conj
@@ -283,13 +255,8 @@ object Module  {
                                                 PS.Data.Enum.Module.Cardinality
                                                   .app(1000))
                                               .app({ v : Any ->
-                                                   when {
-                                                    else -> {
-                                                      val n = v;
-                                                      n;
-                                                    }
-                                                  }
-                                                })
+                                                  val n = v;
+                                                    n;})
                                               .app({ n : Any ->
        when {
         (PS.Data.HeytingAlgebra.Module.conj
@@ -370,13 +337,8 @@ object Module  {
                                        .app(PS.Data.Enum.Module.Cardinality
                                               .app(24))
                                        .app({ v : Any ->
-                                            when {
-                                             else -> {
-                                               val n = v;
-                                               n;
-                                             }
-                                           }
-                                         })
+                                           val n = v;
+                                             n;})
                                        .app({ n : Any ->
        when {
         (PS.Data.HeytingAlgebra.Module.conj

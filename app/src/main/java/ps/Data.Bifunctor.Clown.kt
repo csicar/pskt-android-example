@@ -1,45 +1,32 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Bifunctor.Clown
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Clown = { x : Any -> x};
   @JvmField
   val showClown = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val x = v;
-            (("(Clown " as String) + (((PS.Data.Show.Module.show.app(dictShow)
-                                          .app(x
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val x = v;
+          (("(Clown " as String) + (((PS.Data.Show.Module.show.app(dictShow)
+                                        .app(x
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField val ordClown = { dictOrd : Any -> dictOrd};
   @JvmField
   val newtypeClown = PS.Data.Newtype.Module.Newtype
                        .app({ n : Any ->
-                            when {
-                             else -> {
-                               val a = n;
-                               a;
-                             }
-                           }
-                         })
+                           val a = n;
+                             a;})
                        .app(PS.Data.Bifunctor.Clown.Module.Clown);
   @JvmField
   val functorClown = PS.Data.Functor.Module.Functor
                        .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val a = v1;
-            PS.Data.Bifunctor.Clown.Module.Clown.app(a);
-          }
-        }
-      }
+        val a = v1;
+          PS.Data.Bifunctor.Clown.Module.Clown.app(a);}
     });
   @JvmField val eqClown = { dictEq : Any -> dictEq};
   @JvmField
@@ -48,16 +35,11 @@ object Module  {
        .app({ f : Any ->
          { v : Any ->
            { v1 : Any ->
-             when {
-              else -> {
-                val f1 = f;
-                val a = v1;
-                PS.Data.Bifunctor.Clown.Module.Clown
-                  .app(PS.Data.Functor.Module.map.app(dictFunctor).app(f1)
-                         .app(a));
-              }
-            }
-          }
+            val f1 = f;
+              val a = v1;
+              PS.Data.Bifunctor.Clown.Module.Clown
+                .app(PS.Data.Functor.Module.map.app(dictFunctor).app(f1).app(a)
+              );}
         }
       })
   };
@@ -70,16 +52,11 @@ object Module  {
          })
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val fg = v;
-              val xy = v1;
-              PS.Data.Bifunctor.Clown.Module.Clown
-                .app(PS.Control.Apply.Module.apply.app(dictApply).app(fg)
-                       .app(xy));
-            }
-          }
-        }
+          val fg = v;
+            val xy = v1;
+            PS.Data.Bifunctor.Clown.Module.Clown
+              .app(PS.Control.Apply.Module.apply.app(dictApply).app(fg).app(xy)
+            );}
       })
   };
   @JvmField

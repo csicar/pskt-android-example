@@ -10,6 +10,7 @@ import android.graphics.Color
 import android.view.*
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.CoroutineScope
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
 

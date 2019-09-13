@@ -1,11 +1,13 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.DateTime.Instant
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val fromDateTimeImpl = Foreign.Data.DateTime.Instant.fromDateTimeImpl;
   val toDateTimeImpl = Foreign.Data.DateTime.Instant.toDateTimeImpl;
   @JvmField val Instant = { x : Any -> x};
-  @JvmField val unInstant = { v : Any -> when { else -> { val ms = v; ms; } }};
+  @JvmField val unInstant = { v : Any ->val ms = v; ms;};
   @JvmField
   val toDateTime = object   {
                        val mkDateTime = PS.Partial.Unsafe.Module.unsafePartial
@@ -51,18 +53,13 @@ object Module  {
   @JvmField
   val showInstant = PS.Data.Show.Module.Show
                       .app({ v : Any ->
-       when {
-        else -> {
-          val ms = v;
-          (("(Instant " as String) + (((PS.Data.Show.Module.show
-                                          .app(
-                                            PS.Data.Time.Duration.Module.showMilliseconds
-                                          )
-                                          .app(ms
-          ) as String) + (")" as String)) as String));
-        }
-      }
-    });
+      val ms = v;
+        (("(Instant " as String) + (((PS.Data.Show.Module.show
+                                        .app(
+                                          PS.Data.Time.Duration.Module.showMilliseconds
+                                        )
+                                        .app(ms
+        ) as String) + (")" as String)) as String));});
   @JvmField val ordDateTime = PS.Data.Time.Duration.Module.ordMilliseconds;
   @JvmField
   val instant = { v : Any ->

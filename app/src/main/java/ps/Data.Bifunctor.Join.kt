@@ -1,33 +1,25 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Bifunctor.Join
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Join = { x : Any -> x};
   @JvmField
   val showJoin = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val x = v;
-            (("(Join " as String) + (((PS.Data.Show.Module.show.app(dictShow)
-                                         .app(x
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val x = v;
+          (("(Join " as String) + (((PS.Data.Show.Module.show.app(dictShow)
+                                       .app(x
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField val ordJoin = { dictOrd : Any -> dictOrd};
   @JvmField
   val newtypeJoin = PS.Data.Newtype.Module.Newtype
                       .app({ n : Any ->
-                           when {
-                            else -> {
-                              val a = n;
-                              a;
-                            }
-                          }
-                        })
+                          val a = n;
+                            a;})
                       .app(PS.Data.Bifunctor.Join.Module.Join);
   @JvmField val eqJoin = { dictEq : Any -> dictEq};
   @JvmField
@@ -35,17 +27,12 @@ object Module  {
      PS.Data.Functor.Module.Functor
        .app({ f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val a = v;
-              PS.Data.Bifunctor.Join.Module.Join
-                .app(PS.Data.Bifunctor.Module.bimap.app(dictBifunctor).app(f1)
-                       .app(f1)
-                       .app(a));
-            }
-          }
-        }
+          val f1 = f;
+            val a = v;
+            PS.Data.Bifunctor.Join.Module.Join
+              .app(PS.Data.Bifunctor.Module.bimap.app(dictBifunctor).app(f1)
+                     .app(f1)
+                     .app(a));}
       })
   };
   @JvmField
@@ -57,16 +44,11 @@ object Module  {
          })
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val f = v;
-              val a = v1;
-              PS.Data.Bifunctor.Join.Module.Join
-                .app(PS.Control.Biapply.Module.biapply.app(dictBiapply).app(f)
-                       .app(a));
-            }
-          }
-        }
+          val f = v;
+            val a = v1;
+            PS.Data.Bifunctor.Join.Module.Join
+              .app(PS.Control.Biapply.Module.biapply.app(dictBiapply).app(f)
+                     .app(a));}
       })
   };
   @JvmField

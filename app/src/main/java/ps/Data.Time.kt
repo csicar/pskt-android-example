@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Time
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   sealed class _Type_Time ()  {
     data class Time (val value0 : Any,  val value1 : Any,  val value2 : Any, 
@@ -140,70 +142,42 @@ object Module  {
   };
   @JvmField
   val millisToTime = { v : Any ->
-     when {
-      else -> {
-        val ms = v;
-        val ms_tick = v;
-        object   {
-            val secondLength = 1000.0;
-            val minuteLength = 60000.0;
-            val hourLength = 3600000.0;
-            val hours = PS.Math.Module.floor
+    val ms = v;
+      val ms_tick = v;
+      object   {
+          val secondLength = 1000.0;
+          val minuteLength = 60000.0;
+          val hourLength = 3600000.0;
+          val hours = PS.Math.Module.floor
+                        .app(PS.Data.EuclideanRing.Module.div
+                               .app(
+                                 PS.Data.EuclideanRing.Module.euclideanRingNumber
+                               )
+                               .app(ms_tick)
+                               .app(hourLength));
+          val minutes = PS.Math.Module.floor
                           .app(PS.Data.EuclideanRing.Module.div
                                  .app(
                                    PS.Data.EuclideanRing.Module.euclideanRingNumber
                                  )
-                                 .app(ms_tick)
-                                 .app(hourLength));
-            val minutes = PS.Math.Module.floor
-                            .app(PS.Data.EuclideanRing.Module.div
-                                   .app(
-                                     PS.Data.EuclideanRing.Module.euclideanRingNumber
-                                   )
-                                   .app(PS.Data.Ring.Module.sub
-                                          .app(PS.Data.Ring.Module.ringNumber)
-                                          .app(ms_tick)
-                                          .app(PS.Data.Semiring.Module.mul
-                                                 .app(
-                                                   PS.Data.Semiring.Module.semiringNumber
-                                                 )
-                                                 .app(hours)
-                                                 .app(hourLength)))
-                                   .app(minuteLength));
-            val seconds = PS.Math.Module.floor
-                            .app(PS.Data.EuclideanRing.Module.div
-                                   .app(
-                                     PS.Data.EuclideanRing.Module.euclideanRingNumber
-                                   )
-                                   .app(PS.Data.Ring.Module.sub
-                                          .app(PS.Data.Ring.Module.ringNumber)
-                                          .app(ms_tick)
-                                          .app(PS.Data.Semiring.Module.add
-                                                 .app(
-                                                   PS.Data.Semiring.Module.semiringNumber
-                                                 )
-                                                 .app(
-                                                   PS.Data.Semiring.Module.mul
-                                                     .app(
-                                                       PS.Data.Semiring.Module.semiringNumber
-                                                     )
-                                                     .app(hours)
-                                                     .app(hourLength))
-                                                 .app(
-                                         PS.Data.Semiring.Module.mul
-                                           .app(
-                                             PS.Data.Semiring.Module.semiringNumber
-                                           )
-                                           .app(minutes)
-                                           .app(minuteLength))))
-                                   .app(secondLength));
-            val milliseconds = PS.Data.Ring.Module.sub
-                                 .app(PS.Data.Ring.Module.ringNumber)
-                                 .app(ms_tick)
-                                 .app(PS.Data.Semiring.Module.add
-                                        .app(
-                                          PS.Data.Semiring.Module.semiringNumber
-                                        )
+                                 .app(PS.Data.Ring.Module.sub
+                                        .app(PS.Data.Ring.Module.ringNumber)
+                                        .app(ms_tick)
+                                        .app(PS.Data.Semiring.Module.mul
+                                               .app(
+                                                 PS.Data.Semiring.Module.semiringNumber
+                                               )
+                                               .app(hours)
+                                               .app(hourLength)))
+                                 .app(minuteLength));
+          val seconds = PS.Math.Module.floor
+                          .app(PS.Data.EuclideanRing.Module.div
+                                 .app(
+                                   PS.Data.EuclideanRing.Module.euclideanRingNumber
+                                 )
+                                 .app(PS.Data.Ring.Module.sub
+                                        .app(PS.Data.Ring.Module.ringNumber)
+                                        .app(ms_tick)
                                         .app(PS.Data.Semiring.Module.add
                                                .app(
                                                  PS.Data.Semiring.Module.semiringNumber
@@ -219,63 +193,82 @@ object Module  {
                                                         PS.Data.Semiring.Module.semiringNumber
                                                       )
                                                       .app(minutes)
-                                                      .app(minuteLength)))
-                                        .app(PS.Data.Semiring.Module.mul
+                                                      .app(minuteLength))))
+                                 .app(secondLength));
+          val milliseconds = PS.Data.Ring.Module.sub
+                               .app(PS.Data.Ring.Module.ringNumber)
+                               .app(ms_tick)
+                               .app(PS.Data.Semiring.Module.add
+                                      .app(
+                                        PS.Data.Semiring.Module.semiringNumber)
+                                      .app(PS.Data.Semiring.Module.add
+                                             .app(
+                                               PS.Data.Semiring.Module.semiringNumber
+                                             )
+                                             .app(PS.Data.Semiring.Module.mul
+                                                    .app(
+                                                      PS.Data.Semiring.Module.semiringNumber
+                                                    )
+                                                    .app(hours)
+                                                    .app(hourLength))
+                                             .app(PS.Data.Semiring.Module.mul
+                                                    .app(
+                                                      PS.Data.Semiring.Module.semiringNumber
+                                                    )
+                                                    .app(minutes)
+                                                    .app(minuteLength)))
+                                      .app(PS.Data.Semiring.Module.mul
+                                             .app(
+                                               PS.Data.Semiring.Module.semiringNumber
+                                             )
+                                             .app(seconds)
+                                             .app(secondLength)));
+        }
+        .run({
+          val secondLength = this.secondLength;
+          val minuteLength = this.minuteLength;
+          val hourLength = this.hourLength;
+          val hours = this.hours;
+          val minutes = this.minutes;
+          val seconds = this.seconds;
+          val milliseconds = this.milliseconds;
+          PS.Data.Function.Module.apply
+            .app(PS.Partial.Unsafe.Module.unsafePartial
+                   .app({ dictPartial : Any ->
+                   PS.Data.Maybe.Module.fromJust.app(Unit)
+                }))
+            .app(PS.Control.Apply.Module.apply
+                   .app(PS.Data.Maybe.Module.applyMaybe)
+                   .app(PS.Control.Apply.Module.apply
+                          .app(PS.Data.Maybe.Module.applyMaybe)
+                          .app(PS.Control.Apply.Module.apply
+                                 .app(PS.Data.Maybe.Module.applyMaybe)
+                                 .app(PS.Data.Functor.Module.map
+                                        .app(PS.Data.Maybe.Module.functorMaybe)
+                                        .app(PS.Data.Time.Module.Time)
+                                        .app(PS.Data.Enum.Module.toEnum
                                                .app(
-                                                 PS.Data.Semiring.Module.semiringNumber
+                                                 PS.Data.Time.Component.Module.boundedEnumHour
                                                )
-                                               .app(seconds)
-                                               .app(secondLength)));
-          }
-          .run({
-            val secondLength = this.secondLength;
-            val minuteLength = this.minuteLength;
-            val hourLength = this.hourLength;
-            val hours = this.hours;
-            val minutes = this.minutes;
-            val seconds = this.seconds;
-            val milliseconds = this.milliseconds;
-            PS.Data.Function.Module.apply
-              .app(PS.Partial.Unsafe.Module.unsafePartial
-                     .app({ dictPartial : Any ->
-                     PS.Data.Maybe.Module.fromJust.app(Unit)
-                  }))
-              .app(PS.Control.Apply.Module.apply
-                     .app(PS.Data.Maybe.Module.applyMaybe)
-                     .app(PS.Control.Apply.Module.apply
-                            .app(PS.Data.Maybe.Module.applyMaybe)
-                            .app(PS.Control.Apply.Module.apply
-                                   .app(PS.Data.Maybe.Module.applyMaybe)
-                                   .app(PS.Data.Functor.Module.map
-                                          .app(PS.Data.Maybe.Module.functorMaybe
-                                          )
-                                          .app(PS.Data.Time.Module.Time)
-                                          .app(PS.Data.Enum.Module.toEnum
-                                                 .app(
-                                                   PS.Data.Time.Component.Module.boundedEnumHour
-                                                 )
-                                                 .app(PS.Data.Int.Module.floor
-                                                        .app(hours))))
-                                   .app(PS.Data.Enum.Module.toEnum
-                                          .app(
-                                            PS.Data.Time.Component.Module.boundedEnumMinute
-                                          )
-                                          .app(PS.Data.Int.Module.floor
-                                                 .app(minutes))))
-                            .app(PS.Data.Enum.Module.toEnum
-                                   .app(
-                                     PS.Data.Time.Component.Module.boundedEnumSecond
-                                   )
-                                   .app(PS.Data.Int.Module.floor.app(seconds))))
-                     .app(PS.Data.Enum.Module.toEnum
-                            .app(
-                              PS.Data.Time.Component.Module.boundedEnumMillisecond
-                            )
-                            .app(PS.Data.Int.Module.floor.app(milliseconds))));
-          });
-      }
-    }
-  };
+                                               .app(PS.Data.Int.Module.floor
+                                                      .app(hours))))
+                                 .app(PS.Data.Enum.Module.toEnum
+                                        .app(
+                                          PS.Data.Time.Component.Module.boundedEnumMinute
+                                        )
+                                        .app(PS.Data.Int.Module.floor
+                                               .app(minutes))))
+                          .app(PS.Data.Enum.Module.toEnum
+                                 .app(
+                                   PS.Data.Time.Component.Module.boundedEnumSecond
+                                 )
+                                 .app(PS.Data.Int.Module.floor.app(seconds))))
+                   .app(PS.Data.Enum.Module.toEnum
+                          .app(
+                            PS.Data.Time.Component.Module.boundedEnumMillisecond
+                          )
+                          .app(PS.Data.Int.Module.floor.app(milliseconds))));
+        });};
   @JvmField
   val hour = { v : Any ->
      when {

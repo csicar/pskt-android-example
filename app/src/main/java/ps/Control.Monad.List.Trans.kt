@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Monad.List.Trans
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   sealed class _Type_Step ()  {
     data class Yield (val value0 : Any,  val value1 : Any) : _Type_Step() {};
@@ -88,53 +90,45 @@ object Module  {
   @JvmField val uncons = (::__rec_uncons)();
   fun __rec_uncons(): Any = { dictMonad : Any ->
      { v : Any ->
-       when {
-        else -> {
-          val l = v;
-          object   {
-              val g = { v1 : Any ->
-                 when {
-                  (v1 is PS.Control.Monad.List.Trans.Module._Type_Step
-                           .Yield) -> {
-                    val a = v1.value0;
-                    val s = v1.value1;
-                    PS.Data.Function.Module.apply
-                      .app(PS.Control.Applicative.Module.pure
-                             .app(
-                          (dictMonad as Map<String, Any>)["Applicative0"]!!
-                            .app(Unit)))
-                      .app(PS.Data.Function.Module.apply
-                             .app(PS.Data.Maybe.Module.Just)
-                             .app(PS.Data.Tuple.Module.Tuple.app(a)
-                                    .app(PS.Data.Lazy.Module.force.app(s))));
-                  }
-                  (v1 is PS.Control.Monad.List.Trans.Module._Type_Step
-                           .Skip) -> {
-                    val s = v1.value0;
-                    PS.Control.Monad.List.Trans.Module.uncons.app(dictMonad)
-                      .app(PS.Data.Lazy.Module.force.app(s));
-                  }
-                  (v1 is PS.Control.Monad.List.Trans.Module._Type_Step
-                           .Done) -> {
-                    PS.Control.Applicative.Module.pure
-                      .app((dictMonad as Map<String, Any>)["Applicative0"]!!
-                             .app(Unit))
-                      .app(PS.Data.Maybe.Module.Nothing);
-                  }
-                  else -> (error("Error in Pattern Match") as Any)
+      val l = v;
+        object   {
+            val g = { v1 : Any ->
+               when {
+                (v1 is PS.Control.Monad.List.Trans.Module._Type_Step.Yield) -> {
+                  val a = v1.value0;
+                  val s = v1.value1;
+                  PS.Data.Function.Module.apply
+                    .app(PS.Control.Applicative.Module.pure
+                           .app(
+                        (dictMonad as Map<String, Any>)["Applicative0"]!!
+                          .app(Unit)))
+                    .app(PS.Data.Function.Module.apply
+                           .app(PS.Data.Maybe.Module.Just)
+                           .app(PS.Data.Tuple.Module.Tuple.app(a)
+                                  .app(PS.Data.Lazy.Module.force.app(s))));
                 }
-              };
-            }
-            .run({
-              val g = this.g;
-              PS.Control.Bind.Module.bind
-                .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
-                .app(l)
-                .app(g);
-            });
-        }
-      }
-    }
+                (v1 is PS.Control.Monad.List.Trans.Module._Type_Step.Skip) -> {
+                  val s = v1.value0;
+                  PS.Control.Monad.List.Trans.Module.uncons.app(dictMonad)
+                    .app(PS.Data.Lazy.Module.force.app(s));
+                }
+                (v1 is PS.Control.Monad.List.Trans.Module._Type_Step.Done) -> {
+                  PS.Control.Applicative.Module.pure
+                    .app((dictMonad as Map<String, Any>)["Applicative0"]!!
+                           .app(Unit))
+                    .app(PS.Data.Maybe.Module.Nothing);
+                }
+                else -> (error("Error in Pattern Match") as Any)
+              }
+            };
+          }
+          .run({
+            val g = this.g;
+            PS.Control.Bind.Module.bind
+              .app((dictMonad as Map<String, Any>)["Bind1"]!!.app(Unit))
+              .app(l)
+              .app(g);
+          });}
   };
   @JvmField
   val tail = { dictMonad : Any ->
@@ -153,16 +147,11 @@ object Module  {
   val stepMap = { dictFunctor : Any ->
      { f : Any ->
        { v : Any ->
-         when {
-          else -> {
-            val f1 = f;
-            val l = v;
-            PS.Data.Function.Module.apply
-              .app(PS.Control.Monad.List.Trans.Module.ListT)
-              .app(PS.Data.Functor.Module.map.app(dictFunctor).app(f1).app(l));
-          }
-        }
-      }
+        val f1 = f;
+          val l = v;
+          PS.Data.Function.Module.apply
+            .app(PS.Control.Monad.List.Trans.Module.ListT)
+            .app(PS.Data.Functor.Module.map.app(dictFunctor).app(f1).app(l));}
     }
   };
   @JvmField val takeWhile = (::__rec_takeWhile)();
@@ -468,26 +457,16 @@ object Module  {
                                 .app(dictMonad)
                                 .app(fa))
                          .app({ v : Any ->
-                      when {
-                       else -> {
-                         val ua = v;
-                         PS.Control.Bind.Module.bind
-                           .app((dictMonad as Map<String, Any>)["Bind1"]!!
-                                  .app(Unit))
-                           .app(PS.Control.Monad.List.Trans.Module.uncons
-                                  .app(dictMonad)
-                                  .app(fb))
-                           .app({ v1 : Any ->
-                              when {
-                               else -> {
-                                 val ub = v1;
-                                 g.app(ua).app(ub);
-                               }
-                             }
-                           });
-                       }
-                     }
-                   }))
+                     val ua = v;
+                       PS.Control.Bind.Module.bind
+                         .app((dictMonad as Map<String, Any>)["Bind1"]!!
+                                .app(Unit))
+                         .app(PS.Control.Monad.List.Trans.Module.uncons
+                                .app(dictMonad)
+                                .app(fb))
+                         .app({ v1 : Any ->
+                           val ub = v1;
+                             g.app(ua).app(ub);});}))
              }
            };
          }
@@ -521,13 +500,8 @@ object Module  {
   @JvmField
   val newtypeListT = PS.Data.Newtype.Module.Newtype
                        .app({ n : Any ->
-                            when {
-                             else -> {
-                               val a = n;
-                               a;
-                             }
-                           }
-                         })
+                           val a = n;
+                             a;})
                        .app(PS.Control.Monad.List.Trans.Module.ListT);
   @JvmField val mapMaybe = (::__rec_mapMaybe)();
   fun __rec_mapMaybe(): Any = { dictFunctor : Any ->

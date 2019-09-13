@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.List.ZipList
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val ZipList = { x : Any -> x};
   @JvmField
@@ -9,18 +11,13 @@ object Module  {
   val showZipList = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val xs = v;
-            (("(ZipList " as String) + (((PS.Data.Show.Module.show
-                                            .app(
-                                              PS.Data.List.Lazy.Types.Module.showList
-                                                .app(dictShow))
-                                            .app(xs
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val xs = v;
+          (("(ZipList " as String) + (((PS.Data.Show.Module.show
+                                          .app(
+                                            PS.Data.List.Lazy.Types.Module.showList
+                                              .app(dictShow))
+                                          .app(xs
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField val semigroupZipList = PS.Data.List.Lazy.Types.Module.semigroupList;
   @JvmField
@@ -30,13 +27,8 @@ object Module  {
   @JvmField
   val newtypeZipList = PS.Data.Newtype.Module.Newtype
                          .app({ n : Any ->
-                              when {
-                               else -> {
-                                 val a = n;
-                                 a;
-                               }
-                             }
-                           })
+                             val a = n;
+                               a;})
                          .app(PS.Data.List.ZipList.Module.ZipList);
   @JvmField val monoidZipList = PS.Data.List.Lazy.Types.Module.monoidList;
   @JvmField val functorZipList = PS.Data.List.Lazy.Types.Module.functorList;
@@ -52,18 +44,13 @@ object Module  {
                          })
                        .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val fs = v;
-            val xs = v1;
-            PS.Data.List.ZipList.Module.ZipList
-              .app(PS.Data.List.Lazy.Module.zipWith
-                     .app(PS.Data.Function.Module.apply)
-                     .app(fs)
-                     .app(xs));
-          }
-        }
-      }
+        val fs = v;
+          val xs = v1;
+          PS.Data.List.ZipList.Module.ZipList
+            .app(PS.Data.List.Lazy.Module.zipWith
+                   .app(PS.Data.Function.Module.apply)
+                   .app(fs)
+                   .app(xs));}
     });
   @JvmField
   val zipListIsNotBind = { dictFail : Any ->

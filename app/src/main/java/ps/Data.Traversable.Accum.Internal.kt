@@ -1,11 +1,13 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Traversable.Accum.Internal
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val StateR = { x : Any -> x};
   @JvmField val StateL = { x : Any -> x};
-  @JvmField val stateR = { v : Any -> when { else -> { val k = v; k; } }};
-  @JvmField val stateL = { v : Any -> when { else -> { val k = v; k; } }};
+  @JvmField val stateR = { v : Any ->val k = v; k;};
+  @JvmField val stateL = { v : Any ->val k = v; k;};
   @JvmField
   val functorStateR = PS.Data.Functor.Module.Functor
                         .app({ f : Any ->

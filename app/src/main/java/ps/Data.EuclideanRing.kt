@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.EuclideanRing
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val intDegree = Foreign.Data.EuclideanRing.intDegree;
   val intDiv = Foreign.Data.EuclideanRing.intDiv;

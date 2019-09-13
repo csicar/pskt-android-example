@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Apply
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val arrayApply = Foreign.Control.Apply.arrayApply;
   @JvmField

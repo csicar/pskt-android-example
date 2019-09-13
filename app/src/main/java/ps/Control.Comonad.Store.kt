@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Comonad.Store
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField
   val store = { f : Any ->
@@ -14,15 +16,10 @@ object Module  {
   };
   @JvmField
   val runStore = { v : Any ->
-     when {
-      else -> {
-        val s = v;
-        PS.Data.Tuple.Module.swap
-          .app(PS.Data.Functor.Module.map.app(PS.Data.Tuple.Module.functorTuple)
-                 .app(PS.Data.Newtype.Module.unwrap
-                        .app(PS.Data.Identity.Module.newtypeIdentity))
-                 .app(PS.Data.Tuple.Module.swap.app(s)));
-      }
-    }
-  };
+    val s = v;
+      PS.Data.Tuple.Module.swap
+        .app(PS.Data.Functor.Module.map.app(PS.Data.Tuple.Module.functorTuple)
+               .app(PS.Data.Newtype.Module.unwrap
+                      .app(PS.Data.Identity.Module.newtypeIdentity))
+               .app(PS.Data.Tuple.Module.swap.app(s)));};
 }

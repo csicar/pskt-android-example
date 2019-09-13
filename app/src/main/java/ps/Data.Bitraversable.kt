@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Bitraversable
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField
   val Bitraversable = { Bifoldable1 : Any ->
@@ -79,42 +81,31 @@ object Module  {
          })
        .app({ dictApplicative : Any ->
             { v : Any ->
-              when {
-               else -> {
-                 val f = v;
-                 PS.Data.Functor.Module.map
-                   .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                           .app(Unit) as Map<String, Any>)["Functor0"]!!
-                          .app(Unit))
-                   .app(PS.Data.Bifunctor.Joker.Module.Joker)
-                   .app(PS.Data.Traversable.Module.sequence.app(dictTraversable)
-                          .app(dictApplicative)
-                          .app(f));
-               }
-             }
-           }
+             val f = v;
+               PS.Data.Functor.Module.map
+                 .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                         .app(Unit) as Map<String, Any>)["Functor0"]!!
+                        .app(Unit))
+                 .app(PS.Data.Bifunctor.Joker.Module.Joker)
+                 .app(PS.Data.Traversable.Module.sequence.app(dictTraversable)
+                        .app(dictApplicative)
+                        .app(f));}
          })
        .app({ dictApplicative : Any ->
          { v : Any ->
            { r : Any ->
              { v1 : Any ->
-               when {
-                else -> {
-                  val r1 = r;
-                  val f = v1;
-                  PS.Data.Functor.Module.map
-                    .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                            .app(Unit) as Map<String, Any>)["Functor0"]!!
-                           .app(Unit))
-                    .app(PS.Data.Bifunctor.Joker.Module.Joker)
-                    .app(PS.Data.Traversable.Module.traverse
-                           .app(dictTraversable)
-                           .app(dictApplicative)
-                           .app(r1)
-                           .app(f));
-                }
-              }
-            }
+              val r1 = r;
+                val f = v1;
+                PS.Data.Functor.Module.map
+                  .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                          .app(Unit) as Map<String, Any>)["Functor0"]!!
+                         .app(Unit))
+                  .app(PS.Data.Bifunctor.Joker.Module.Joker)
+                  .app(PS.Data.Traversable.Module.traverse.app(dictTraversable)
+                         .app(dictApplicative)
+                         .app(r1)
+                         .app(f));}
           }
         }
       })
@@ -134,42 +125,31 @@ object Module  {
          })
        .app({ dictApplicative : Any ->
             { v : Any ->
-              when {
-               else -> {
-                 val f = v;
-                 PS.Data.Functor.Module.map
-                   .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                           .app(Unit) as Map<String, Any>)["Functor0"]!!
-                          .app(Unit))
-                   .app(PS.Data.Bifunctor.Clown.Module.Clown)
-                   .app(PS.Data.Traversable.Module.sequence.app(dictTraversable)
-                          .app(dictApplicative)
-                          .app(f));
-               }
-             }
-           }
+             val f = v;
+               PS.Data.Functor.Module.map
+                 .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                         .app(Unit) as Map<String, Any>)["Functor0"]!!
+                        .app(Unit))
+                 .app(PS.Data.Bifunctor.Clown.Module.Clown)
+                 .app(PS.Data.Traversable.Module.sequence.app(dictTraversable)
+                        .app(dictApplicative)
+                        .app(f));}
          })
        .app({ dictApplicative : Any ->
          { l : Any ->
            { v : Any ->
              { v1 : Any ->
-               when {
-                else -> {
-                  val l1 = l;
-                  val f = v1;
-                  PS.Data.Functor.Module.map
-                    .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                            .app(Unit) as Map<String, Any>)["Functor0"]!!
-                           .app(Unit))
-                    .app(PS.Data.Bifunctor.Clown.Module.Clown)
-                    .app(PS.Data.Traversable.Module.traverse
-                           .app(dictTraversable)
-                           .app(dictApplicative)
-                           .app(l1)
-                           .app(f));
-                }
-              }
-            }
+              val l1 = l;
+                val f = v1;
+                PS.Data.Functor.Module.map
+                  .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                          .app(Unit) as Map<String, Any>)["Functor0"]!!
+                         .app(Unit))
+                  .app(PS.Data.Bifunctor.Clown.Module.Clown)
+                  .app(PS.Data.Traversable.Module.traverse.app(dictTraversable)
+                         .app(dictApplicative)
+                         .app(l1)
+                         .app(f));}
           }
         }
       })
@@ -204,45 +184,35 @@ object Module  {
          })
        .app({ dictApplicative : Any ->
             { v : Any ->
-              when {
-               else -> {
-                 val p = v;
-                 PS.Data.Functor.Module.map
-                   .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                           .app(Unit) as Map<String, Any>)["Functor0"]!!
-                          .app(Unit))
-                   .app(PS.Data.Bifunctor.Flip.Module.Flip)
-                   .app(PS.Data.Bitraversable.Module.bisequence
-                          .app(dictBitraversable)
-                          .app(dictApplicative)
-                          .app(p));
-               }
-             }
-           }
+             val p = v;
+               PS.Data.Functor.Module.map
+                 .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                         .app(Unit) as Map<String, Any>)["Functor0"]!!
+                        .app(Unit))
+                 .app(PS.Data.Bifunctor.Flip.Module.Flip)
+                 .app(PS.Data.Bitraversable.Module.bisequence
+                        .app(dictBitraversable)
+                        .app(dictApplicative)
+                        .app(p));}
          })
        .app({ dictApplicative : Any ->
          { r : Any ->
            { l : Any ->
              { v : Any ->
-               when {
-                else -> {
-                  val r1 = r;
-                  val l1 = l;
-                  val p = v;
-                  PS.Data.Functor.Module.map
-                    .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                            .app(Unit) as Map<String, Any>)["Functor0"]!!
-                           .app(Unit))
-                    .app(PS.Data.Bifunctor.Flip.Module.Flip)
-                    .app(PS.Data.Bitraversable.Module.bitraverse
-                           .app(dictBitraversable)
-                           .app(dictApplicative)
-                           .app(l1)
-                           .app(r1)
-                           .app(p));
-                }
-              }
-            }
+              val r1 = r;
+                val l1 = l;
+                val p = v;
+                PS.Data.Functor.Module.map
+                  .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                          .app(Unit) as Map<String, Any>)["Functor0"]!!
+                         .app(Unit))
+                  .app(PS.Data.Bifunctor.Flip.Module.Flip)
+                  .app(PS.Data.Bitraversable.Module.bitraverse
+                         .app(dictBitraversable)
+                         .app(dictApplicative)
+                         .app(l1)
+                         .app(r1)
+                         .app(p));}
           }
         }
       })
@@ -350,45 +320,35 @@ object Module  {
          })
        .app({ dictApplicative : Any ->
             { v : Any ->
-              when {
-               else -> {
-                 val p = v;
-                 PS.Data.Functor.Module.map
-                   .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                           .app(Unit) as Map<String, Any>)["Functor0"]!!
-                          .app(Unit))
-                   .app(PS.Data.Bifunctor.Wrap.Module.Wrap)
-                   .app(PS.Data.Bitraversable.Module.bisequence
-                          .app(dictBitraversable)
-                          .app(dictApplicative)
-                          .app(p));
-               }
-             }
-           }
+             val p = v;
+               PS.Data.Functor.Module.map
+                 .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                         .app(Unit) as Map<String, Any>)["Functor0"]!!
+                        .app(Unit))
+                 .app(PS.Data.Bifunctor.Wrap.Module.Wrap)
+                 .app(PS.Data.Bitraversable.Module.bisequence
+                        .app(dictBitraversable)
+                        .app(dictApplicative)
+                        .app(p));}
          })
        .app({ dictApplicative : Any ->
          { l : Any ->
            { r : Any ->
              { v : Any ->
-               when {
-                else -> {
-                  val l1 = l;
-                  val r1 = r;
-                  val p = v;
-                  PS.Data.Functor.Module.map
-                    .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                            .app(Unit) as Map<String, Any>)["Functor0"]!!
-                           .app(Unit))
-                    .app(PS.Data.Bifunctor.Wrap.Module.Wrap)
-                    .app(PS.Data.Bitraversable.Module.bitraverse
-                           .app(dictBitraversable)
-                           .app(dictApplicative)
-                           .app(l1)
-                           .app(r1)
-                           .app(p));
-                }
-              }
-            }
+              val l1 = l;
+                val r1 = r;
+                val p = v;
+                PS.Data.Functor.Module.map
+                  .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                          .app(Unit) as Map<String, Any>)["Functor0"]!!
+                         .app(Unit))
+                  .app(PS.Data.Bifunctor.Wrap.Module.Wrap)
+                  .app(PS.Data.Bitraversable.Module.bitraverse
+                         .app(dictBitraversable)
+                         .app(dictApplicative)
+                         .app(l1)
+                         .app(r1)
+                         .app(p));}
           }
         }
       })

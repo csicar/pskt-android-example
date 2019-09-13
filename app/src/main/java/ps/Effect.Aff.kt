@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Effect.Aff
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val __pure = Foreign.Effect.Aff.__pure;
   val __throwError = Foreign.Effect.Aff.__throwError;
@@ -26,13 +28,8 @@ object Module  {
   @JvmField
   val newtypeCanceler = PS.Data.Newtype.Module.Newtype
                           .app({ n : Any ->
-                               when {
-                                else -> {
-                                  val a = n;
-                                  a;
-                                }
-                              }
-                            })
+                              val a = n;
+                                a;})
                           .app(PS.Effect.Aff.Module.Canceler);
   @JvmField
   val functorParAff = PS.Data.Functor.Module.Functor
@@ -100,23 +97,13 @@ object Module  {
   };
   @JvmField
   val launchAff = { aff : Any ->
-     PS.Control.Bind.Module.bind.app(PS.Effect.Module.bindEffect)
-       .app(PS.Effect.Aff.Module.makeFiber.app(aff))
-       .app({ v : Any ->
-         when {
-          else -> {
-            val fiber = v;
-            { _ : Any ->
-              when {
-                    else -> {
-                      val f = fiber;
-                      (f as Map<String, Any>)["run"]!!;
-                    }
-                  }()
-                fiber};
-          }
-        }
-      })
+     /* defer **/{
+      val v = PS.Effect.Aff.Module.makeFiber.app(aff).appRun();
+      val fiber = v;
+      val f = fiber;
+      (f as Map<String, Any>)["run"]!!.appRun();
+      fiber;
+    }
   };
   @JvmField
   val launchAff_ = PS.Control.Semigroupoid.Module.compose
@@ -127,16 +114,10 @@ object Module  {
   @JvmField val launchSuspendedAff = PS.Effect.Aff.Module.makeFiber;
   @JvmField
   val delay = { v : Any ->
-     when {
-      else -> {
-        val n = v;
-        PS.Data.Function.Uncurried.Module.runFn2
-          .app(PS.Effect.Aff.Module.__delay)
-          .app(PS.Data.Either.Module.Right)
-          .app(n);
-      }
-    }
-  };
+    val n = v;
+      PS.Data.Function.Uncurried.Module.runFn2.app(PS.Effect.Aff.Module.__delay)
+        .app(PS.Data.Either.Module.Right)
+        .app(n);};
   @JvmField
   val bracket = { acquire : Any ->
      { completed : Any ->
@@ -189,30 +170,25 @@ object Module  {
   @JvmField
   val cancelWith = { aff : Any ->
      { v : Any ->
-       when {
-        else -> {
-          val aff1 = aff;
-          val cancel = v;
-          PS.Effect.Aff.Module.generalBracket
-            .app(PS.Control.Applicative.Module.pure
-                   .app(PS.Effect.Aff.Module.applicativeAff)
-                   .app(PS.Data.Unit.Module.unit))
-            .app(mapOf(("killed" to { e : Any ->
-                   { v1 : Any ->
-                     cancel.app(e)
-                  }
-                }),  ("failed" to PS.Data.Function.Module._const
-                                    .app(PS.Control.Applicative.Module.pure
-                                           .app(
-                    PS.Effect.Aff.Module.applicativeAff))),  
-                ("completed" to PS.Data.Function.Module._const
+      val aff1 = aff;
+        val cancel = v;
+        PS.Effect.Aff.Module.generalBracket
+          .app(PS.Control.Applicative.Module.pure
+                 .app(PS.Effect.Aff.Module.applicativeAff)
+                 .app(PS.Data.Unit.Module.unit))
+          .app(mapOf(("killed" to { e : Any ->
+                 { v1 : Any ->
+                   cancel.app(e)
+                }
+              }),  ("failed" to PS.Data.Function.Module._const
                                   .app(PS.Control.Applicative.Module.pure
                                          .app(
-                    PS.Effect.Aff.Module.applicativeAff)))))
-            .app(PS.Data.Function.Module._const.app(aff1));
-        }
-      }
-    }
+                  PS.Effect.Aff.Module.applicativeAff))),  
+              ("completed" to PS.Data.Function.Module._const
+                                .app(PS.Control.Applicative.Module.pure
+                                       .app(PS.Effect.Aff.Module.applicativeAff)
+              ))))
+          .app(PS.Data.Function.Module._const.app(aff1));}
   };
   @JvmField
   val _finally = { fin : Any ->
@@ -269,18 +245,13 @@ object Module  {
     ));
   @JvmField
   val joinFiber = { v : Any ->
-     when {
-      else -> {
-        val t = v;
-        PS.Effect.Aff.Module.makeAff
-          .app({ k : Any ->
-             PS.Data.Functor.Module.map.app(PS.Effect.Module.functorEffect)
-               .app(PS.Effect.Aff.Module.effectCanceler)
-               .app((t as Map<String, Any>)["join"]!!.app(k))
-          });
-      }
-    }
-  };
+    val t = v;
+      PS.Effect.Aff.Module.makeAff
+        .app({ k : Any ->
+           PS.Data.Functor.Module.map.app(PS.Effect.Module.functorEffect)
+             .app(PS.Effect.Aff.Module.effectCanceler)
+             .app((t as Map<String, Any>)["join"]!!.app(k))
+        });};
   @JvmField
   val functorFiber = PS.Data.Functor.Module.Functor
                        .app({ f : Any ->
@@ -323,46 +294,46 @@ object Module  {
   @JvmField
   val killFiber = { e : Any ->
      { v : Any ->
-       when {
-        else -> {
-          val e1 = e;
-          val t = v;
-          PS.Control.Bind.Module.bind.app(PS.Effect.Aff.Module.bindAff)
-            .app(PS.Effect.Class.Module.liftEffect
-                   .app(PS.Effect.Aff.Module.monadEffectAff)
-                   .app((t as Map<String, Any>)["isSuspended"]!!))
-            .app({ v1 : Any ->
-               when {
-                (v1 == true) -> {
-                  PS.Data.Function.Module.apply
-                    .app(PS.Effect.Class.Module.liftEffect
-                           .app(PS.Effect.Aff.Module.monadEffectAff))
-                    .app(PS.Data.Function.Module.apply
-                           .app(PS.Data.Functor.Module.void
-                                  .app(PS.Effect.Module.functorEffect))
-                           .app(PS.Data.Function.Uncurried.Module.runFn2
-                                  .app((t as Map<String, Any>)["kill"]!!)
-                                  .app(e1)
-                                  .app(PS.Data.Function.Module._const
-                                         .app(PS.Data.Unit.Module.unit))));
-                }
-                else -> {
-                  PS.Effect.Aff.Module.makeAff
-                    .app({ k : Any ->
-                       PS.Data.Functor.Module.map
-                         .app(PS.Effect.Module.functorEffect)
-                         .app(PS.Effect.Aff.Module.effectCanceler)
+      val e1 = e;
+        val t = v;
+        PS.Control.Bind.Module.bind.app(PS.Effect.Aff.Module.bindAff)
+          .app(PS.Effect.Class.Module.liftEffect
+                 .app(PS.Effect.Aff.Module.monadEffectAff)
+                 .app((t as Map<String, Any>)["isSuspended"]!!))
+          .app({ v1 : Any ->
+             when {
+              (v1 == true) -> {
+                PS.Data.Function.Module.apply
+                  .app(PS.Effect.Class.Module.liftEffect
+                         .app(PS.Effect.Aff.Module.monadEffectAff))
+                  .app(PS.Data.Function.Module.apply
+                         .app(PS.Data.Functor.Module.void
+                                .app(PS.Effect.Module.functorEffect))
                          .app(PS.Data.Function.Uncurried.Module.runFn2
                                 .app((t as Map<String, Any>)["kill"]!!)
                                 .app(e1)
-                                .app(k))
-                    });
-                }
+                                .app(PS.Data.Function.Module._const
+                                       .app(PS.Control.Applicative.Module.pure
+                                              .app(
+                                                PS.Effect.Module.applicativeEffect
+                                              )
+                                              .app(PS.Data.Unit.Module.unit))))
+                );
               }
-            });
-        }
-      }
-    }
+              else -> {
+                PS.Effect.Aff.Module.makeAff
+                  .app({ k : Any ->
+                     PS.Data.Functor.Module.map
+                       .app(PS.Effect.Module.functorEffect)
+                       .app(PS.Effect.Aff.Module.effectCanceler)
+                       .app(PS.Data.Function.Uncurried.Module.runFn2
+                              .app((t as Map<String, Any>)["kill"]!!)
+                              .app(e1)
+                              .app(k))
+                  });
+              }
+            }
+          });}
   };
   @JvmField
   val fiberCanceler = PS.Control.Semigroupoid.Module.compose
@@ -463,20 +434,15 @@ object Module  {
   val semigroupCanceler = PS.Data.Semigroup.Module.Semigroup
                             .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val c1 = v;
-            val c2 = v1;
-            PS.Effect.Aff.Module.Canceler
-              .app({ err : Any ->
-                 PS.Control.Parallel.Module.parSequence_
-                   .app(PS.Effect.Aff.Module.parallelAff)
-                   .app(PS.Data.Foldable.Module.foldableArray)
-                   .app(listOf(c1.app(err),  c2.app(err)))
-              });
-          }
-        }
-      }
+        val c1 = v;
+          val c2 = v1;
+          PS.Effect.Aff.Module.Canceler
+            .app({ err : Any ->
+               PS.Control.Parallel.Module.parSequence_
+                 .app(PS.Effect.Aff.Module.parallelAff)
+                 .app(PS.Data.Foldable.Module.foldableArray)
+                 .app(listOf(c1.app(err),  c2.app(err)))
+            });}
     });
   @JvmField
   val supervise = { aff : Any ->
@@ -498,27 +464,17 @@ object Module  {
                })
            }
          };
-         val acquire = PS.Control.Bind.Module.bind
-                         .app(PS.Effect.Module.bindEffect)
-                         .app(PS.Data.Function.Uncurried.Module.runFn2
-                                .app(PS.Effect.Aff.Module.__makeSupervisedFiber)
-                                .app(PS.Effect.Aff.Module.ffiUtil)
-                                .app(aff))
-                         .app({ v : Any ->
-              when {
-               else -> {
-                 val sup = v;
-                 { _ : Any ->
-                   when {
-                         else -> {
-                           val f = (sup as Map<String, Any>)["fiber"]!!;
-                           (f as Map<String, Any>)["run"]!!;
-                         }
-                       }()
-                     sup};
-               }
-             }
-           });
+         val acquire = /* defer **/{
+           val v = PS.Data.Function.Uncurried.Module.runFn2
+                     .app(PS.Effect.Aff.Module.__makeSupervisedFiber)
+                     .app(PS.Effect.Aff.Module.ffiUtil)
+                     .app(aff)
+                     .appRun();
+           val sup = v;
+           val f = (sup as Map<String, Any>)["fiber"]!!;
+           (f as Map<String, Any>)["run"]!!.appRun();
+           sup;
+         };
        }
        .run({
         val killError = this.killError;
@@ -561,27 +517,22 @@ object Module  {
               PS.Control.Bind.Module.bind.app(PS.Effect.Aff.Module.bindAff)
                 .app(k.app(a))
                 .app({ v : Any ->
-                  when {
-                   else -> {
-                     val res = v;
-                     when {
-                       (res is PS.Control.Monad.Rec.Class.Module._Type_Step
-                                 .Done) -> {
-                         val r = res.value0;
-                         PS.Control.Applicative.Module.pure
-                           .app(PS.Effect.Aff.Module.applicativeAff)
-                           .app(r);
-                       }
-                       (res is PS.Control.Monad.Rec.Class.Module._Type_Step
-                                 .Loop) -> {
-                         val b = res.value0;
-                         __rec_go().app(b);
-                       }
-                       else -> (error("Error in Pattern Match") as Any)
-                     };
-                   }
-                 }
-               })
+                 val res = v;
+                   when {
+                     (res is PS.Control.Monad.Rec.Class.Module._Type_Step
+                               .Done) -> {
+                       val r = res.value0;
+                       PS.Control.Applicative.Module.pure
+                         .app(PS.Effect.Aff.Module.applicativeAff)
+                         .app(r);
+                     }
+                     (res is PS.Control.Monad.Rec.Class.Module._Type_Step
+                               .Loop) -> {
+                       val b = res.value0;
+                       __rec_go().app(b);
+                     }
+                     else -> (error("Error in Pattern Match") as Any)
+                   };})
            };
          }
          .run({
@@ -615,7 +566,10 @@ object Module  {
   @JvmField
   val never = PS.Effect.Aff.Module.makeAff
                 .app({ v : Any ->
-       PS.Data.Monoid.Module.mempty.app(PS.Effect.Aff.Module.monoidCanceler)
+       PS.Control.Applicative.Module.pure
+         .app(PS.Effect.Module.applicativeEffect)
+         .app(PS.Data.Monoid.Module.mempty
+                .app(PS.Effect.Aff.Module.monoidCanceler))
     });
   @JvmField
   val apathize = PS.Control.Semigroupoid.Module.composeFlipped

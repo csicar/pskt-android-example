@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Function.Uncurried
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val mkFn0 = Foreign.Data.Function.Uncurried.mkFn0;
   val mkFn2 = Foreign.Data.Function.Uncurried.mkFn2;

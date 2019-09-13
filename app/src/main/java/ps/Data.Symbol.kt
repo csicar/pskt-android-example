@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Symbol
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val unsafeCoerce = Foreign.Data.Symbol.unsafeCoerce;
   sealed class _Type_SProxy ()  { object SProxy : _Type_SProxy() {}; };

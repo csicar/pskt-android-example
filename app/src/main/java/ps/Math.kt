@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Math
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val abs = Foreign.Math.abs;
   val acos = Foreign.Math.acos;

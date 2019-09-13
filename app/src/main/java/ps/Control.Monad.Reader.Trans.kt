@@ -1,35 +1,27 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Monad.Reader.Trans
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val ReaderT = { x : Any -> x};
   @JvmField
   val withReaderT = { f : Any ->
      { v : Any ->
-       when {
-        else -> {
-          val f1 = f;
-          val m = v;
-          PS.Control.Monad.Reader.Trans.Module.ReaderT
-            .app(PS.Control.Semigroupoid.Module.compose
-                   .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
-                   .app(m)
-                   .app(f1));
-        }
-      }
-    }
+      val f1 = f;
+        val m = v;
+        PS.Control.Monad.Reader.Trans.Module.ReaderT
+          .app(PS.Control.Semigroupoid.Module.compose
+                 .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
+                 .app(m)
+                 .app(f1));}
   };
-  @JvmField val runReaderT = { v : Any -> when { else -> { val x = v; x; } }};
+  @JvmField val runReaderT = { v : Any ->val x = v; x;};
   @JvmField
   val newtypeReaderT = PS.Data.Newtype.Module.Newtype
                          .app({ n : Any ->
-                              when {
-                               else -> {
-                                 val a = n;
-                                 a;
-                               }
-                             }
-                           })
+                             val a = n;
+                               a;})
                          .app(PS.Control.Monad.Reader.Trans.Module.ReaderT);
   @JvmField
   val monadTransReaderT = PS.Control.Monad.Trans.Class.Module.MonadTrans
@@ -42,18 +34,13 @@ object Module  {
   @JvmField
   val mapReaderT = { f : Any ->
      { v : Any ->
-       when {
-        else -> {
-          val f1 = f;
-          val m = v;
-          PS.Control.Monad.Reader.Trans.Module.ReaderT
-            .app(PS.Control.Semigroupoid.Module.compose
-                   .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
-                   .app(f1)
-                   .app(m));
-        }
-      }
-    }
+      val f1 = f;
+        val m = v;
+        PS.Control.Monad.Reader.Trans.Module.ReaderT
+          .app(PS.Control.Semigroupoid.Module.compose
+                 .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
+                 .app(f1)
+                 .app(m));}
   };
   @JvmField
   val functorReaderT = { dictFunctor : Any ->
@@ -90,13 +77,8 @@ object Module  {
                PS.Data.Distributive.Module.collect.app(dictDistributive)
                  .app(dictFunctor)
                  .app({ r : Any ->
-                      when {
-                       else -> {
-                         val r_tick = r;
-                         r_tick.app(e);
-                       }
-                     }
-                   })
+                     val r_tick = r;
+                       r_tick.app(e);})
                  .app(a)
             })
         }
@@ -111,18 +93,13 @@ object Module  {
          })
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val f = v;
-              val v2 = v1;
-              PS.Control.Monad.Reader.Trans.Module.ReaderT
-                .app({ r : Any ->
-                   PS.Control.Apply.Module.apply.app(dictApply).app(f.app(r))
-                     .app(v2.app(r))
-                });
-            }
-          }
-        }
+          val f = v;
+            val v2 = v1;
+            PS.Control.Monad.Reader.Trans.Module.ReaderT
+              .app({ r : Any ->
+                 PS.Control.Apply.Module.apply.app(dictApply).app(f.app(r))
+                   .app(v2.app(r))
+              });}
       })
   };
   @JvmField
@@ -134,26 +111,22 @@ object Module  {
          })
        .app({ v : Any ->
          { k : Any ->
-           when {
-            else -> {
-              val m = v;
-              val k1 = k;
-              PS.Control.Monad.Reader.Trans.Module.ReaderT
-                .app({ r : Any ->
-                   PS.Control.Bind.Module.bind.app(dictBind).app(m.app(r))
-                     .app({ a : Any ->
-                       object   {
-                           val v1 = k1.app(a);
-                         }
-                         .run({
-                          val v1 = this.v1;
-                          when { else -> { val f = v1; f.app(r); } };
-                        })
-                    })
-                });
-            }
-          }
-        }
+          val m = v;
+            val k1 = k;
+            PS.Control.Monad.Reader.Trans.Module.ReaderT
+              .app({ r : Any ->
+                 PS.Control.Bind.Module.bind.app(dictBind).app(m.app(r))
+                   .app({ a : Any ->
+                     object   {
+                         val v1 = k1.app(a);
+                       }
+                       .run({
+                        val v1 = this.v1;
+                        val f = v1;
+                        f.app(r);
+                      })
+                  })
+              });}
       })
   };
   @JvmField
@@ -242,7 +215,8 @@ object Module  {
                    }
                    .run({
                     val v = this.v;
-                    when { else -> { val f_tick = v; f_tick.app(r); } };
+                    val f_tick = v;
+                    f_tick.app(r);
                   })
               })
           })
@@ -281,23 +255,18 @@ object Module  {
                       }
                       .run({
                        val v = this.v;
-                       when {
-                         else -> {
-                           val f = v;
-                           PS.Control.Bind.Module.bindFlipped
-                             .app(
-                               ((dictMonadRec as Map<String, Any>)["Monad0"]!!
-                                  .app(Unit) as Map<String, Any>)["Bind1"]!!
-                                 .app(Unit))
-                             .app(PS.Control.Applicative.Module.pure
-                                    .app(
-                                 ((dictMonadRec as Map<String, Any>)["Monad0"]!!
-                                    .app(Unit
-                                   ) as Map<String, Any>)["Applicative0"]!!
-                                   .app(Unit)))
-                             .app(f.app(r));
-                         }
-                       };
+                       val f = v;
+                       PS.Control.Bind.Module.bindFlipped
+                         .app(((dictMonadRec as Map<String, Any>)["Monad0"]!!
+                                 .app(Unit) as Map<String, Any>)["Bind1"]!!
+                                .app(Unit))
+                         .app(PS.Control.Applicative.Module.pure
+                                .app(
+                             ((dictMonadRec as Map<String, Any>)["Monad0"]!!
+                                .app(Unit
+                               ) as Map<String, Any>)["Applicative0"]!!
+                               .app(Unit)))
+                         .app(f.app(r));
                      })
                  }
                };
@@ -390,28 +359,24 @@ object Module  {
          })
        .app({ v : Any ->
          { h : Any ->
-           when {
-            else -> {
-              val m = v;
-              val h1 = h;
-              PS.Control.Monad.Reader.Trans.Module.ReaderT
-                .app({ r : Any ->
-                   PS.Control.Monad.Error.Class.Module.catchError
-                     .app(dictMonadError)
-                     .app(m.app(r))
-                     .app({ e : Any ->
-                       object   {
-                           val v1 = h1.app(e);
-                         }
-                         .run({
-                          val v1 = this.v1;
-                          when { else -> { val f = v1; f.app(r); } };
-                        })
-                    })
-                });
-            }
-          }
-        }
+          val m = v;
+            val h1 = h;
+            PS.Control.Monad.Reader.Trans.Module.ReaderT
+              .app({ r : Any ->
+                 PS.Control.Monad.Error.Class.Module.catchError
+                   .app(dictMonadError)
+                   .app(m.app(r))
+                   .app({ e : Any ->
+                     object   {
+                         val v1 = h1.app(e);
+                       }
+                       .run({
+                        val v1 = this.v1;
+                        val f = v1;
+                        f.app(r);
+                      })
+                  })
+              });}
       })
   };
   @JvmField
@@ -439,18 +404,13 @@ object Module  {
          })
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val m = v;
-              val n = v1;
-              PS.Control.Monad.Reader.Trans.Module.ReaderT
-                .app({ r : Any ->
-                   PS.Control.Alt.Module.alt.app(dictAlt).app(m.app(r))
-                     .app(n.app(r))
-                });
-            }
-          }
-        }
+          val m = v;
+            val n = v1;
+            PS.Control.Monad.Reader.Trans.Module.ReaderT
+              .app({ r : Any ->
+                 PS.Control.Alt.Module.alt.app(dictAlt).app(m.app(r))
+                   .app(n.app(r))
+              });}
       })
   };
   @JvmField

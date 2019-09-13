@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Functor
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val arrayMap = Foreign.Data.Functor.arrayMap;
   @JvmField val Functor = { map : Any -> mapOf(("map" to map))};

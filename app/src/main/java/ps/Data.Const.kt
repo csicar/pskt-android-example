@@ -1,34 +1,26 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Const
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val Const = { x : Any -> x};
   @JvmField
   val showConst = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val x = v;
-            (("(Const " as String) + (((PS.Data.Show.Module.show.app(dictShow)
-                                          .app(x
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val x = v;
+          (("(Const " as String) + (((PS.Data.Show.Module.show.app(dictShow)
+                                        .app(x
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField val semiringConst = { dictSemiring : Any -> dictSemiring};
   @JvmField
   val semigroupoidConst = PS.Control.Semigroupoid.Module.Semigroupoid
                             .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val x = v1;
-            PS.Data.Const.Module.Const.app(x);
-          }
-        }
-      }
+        val x = v1;
+          PS.Data.Const.Module.Const.app(x);}
     });
   @JvmField val semigroupConst = { dictSemigroup : Any -> dictSemigroup};
   @JvmField val ringConst = { dictRing : Any -> dictRing};
@@ -36,13 +28,8 @@ object Module  {
   @JvmField
   val newtypeConst = PS.Data.Newtype.Module.Newtype
                        .app({ n : Any ->
-                            when {
-                             else -> {
-                               val a = n;
-                               a;
-                             }
-                           }
-                         })
+                           val a = n;
+                             a;})
                        .app(PS.Data.Const.Module.Const);
   @JvmField val monoidConst = { dictMonoid : Any -> dictMonoid};
   @JvmField
@@ -53,13 +40,8 @@ object Module  {
   val functorConst = PS.Data.Functor.Module.Functor
                        .app({ f : Any ->
        { m : Any ->
-         when {
-          else -> {
-            val v = m;
-            PS.Data.Const.Module.Const.app(v);
-          }
-        }
-      }
+        val v = m;
+          PS.Data.Const.Module.Const.app(v);}
     });
   @JvmField
   val functorWithIndexConst = PS.Data.FunctorWithIndex.Module.FunctorWithIndex
@@ -68,13 +50,8 @@ object Module  {
                                   })
                                 .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val x = v1;
-            PS.Data.Const.Module.Const.app(x);
-          }
-        }
-      }
+        val x = v1;
+          PS.Data.Const.Module.Const.app(x);}
     });
   @JvmField
   val invariantConst = PS.Data.Functor.Invariant.Module.Invariant
@@ -140,27 +117,17 @@ object Module  {
                              })
                            .app({ dictApplicative : Any ->
                                 { v : Any ->
-                                  when {
-                                   else -> {
-                                     val x = v;
-                                     PS.Control.Applicative.Module.pure
-                                       .app(dictApplicative)
-                                       .app(PS.Data.Const.Module.Const.app(x));
-                                   }
-                                 }
-                               }
+                                 val x = v;
+                                   PS.Control.Applicative.Module.pure
+                                     .app(dictApplicative)
+                                     .app(PS.Data.Const.Module.Const.app(x));}
                              })
                            .app({ dictApplicative : Any ->
        { v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val x = v1;
-              PS.Control.Applicative.Module.pure.app(dictApplicative)
-                .app(PS.Data.Const.Module.Const.app(x));
-            }
-          }
-        }
+          val x = v1;
+            PS.Control.Applicative.Module.pure.app(dictApplicative)
+              .app(PS.Data.Const.Module.Const.app(x));}
       }
     });
   @JvmField
@@ -177,14 +144,9 @@ object Module  {
                                     .app({ dictApplicative : Any ->
        { v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val x = v1;
-              PS.Control.Applicative.Module.pure.app(dictApplicative)
-                .app(PS.Data.Const.Module.Const.app(x));
-            }
-          }
-        }
+          val x = v1;
+            PS.Control.Applicative.Module.pure.app(dictApplicative)
+              .app(PS.Data.Const.Module.Const.app(x));}
       }
     });
   @JvmField
@@ -215,13 +177,8 @@ object Module  {
   val contravariantConst = PS.Data.Functor.Contravariant.Module.Contravariant
                              .app({ v : Any ->
        { v1 : Any ->
-         when {
-          else -> {
-            val x = v1;
-            PS.Data.Const.Module.Const.app(x);
-          }
-        }
-      }
+        val x = v1;
+          PS.Data.Const.Module.Const.app(x);}
     });
   @JvmField
   val commutativeRingConst = { dictCommutativeRing : Any ->
@@ -237,14 +194,9 @@ object Module  {
                          .app({ f : Any ->
        { v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val a = v1;
-              PS.Data.Const.Module.Const.app(f1.app(a));
-            }
-          }
-        }
+          val f1 = f;
+            val a = v1;
+            PS.Data.Const.Module.Const.app(f1.app(a));}
       }
     });
   @JvmField
@@ -253,14 +205,9 @@ object Module  {
                                { f : Any ->
                                  { v : Any ->
                                    { v1 : Any ->
-                                     when {
-                                      else -> {
-                                        val f1 = f;
-                                        val a = v1;
-                                        f1.app(a);
-                                      }
-                                    }
-                                  }
+                                    val f1 = f;
+                                      val a = v1;
+                                      f1.app(a);}
                                 }
                               }
                             })
@@ -268,15 +215,10 @@ object Module  {
                                { v : Any ->
                                  { z : Any ->
                                    { v1 : Any ->
-                                     when {
-                                      else -> {
-                                        val f1 = f;
-                                        val z1 = z;
-                                        val a = v1;
-                                        f1.app(z1).app(a);
-                                      }
-                                    }
-                                  }
+                                    val f1 = f;
+                                      val z1 = z;
+                                      val a = v1;
+                                      f1.app(z1).app(a);}
                                 }
                               }
                             })
@@ -284,15 +226,10 @@ object Module  {
        { v : Any ->
          { z : Any ->
            { v1 : Any ->
-             when {
-              else -> {
-                val f1 = f;
-                val z1 = z;
-                val a = v1;
-                f1.app(a).app(z1);
-              }
-            }
-          }
+            val f1 = f;
+              val z1 = z;
+              val a = v1;
+              f1.app(a).app(z1);}
         }
       }
     });
@@ -306,38 +243,28 @@ object Module  {
                                })
                              .app({ dictApplicative : Any ->
                                   { v : Any ->
-                                    when {
-                                     else -> {
-                                       val a = v;
-                                       PS.Data.Functor.Module.map
-                                         .app(
-                                           ((dictApplicative as Map<String, Any>)["Apply0"]!!
-                                              .app(Unit
-                                             ) as Map<String, Any>)["Functor0"]!!
-                                             .app(Unit))
-                                         .app(PS.Data.Const.Module.Const)
-                                         .app(a);
-                                     }
-                                   }
-                                 }
+                                   val a = v;
+                                     PS.Data.Functor.Module.map
+                                       .app(
+                                         ((dictApplicative as Map<String, Any>)["Apply0"]!!
+                                            .app(Unit
+                                           ) as Map<String, Any>)["Functor0"]!!
+                                           .app(Unit))
+                                       .app(PS.Data.Const.Module.Const)
+                                       .app(a);}
                                })
                              .app({ dictApplicative : Any ->
        { f : Any ->
          { v : Any ->
            { v1 : Any ->
-             when {
-              else -> {
-                val f1 = f;
-                val a = v1;
-                PS.Data.Functor.Module.map
-                  .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                          .app(Unit) as Map<String, Any>)["Functor0"]!!
-                         .app(Unit))
-                  .app(PS.Data.Const.Module.Const)
-                  .app(f1.app(a));
-              }
-            }
-          }
+            val f1 = f;
+              val a = v1;
+              PS.Data.Functor.Module.map
+                .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                        .app(Unit) as Map<String, Any>)["Functor0"]!!
+                       .app(Unit))
+                .app(PS.Data.Const.Module.Const)
+                .app(f1.app(a));}
         }
       }
     });
@@ -349,16 +276,11 @@ object Module  {
          })
        .app({ v : Any ->
          { v1 : Any ->
-           when {
-            else -> {
-              val x = v;
-              val y = v1;
-              PS.Data.Const.Module.Const
-                .app(PS.Data.Semigroup.Module.append.app(dictSemigroup).app(x)
-                       .app(y));
-            }
-          }
-        }
+          val x = v;
+            val y = v1;
+            PS.Data.Const.Module.Const
+              .app(PS.Data.Semigroup.Module.append.app(dictSemigroup).app(x)
+                     .app(y));}
       })
   };
   @JvmField

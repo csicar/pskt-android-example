@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.HeytingAlgebra
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val boolConj = Foreign.Data.HeytingAlgebra.boolConj;
   val boolDisj = Foreign.Data.HeytingAlgebra.boolDisj;

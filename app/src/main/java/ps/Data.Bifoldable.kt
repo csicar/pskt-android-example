@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Bifoldable
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField
   val Bifoldable = { bifoldMap : Any ->
@@ -79,17 +81,12 @@ object Module  {
             { v : Any ->
               { r : Any ->
                 { v1 : Any ->
-                  when {
-                   else -> {
-                     val r1 = r;
-                     val f = v1;
-                     PS.Data.Foldable.Module.foldMap.app(dictFoldable)
-                       .app(dictMonoid)
-                       .app(r1)
-                       .app(f);
-                   }
-                 }
-               }
+                 val r1 = r;
+                   val f = v1;
+                   PS.Data.Foldable.Module.foldMap.app(dictFoldable)
+                     .app(dictMonoid)
+                     .app(r1)
+                     .app(f);}
              }
            }
          })
@@ -97,17 +94,12 @@ object Module  {
             { r : Any ->
               { u : Any ->
                 { v1 : Any ->
-                  when {
-                   else -> {
-                     val r1 = r;
-                     val u1 = u;
-                     val f = v1;
-                     PS.Data.Foldable.Module.foldl.app(dictFoldable).app(r1)
-                       .app(u1)
-                       .app(f);
-                   }
-                 }
-               }
+                 val r1 = r;
+                   val u1 = u;
+                   val f = v1;
+                   PS.Data.Foldable.Module.foldl.app(dictFoldable).app(r1)
+                     .app(u1)
+                     .app(f);}
              }
            }
          })
@@ -115,17 +107,11 @@ object Module  {
          { r : Any ->
            { u : Any ->
              { v1 : Any ->
-               when {
-                else -> {
-                  val r1 = r;
-                  val u1 = u;
-                  val f = v1;
-                  PS.Data.Foldable.Module.foldr.app(dictFoldable).app(r1)
-                    .app(u1)
-                    .app(f);
-                }
-              }
-            }
+              val r1 = r;
+                val u1 = u;
+                val f = v1;
+                PS.Data.Foldable.Module.foldr.app(dictFoldable).app(r1).app(u1)
+                  .app(f);}
           }
         }
       })
@@ -137,17 +123,12 @@ object Module  {
             { l : Any ->
               { v : Any ->
                 { v1 : Any ->
-                  when {
-                   else -> {
-                     val l1 = l;
-                     val f = v1;
-                     PS.Data.Foldable.Module.foldMap.app(dictFoldable)
-                       .app(dictMonoid)
-                       .app(l1)
-                       .app(f);
-                   }
-                 }
-               }
+                 val l1 = l;
+                   val f = v1;
+                   PS.Data.Foldable.Module.foldMap.app(dictFoldable)
+                     .app(dictMonoid)
+                     .app(l1)
+                     .app(f);}
              }
            }
          })
@@ -155,17 +136,12 @@ object Module  {
             { v : Any ->
               { u : Any ->
                 { v1 : Any ->
-                  when {
-                   else -> {
-                     val l1 = l;
-                     val u1 = u;
-                     val f = v1;
-                     PS.Data.Foldable.Module.foldl.app(dictFoldable).app(l1)
-                       .app(u1)
-                       .app(f);
-                   }
-                 }
-               }
+                 val l1 = l;
+                   val u1 = u;
+                   val f = v1;
+                   PS.Data.Foldable.Module.foldl.app(dictFoldable).app(l1)
+                     .app(u1)
+                     .app(f);}
              }
            }
          })
@@ -173,17 +149,11 @@ object Module  {
          { v : Any ->
            { u : Any ->
              { v1 : Any ->
-               when {
-                else -> {
-                  val l1 = l;
-                  val u1 = u;
-                  val f = v1;
-                  PS.Data.Foldable.Module.foldr.app(dictFoldable).app(l1)
-                    .app(u1)
-                    .app(f);
-                }
-              }
-            }
+              val l1 = l;
+                val u1 = u;
+                val f = v1;
+                PS.Data.Foldable.Module.foldr.app(dictFoldable).app(l1).app(u1)
+                  .app(f);}
           }
         }
       })
@@ -251,19 +221,14 @@ object Module  {
             { r : Any ->
               { l : Any ->
                 { v : Any ->
-                  when {
-                   else -> {
-                     val r1 = r;
-                     val l1 = l;
-                     val p = v;
-                     PS.Data.Bifoldable.Module.bifoldMap.app(dictBifoldable)
-                       .app(dictMonoid)
-                       .app(l1)
-                       .app(r1)
-                       .app(p);
-                   }
-                 }
-               }
+                 val r1 = r;
+                   val l1 = l;
+                   val p = v;
+                   PS.Data.Bifoldable.Module.bifoldMap.app(dictBifoldable)
+                     .app(dictMonoid)
+                     .app(l1)
+                     .app(r1)
+                     .app(p);}
              }
            }
          })
@@ -271,20 +236,14 @@ object Module  {
             { l : Any ->
               { u : Any ->
                 { v : Any ->
-                  when {
-                   else -> {
-                     val r1 = r;
-                     val l1 = l;
-                     val u1 = u;
-                     val p = v;
-                     PS.Data.Bifoldable.Module.bifoldl.app(dictBifoldable)
-                       .app(l1)
-                       .app(r1)
-                       .app(u1)
-                       .app(p);
-                   }
-                 }
-               }
+                 val r1 = r;
+                   val l1 = l;
+                   val u1 = u;
+                   val p = v;
+                   PS.Data.Bifoldable.Module.bifoldl.app(dictBifoldable).app(l1)
+                     .app(r1)
+                     .app(u1)
+                     .app(p);}
              }
            }
          })
@@ -292,19 +251,14 @@ object Module  {
          { l : Any ->
            { u : Any ->
              { v : Any ->
-               when {
-                else -> {
-                  val r1 = r;
-                  val l1 = l;
-                  val u1 = u;
-                  val p = v;
-                  PS.Data.Bifoldable.Module.bifoldr.app(dictBifoldable).app(l1)
-                    .app(r1)
-                    .app(u1)
-                    .app(p);
-                }
-              }
-            }
+              val r1 = r;
+                val l1 = l;
+                val u1 = u;
+                val p = v;
+                PS.Data.Bifoldable.Module.bifoldr.app(dictBifoldable).app(l1)
+                  .app(r1)
+                  .app(u1)
+                  .app(p);}
           }
         }
       })
@@ -316,19 +270,14 @@ object Module  {
             { l : Any ->
               { r : Any ->
                 { v : Any ->
-                  when {
-                   else -> {
-                     val l1 = l;
-                     val r1 = r;
-                     val p = v;
-                     PS.Data.Bifoldable.Module.bifoldMap.app(dictBifoldable)
-                       .app(dictMonoid)
-                       .app(l1)
-                       .app(r1)
-                       .app(p);
-                   }
-                 }
-               }
+                 val l1 = l;
+                   val r1 = r;
+                   val p = v;
+                   PS.Data.Bifoldable.Module.bifoldMap.app(dictBifoldable)
+                     .app(dictMonoid)
+                     .app(l1)
+                     .app(r1)
+                     .app(p);}
              }
            }
          })
@@ -336,20 +285,14 @@ object Module  {
             { r : Any ->
               { u : Any ->
                 { v : Any ->
-                  when {
-                   else -> {
-                     val l1 = l;
-                     val r1 = r;
-                     val u1 = u;
-                     val p = v;
-                     PS.Data.Bifoldable.Module.bifoldl.app(dictBifoldable)
-                       .app(l1)
-                       .app(r1)
-                       .app(u1)
-                       .app(p);
-                   }
-                 }
-               }
+                 val l1 = l;
+                   val r1 = r;
+                   val u1 = u;
+                   val p = v;
+                   PS.Data.Bifoldable.Module.bifoldl.app(dictBifoldable).app(l1)
+                     .app(r1)
+                     .app(u1)
+                     .app(p);}
              }
            }
          })
@@ -357,19 +300,14 @@ object Module  {
          { r : Any ->
            { u : Any ->
              { v : Any ->
-               when {
-                else -> {
-                  val l1 = l;
-                  val r1 = r;
-                  val u1 = u;
-                  val p = v;
-                  PS.Data.Bifoldable.Module.bifoldr.app(dictBifoldable).app(l1)
-                    .app(r1)
-                    .app(u1)
-                    .app(p);
-                }
-              }
-            }
+              val l1 = l;
+                val r1 = r;
+                val u1 = u;
+                val p = v;
+                PS.Data.Bifoldable.Module.bifoldr.app(dictBifoldable).app(l1)
+                  .app(r1)
+                  .app(u1)
+                  .app(p);}
           }
         }
       })

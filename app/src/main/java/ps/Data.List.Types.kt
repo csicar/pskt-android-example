@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.List.Types
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   sealed class _Type_List ()  {
     object Nil : _Type_List() {};
@@ -27,13 +29,8 @@ object Module  {
   @JvmField
   val newtypeNonEmptyList = PS.Data.Newtype.Module.Newtype
                               .app({ n : Any ->
-                                   when {
-                                    else -> {
-                                      val a = n;
-                                      a;
-                                    }
-                                  }
-                                })
+                                  val a = n;
+                                    a;})
                               .app(PS.Data.List.Types.Module.NonEmptyList);
   @JvmField
   val nelCons = { a : Any ->
@@ -422,97 +419,82 @@ object Module  {
                                         .app({ dictMonoid : Any ->
                                              { f : Any ->
                                                { v : Any ->
-                                                 when {
-                                                  else -> {
-                                                    val f1 = f;
-                                                    val ne = v;
-                                                    PS.Data.FoldableWithIndex.Module.foldMapWithIndex
-                                                      .app(
-                                                        PS.Data.NonEmpty.Module.foldableWithIndexNonEmpty
+                                                val f1 = f;
+                                                  val ne = v;
+                                                  PS.Data.FoldableWithIndex.Module.foldMapWithIndex
+                                                    .app(
+                                                      PS.Data.NonEmpty.Module.foldableWithIndexNonEmpty
+                                                        .app(
+                                                        PS.Data.List.Types.Module.foldableWithIndexList
+                                                      ))
+                                                    .app(dictMonoid)
+                                                    .app(
+                                                      PS.Control.Semigroupoid.Module.compose
+                                                        .app(
+                                                          PS.Control.Semigroupoid.Module.semigroupoidFn
+                                                        )
+                                                        .app(f1)
+                                                        .app(
+                                                        PS.Data.Maybe.Module.maybe
+                                                          .app(0)
                                                           .app(
-                                                          PS.Data.List.Types.Module.foldableWithIndexList
-                                                        ))
-                                                      .app(dictMonoid)
-                                                      .app(
-                                                        PS.Control.Semigroupoid.Module.compose
-                                                          .app(
-                                                            PS.Control.Semigroupoid.Module.semigroupoidFn
-                                                          )
-                                                          .app(f1)
-                                                          .app(
-                                                          PS.Data.Maybe.Module.maybe
-                                                            .app(0)
+                                                          PS.Data.Semiring.Module.add
                                                             .app(
-                                                            PS.Data.Semiring.Module.add
-                                                              .app(
-                                                                PS.Data.Semiring.Module.semiringInt
-                                                              )
-                                                              .app(1))))
-                                                      .app(ne);
-                                                  }
-                                                }
-                                              }
+                                                              PS.Data.Semiring.Module.semiringInt
+                                                            )
+                                                            .app(1))))
+                                                    .app(ne);}
                                             }
                                           })
                                         .app({ f : Any ->
                                              { b : Any ->
                                                { v : Any ->
-                                                 when {
-                                                  else -> {
-                                                    val f1 = f;
-                                                    val b1 = b;
-                                                    val ne = v;
-                                                    PS.Data.FoldableWithIndex.Module.foldlWithIndex
-                                                      .app(
-                                                        PS.Data.NonEmpty.Module.foldableWithIndexNonEmpty
+                                                val f1 = f;
+                                                  val b1 = b;
+                                                  val ne = v;
+                                                  PS.Data.FoldableWithIndex.Module.foldlWithIndex
+                                                    .app(
+                                                      PS.Data.NonEmpty.Module.foldableWithIndexNonEmpty
+                                                        .app(
+                                                        PS.Data.List.Types.Module.foldableWithIndexList
+                                                      ))
+                                                    .app(
+                                                      PS.Control.Semigroupoid.Module.compose
+                                                        .app(
+                                                          PS.Control.Semigroupoid.Module.semigroupoidFn
+                                                        )
+                                                        .app(f1)
+                                                        .app(
+                                                        PS.Data.Maybe.Module.maybe
+                                                          .app(0)
                                                           .app(
-                                                          PS.Data.List.Types.Module.foldableWithIndexList
-                                                        ))
-                                                      .app(
-                                                        PS.Control.Semigroupoid.Module.compose
-                                                          .app(
-                                                            PS.Control.Semigroupoid.Module.semigroupoidFn
-                                                          )
-                                                          .app(f1)
-                                                          .app(
-                                                          PS.Data.Maybe.Module.maybe
-                                                            .app(0)
+                                                          PS.Data.Semiring.Module.add
                                                             .app(
-                                                            PS.Data.Semiring.Module.add
-                                                              .app(
-                                                                PS.Data.Semiring.Module.semiringInt
-                                                              )
-                                                              .app(1))))
-                                                      .app(b1)
-                                                      .app(ne);
-                                                  }
-                                                }
-                                              }
+                                                              PS.Data.Semiring.Module.semiringInt
+                                                            )
+                                                            .app(1))))
+                                                    .app(b1)
+                                                    .app(ne);}
                                             }
                                           })
                                         .app({ f : Any ->
        { b : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val b1 = b;
-              val ne = v;
-              PS.Data.FoldableWithIndex.Module.foldrWithIndex
-                .app(PS.Data.NonEmpty.Module.foldableWithIndexNonEmpty
-                       .app(PS.Data.List.Types.Module.foldableWithIndexList))
-                .app(PS.Control.Semigroupoid.Module.compose
-                       .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
-                       .app(f1)
-                       .app(PS.Data.Maybe.Module.maybe.app(0)
-                              .app(PS.Data.Semiring.Module.add
-                                     .app(PS.Data.Semiring.Module.semiringInt)
-                                     .app(1))))
-                .app(b1)
-                .app(ne);
-            }
-          }
-        }
+          val f1 = f;
+            val b1 = b;
+            val ne = v;
+            PS.Data.FoldableWithIndex.Module.foldrWithIndex
+              .app(PS.Data.NonEmpty.Module.foldableWithIndexNonEmpty
+                     .app(PS.Data.List.Types.Module.foldableWithIndexList))
+              .app(PS.Control.Semigroupoid.Module.compose
+                     .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
+                     .app(f1)
+                     .app(PS.Data.Maybe.Module.maybe.app(0)
+                            .app(PS.Data.Semiring.Module.add
+                                   .app(PS.Data.Semiring.Module.semiringInt)
+                                   .app(1))))
+              .app(b1)
+              .app(ne);}
       }
     });
   @JvmField
@@ -539,28 +521,22 @@ object Module  {
                                          })
                                        .app({ fn : Any ->
        { v : Any ->
-         when {
-          else -> {
-            val fn1 = fn;
-            val ne = v;
-            PS.Data.Function.Module.apply
-              .app(PS.Data.List.Types.Module.NonEmptyList)
-              .app(PS.Data.FunctorWithIndex.Module.mapWithIndex
-                     .app(PS.Data.NonEmpty.Module.functorWithIndex
-                            .app(PS.Data.List.Types.Module.functorWithIndexList)
-                     )
-                     .app(PS.Control.Semigroupoid.Module.compose
-                            .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
-                            .app(fn1)
-                            .app(PS.Data.Maybe.Module.maybe.app(0)
-                                   .app(PS.Data.Semiring.Module.add
-                                          .app(
-                                            PS.Data.Semiring.Module.semiringInt)
-                                          .app(1))))
-                     .app(ne));
-          }
-        }
-      }
+        val fn1 = fn;
+          val ne = v;
+          PS.Data.Function.Module.apply
+            .app(PS.Data.List.Types.Module.NonEmptyList)
+            .app(PS.Data.FunctorWithIndex.Module.mapWithIndex
+                   .app(PS.Data.NonEmpty.Module.functorWithIndex
+                          .app(PS.Data.List.Types.Module.functorWithIndexList))
+                   .app(PS.Control.Semigroupoid.Module.compose
+                          .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
+                          .app(fn1)
+                          .app(PS.Data.Maybe.Module.maybe.app(0)
+                                 .app(PS.Data.Semiring.Module.add
+                                        .app(PS.Data.Semiring.Module.semiringInt
+                                        )
+                                        .app(1))))
+                   .app(ne));}
     });
   @JvmField
   val semigroupList = PS.Data.Semigroup.Module.Semigroup
@@ -630,21 +606,16 @@ object Module  {
   val showNonEmptyList = { dictShow : Any ->
      PS.Data.Show.Module.Show
        .app({ v : Any ->
-         when {
-          else -> {
-            val nel = v;
-            (("(NonEmptyList " as String) + (((PS.Data.Show.Module.show
-                                                 .app(
-                                                   PS.Data.NonEmpty.Module.showNonEmpty
-                                                     .app(dictShow)
-                                                     .app(
-                                                     PS.Data.List.Types.Module.showList
-                                                       .app(dictShow)))
-                                                 .app(nel
-            ) as String) + (")" as String)) as String));
-          }
-        }
-      })
+        val nel = v;
+          (("(NonEmptyList " as String) + (((PS.Data.Show.Module.show
+                                               .app(
+                                                 PS.Data.NonEmpty.Module.showNonEmpty
+                                                   .app(dictShow)
+                                                   .app(
+                                                   PS.Data.List.Types.Module.showList
+                                                     .app(dictShow)))
+                                               .app(nel
+          ) as String) + (")" as String)) as String));})
   };
   @JvmField val traversableList = (::__rec_traversableList)();
   fun __rec_traversableList(): Any = PS.Data.Traversable.Module.Traversable
@@ -768,34 +739,27 @@ object Module  {
                                            .app({ dictApplicative : Any ->
        { f : Any ->
          { v : Any ->
-           when {
-            else -> {
-              val f1 = f;
-              val ne = v;
-              PS.Data.Functor.Module.map
-                .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
-                        .app(Unit) as Map<String, Any>)["Functor0"]!!
-                       .app(Unit))
-                .app(PS.Data.List.Types.Module.NonEmptyList)
-                .app(PS.Data.TraversableWithIndex.Module.traverseWithIndex
-                       .app(PS.Data.NonEmpty.Module.traversableWithIndexNonEmpty
-                              .app(
-                           PS.Data.List.Types.Module.traversableWithIndexList))
-                       .app(dictApplicative)
-                       .app(PS.Control.Semigroupoid.Module.compose
-                              .app(PS.Control.Semigroupoid.Module.semigroupoidFn
-                              )
-                              .app(f1)
-                              .app(PS.Data.Maybe.Module.maybe.app(0)
-                                     .app(PS.Data.Semiring.Module.add
-                                            .app(
-                                              PS.Data.Semiring.Module.semiringInt
-                                            )
-                                            .app(1))))
-                       .app(ne));
-            }
-          }
-        }
+          val f1 = f;
+            val ne = v;
+            PS.Data.Functor.Module.map
+              .app(((dictApplicative as Map<String, Any>)["Apply0"]!!
+                      .app(Unit) as Map<String, Any>)["Functor0"]!!
+                     .app(Unit))
+              .app(PS.Data.List.Types.Module.NonEmptyList)
+              .app(PS.Data.TraversableWithIndex.Module.traverseWithIndex
+                     .app(PS.Data.NonEmpty.Module.traversableWithIndexNonEmpty
+                            .app(
+                         PS.Data.List.Types.Module.traversableWithIndexList))
+                     .app(dictApplicative)
+                     .app(PS.Control.Semigroupoid.Module.compose
+                            .app(PS.Control.Semigroupoid.Module.semigroupoidFn)
+                            .app(f1)
+                            .app(PS.Data.Maybe.Module.maybe.app(0)
+                                   .app(PS.Data.Semiring.Module.add
+                                          .app(
+                                            PS.Data.Semiring.Module.semiringInt)
+                                          .app(1))))
+                     .app(ne));}
       }
     });
   @JvmField

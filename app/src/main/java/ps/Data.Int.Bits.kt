@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Data.Int.Bits
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val and = Foreign.Data.Int.Bits.and;
   val or = Foreign.Data.Int.Bits.or;

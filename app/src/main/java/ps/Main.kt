@@ -1,175 +1,107 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Main
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
-  val __textView = Foreign.Main.__textView;
-  val __button = Foreign.Main.__button;
-  val __editText = Foreign.Main.__editText;
-  val __verticalLayout = Foreign.Main.__verticalLayout;
-  val __onClick = Foreign.Main.__onClick;
-  val __setTextViewText = Foreign.Main.__setTextViewText;
-  val __getTextEditText = Foreign.Main.__getTextEditText;
-  @JvmField val SetText = { setText : Any -> mapOf(("setText" to setText))};
-  @JvmField val IsView = { toView : Any -> mapOf(("toView" to toView))};
-  @JvmField val GetText = { getText : Any -> mapOf(("getText" to getText))};
-  @JvmField
-  val verticalLayout = PS.Effect.Uncurried.Module.runEffectFn2
-                         .app(PS.Main.Module.__verticalLayout);
-  @JvmField
-  val toView = { dict : Any ->
-     (dict as Map<String, Any>)["toView"]!!
-  };
-  @JvmField
-  val textViewView = PS.Main.Module.IsView
-                       .app(PS.Unsafe.Coerce.Module.unsafeCoerce);
-  @JvmField
-  val textView = PS.Effect.Uncurried.Module.runEffectFn2
-                   .app(PS.Main.Module.__textView);
-  @JvmField
-  val setTextTextView = PS.Main.Module.SetText
-                          .app(PS.Effect.Uncurried.Module.runEffectFn2
-                                 .app(PS.Main.Module.__setTextViewText));
-  @JvmField
-  val setText = { dict : Any ->
-     (dict as Map<String, Any>)["setText"]!!
-  };
-  @JvmField
-  val onClick = { dictIsView : Any ->
-     { v : Any ->
-       PS.Effect.Uncurried.Module.runEffectFn2.app(PS.Main.Module.__onClick)
-         .app(PS.Main.Module.toView.app(dictIsView).app(v))
-    }
-  };
-  @JvmField
-  val getTextEditText = PS.Main.Module.GetText
-                          .app(PS.Effect.Uncurried.Module.runEffectFn1
-                                 .app(PS.Main.Module.__getTextEditText));
-  @JvmField
-  val getText = { dict : Any ->
-     (dict as Map<String, Any>)["getText"]!!
-  };
-  @JvmField
-  val editText = PS.Effect.Uncurried.Module.runEffectFn2
-                   .app(PS.Main.Module.__editText);
-  @JvmField
-  val buttonView = PS.Main.Module.IsView
-                     .app(PS.Unsafe.Coerce.Module.unsafeCoerce);
-  @JvmField
-  val button = PS.Effect.Uncurried.Module.runEffectFn2
-                 .app(PS.Main.Module.__button);
   @JvmField
   val main = { ctx : Any ->
-     { _ : Any ->
-      PS.Effect.Console.Module.log.app("in main")()
-        PS.Data.Function.Module.apply
-          .app(PS.Data.Functor.Module.void.app(PS.Effect.Module.functorEffect))
-          .app(PS.Data.Function.Module.apply
-                 .app(PS.Main.Module.verticalLayout.app(ctx))
-                 .app({ vm : Any ->
-               { _ : Any ->
-                PS.Effect.Console.Module.log.app("in vertical layout")()
-                  PS.Control.Bind.Module.bind.app(PS.Effect.Module.bindEffect)
-                    .app(PS.Main.Module.editText.app(vm).app("1st Field"))
-                    .app({ v : Any ->
-                       when {
-                        else -> {
-                          val a = v;
-                          PS.Control.Bind.Module.bind
-                            .app(PS.Effect.Module.bindEffect)
-                            .app(PS.Main.Module.editText.app(vm)
-                                   .app("2nd Field"))
-                            .app({ v1 : Any ->
-                               when {
-                                else -> {
-                                  val b = v1;
-                                  PS.Control.Bind.Module.bind
-                                    .app(PS.Effect.Module.bindEffect)
-                                    .app(PS.Main.Module.textView.app(vm)
-                                           .app("result ="))
-                                    .app({ v2 : Any ->
-                                       when {
-                                        else -> {
-                                          val res = v2;
-                                          PS.Control.Bind.Module.bind
-                                            .app(PS.Effect.Module.bindEffect)
-                                            .app(PS.Main.Module.button.app(vm)
-                                                   .app("click"))
-                                            .app({ v3 : Any ->
-                                               when {
-                                                else -> {
-                                                  val btn = v3;
-                                                  PS.Data.Function.Module.apply
-                                                    .app(PS.Main.Module.onClick
-                                                           .app(
-                                                             PS.Main.Module.buttonView
-                                                           )
-                                                           .app(btn))
-                                                    .app({ v4 : Any ->
-                                                       PS.Control.Bind.Module.bind
-                                                         .app(
-                                                           PS.Effect.Module.bindEffect
-                                                         )
-                                                         .app(
-                                                           PS.Main.Module.getText
-                                                             .app(
-                                                               PS.Main.Module.getTextEditText
-                                                             )
-                                                             .app(a))
-                                                         .app({ v5 : Any ->
-                                                           when {
-                                                            else -> {
-                                                              val aVal = v5;
-                                                              PS.Control.Bind.Module.bind
-                                                                .app(
-                                                                  PS.Effect.Module.bindEffect
-                                                                )
-                                                                .app(
-                                                                  PS.Main.Module.getText
-                                                                    .app(
-                                                                      PS.Main.Module.getTextEditText
-                                                                    )
-                                                                    .app(b))
-                                                                .app(
-                                                                { v6 : Any ->
-                                                                   when {
-                                                                    else -> {
-                                                                      val bVal = v6;
-                                                                      { _ : Any ->
-                                                                        PS.Data.Function.Module.apply
-                                                                          .app(
-                                                                            PS.Main.Module.setText
-                                                                              .app(
-                                                                                PS.Main.Module.setTextTextView
-                                                                              )
-                                                                              .app(
-                                                                              res
-                                                                            ))
-                                                                          .app(
-                                                                              (("result = " as String) + (((aVal as String) + (bVal as String)) as String))
-                                                                            )()
-                                                                          PS.Effect.Console.Module.log
-                                                                            .app(
-                                                                            "btn clicked!"
-                                                                          )};
-                                                                    }
-                                                                  }
-                                                                });
-                                                            }
-                                                          }
-                                                        })
-                                                    });
-                                                }
-                                              }
-                                            });
-                                        }
-                                      }
-                                    });
-                                }
-                              }
-                            });
-                        }
-                      }
-                    })}
-            }))}
+     /* defer **/{
+      PS.Effect.Console.Module.log.app("in main").appRun();
+      val v = PS.Android.Widget.Module.verticalLayout.app(ctx).appRun();
+      val vl = v;
+      val v1 = PS.Android.Widget.Module.tabLayout.app(ctx).appRun();
+      val tabView = v1;
+      PS.Android.Widget.Module.addTab.app(tabView).app("Test 1").appRun();
+      PS.Android.Widget.Module.addTab.app(tabView).app("Test 2").appRun();
+      PS.Android.Widget.Module.addView
+        .app(PS.Android.Widget.Module.viewGroupVerticalLayout)
+        .app(PS.Android.Widget.Module.tabLayoutView)
+        .app(vl)
+        .app(tabView)
+        .appRun();
+      val v2 = PS.Android.Widget.Module.editText.app(ctx)
+                 .app("https://pursuit.purescript.org")
+                 .appRun();
+      val urlBar = v2;
+      PS.Android.Widget.Module.addView
+        .app(PS.Android.Widget.Module.viewGroupVerticalLayout)
+        .app(PS.Android.Widget.Module.isViewEditText)
+        .app(vl)
+        .app(urlBar)
+        .appRun();
+      PS.Effect.Console.Module.log.app("1").appRun();
+      val v3 = PS.Android.Widget.Module.button.app(ctx).app("fetch").appRun();
+      val btn = v3;
+      PS.Effect.Console.Module.log.app("2").appRun();
+      PS.Android.Widget.Module.addView
+        .app(PS.Android.Widget.Module.viewGroupVerticalLayout)
+        .app(PS.Android.Widget.Module.buttonView)
+        .app(vl)
+        .app(btn)
+        .appRun();
+      val v4 = PS.Android.Widget.Module.scrollView.app(ctx).appRun();
+      val contentScroll = v4;
+      PS.Android.Widget.Module.addView
+        .app(PS.Android.Widget.Module.viewGroupVerticalLayout)
+        .app(PS.Android.Widget.Module.viewScrollView)
+        .app(vl)
+        .app(contentScroll)
+        .appRun();
+      val v5 = PS.Android.Widget.Module.textView.app(ctx).app("-").appRun();
+      val tv = v5;
+      PS.Android.Widget.Module.addView
+        .app(PS.Android.Widget.Module.viewGroupScrollView)
+        .app(PS.Android.Widget.Module.textViewView)
+        .app(contentScroll)
+        .app(tv)
+        .appRun();
+      PS.Effect.Console.Module.log.app("3").appRun();
+      PS.Android.Widget.Module.addContentView
+        .app(PS.Android.Widget.Module.layoutView)
+        .app(ctx)
+        .app(vl)
+        .appRun();
+      PS.Effect.Console.Module.log.app("4").appRun();
+      PS.Android.Widget.Module.onClick.app(PS.Android.Widget.Module.buttonView)
+        .app(btn)
+        .app(/* defer **/{
+            PS.Android.Widget.Module.setText
+              .app(PS.Android.Widget.Module.isSetTextTextView
+                     .app(PS.Android.Widget.Module.isTextViewButton))
+              .app(btn)
+              .app("loading...")
+              .appRun();
+            val v6 = PS.Android.Widget.Module.getText
+                       .app(PS.Android.Widget.Module.isTextViewEditText)
+                       .app(urlBar)
+                       .appRun();
+            val url = v6;
+            val v7 = PS.Android.IO.Module.httpGet.app(ctx).app(url)
+                       .app({ str : Any ->
+                            /* defer **/{
+                             PS.Android.Widget.Module.setText
+                               .app(PS.Android.Widget.Module.isSetTextTextView
+                                      .app(
+                                   PS.Android.Widget.Module.isTextViewTextView))
+                               .app(tv)
+                               .app(str)
+                               .appRun();
+                             PS.Android.Widget.Module.setText
+                               .app(PS.Android.Widget.Module.isSetTextTextView
+                                      .app(
+                                   PS.Android.Widget.Module.isTextViewButton))
+                               .app(btn)
+                               .app("fetch")
+                               .appRun();
+                             PS.Effect.Console.Module.log.app(str).appRun();
+                           }
+                         })
+                       .appRun();
+            PS.Effect.Console.Module.log.app("clicked!").appRun();
+          })
+        .appRun();
+      PS.Effect.Console.Module.log.app("5").appRun();
+    }
   };
 }

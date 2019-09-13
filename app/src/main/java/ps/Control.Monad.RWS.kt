@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Control.Monad.RWS
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   @JvmField val withRWS = PS.Control.Monad.RWS.Trans.Module.withRWST;
   @JvmField
@@ -19,19 +21,15 @@ object Module  {
   val runRWS = { m : Any ->
      { r : Any ->
        { s : Any ->
-         when {
-          else -> {
-            val f = m;
-            object   {
-                val v = f.app(r).app(s);
-              }
-              .run({
-                val v = this.v;
-                when { else -> { val x = v; x; } };
-              });
-          }
-        }
-      }
+        val f = m;
+          object   {
+              val v = f.app(r).app(s);
+            }
+            .run({
+              val v = this.v;
+              val x = v;
+              x;
+            });}
     }
   };
   @JvmField

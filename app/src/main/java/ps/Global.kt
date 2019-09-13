@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Global
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val nan = Foreign.Global.nan;
   val isNaN = Foreign.Global.isNaN;

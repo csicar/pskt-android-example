@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package PS.Effect.Console
 import Foreign.PsRuntime.app
+import Foreign.PsRuntime.appRun
 object Module  {
   val log = Foreign.Effect.Console.log;
   val warn = Foreign.Effect.Console.warn;
