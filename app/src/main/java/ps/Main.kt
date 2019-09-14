@@ -4,6 +4,7 @@ package PS.Main
 import Foreign.PsRuntime.app
 import Foreign.PsRuntime.appRun
 object Module  {
+  val lines = Foreign.Main.lines;
   @JvmField
   val main = { ctx : Any ->
      /* defer **/{
@@ -12,7 +13,7 @@ object Module  {
       val vl = v;
       val v1 = PS.Android.Widget.Module.tabLayout.app(ctx).appRun();
       val tabView = v1;
-      PS.Android.Widget.Module.addTab.app(tabView).app("Test 1").appRun();
+      PS.Android.Widget.Module.addTab.app(tabView).app("Fetch HTML 1").appRun();
       PS.Android.Widget.Module.addTab.app(tabView).app("Test 2").appRun();
       PS.Android.Widget.Module.addView
         .app(PS.Android.Widget.Module.viewGroupVerticalLayout)
@@ -33,6 +34,56 @@ object Module  {
       PS.Effect.Console.Module.log.app("1").appRun();
       val v3 = PS.Android.Widget.Module.button.app(ctx).app("fetch").appRun();
       val btn = v3;
+      val v4 = PS.Data.Function.Module.apply
+                 .app(PS.Android.Widget.Module.recyclerView.app(ctx)
+                        .app(listOf("none yet")))
+                 .app({ ctx_tick : Any ->
+                      /* defer **/{
+                       val v4 = PS.Android.Widget.Module.button.app(ctx_tick)
+                                  .app("test")
+                                  .appRun();
+                       val tv = v4;
+                       PS.Data.Function.Module.apply
+                         .app(PS.Control.Applicative.Module.pure
+                                .app(PS.Effect.Module.applicativeEffect))
+                         .app(PS.Data.Tuple.Module.Tuple
+                                .app(PS.Android.Widget.Module.toView
+                                       .app(PS.Android.Widget.Module.buttonView)
+                                       .app(tv))
+                                .app({ pos : Any ->
+                                { _val : Any ->
+                                  PS.Android.Widget.Module.setText
+                                    .app(
+                                      PS.Android.Widget.Module.isSetTextTextView
+                                        .app(
+                                        PS.Android.Widget.Module.isTextViewButton
+                                      ))
+                                    .app(tv)
+                                    .app(
+                                   (("from ps" as String) + (((PS.Data.Show.Module.show
+                                                                 .app(
+                                                                   PS.Data.Show.Module.showInt
+                                                                 )
+                                                                 .app(pos
+                                   ) as String) + ((("has val " as String) + (PS.Data.Show.Module.show
+                                                                                .app(
+                                                                                  PS.Data.Show.Module.showString
+                                                                                )
+                                                                                .app(
+                                     _val) as String)) as String)) as String)))
+                               }
+                             }))
+                         .appRun();
+                     }
+                   })
+                 .appRun();
+      val rv = v4;
+      PS.Android.Widget.Module.addView
+        .app(PS.Android.Widget.Module.viewGroupVerticalLayout)
+        .app(PS.Android.Widget.Module.isViewRecyclerView)
+        .app(vl)
+        .app(rv)
+        .appRun();
       PS.Effect.Console.Module.log.app("2").appRun();
       PS.Android.Widget.Module.addView
         .app(PS.Android.Widget.Module.viewGroupVerticalLayout)
@@ -40,16 +91,16 @@ object Module  {
         .app(vl)
         .app(btn)
         .appRun();
-      val v4 = PS.Android.Widget.Module.scrollView.app(ctx).appRun();
-      val contentScroll = v4;
+      val v5 = PS.Android.Widget.Module.scrollView.app(ctx).appRun();
+      val contentScroll = v5;
       PS.Android.Widget.Module.addView
         .app(PS.Android.Widget.Module.viewGroupVerticalLayout)
         .app(PS.Android.Widget.Module.viewScrollView)
         .app(vl)
         .app(contentScroll)
         .appRun();
-      val v5 = PS.Android.Widget.Module.textView.app(ctx).app("-").appRun();
-      val tv = v5;
+      val v6 = PS.Android.Widget.Module.textView.app(ctx).app("-").appRun();
+      val tv = v6;
       PS.Android.Widget.Module.addView
         .app(PS.Android.Widget.Module.viewGroupScrollView)
         .app(PS.Android.Widget.Module.textViewView)
@@ -72,12 +123,12 @@ object Module  {
               .app(btn)
               .app("loading...")
               .appRun();
-            val v6 = PS.Android.Widget.Module.getText
+            val v7 = PS.Android.Widget.Module.getText
                        .app(PS.Android.Widget.Module.isTextViewEditText)
                        .app(urlBar)
                        .appRun();
-            val url = v6;
-            val v7 = PS.Android.IO.Module.httpGet.app(ctx).app(url)
+            val url = v7;
+            val v8 = PS.Android.IO.Module.httpGet.app(ctx).app(url)
                        .app({ str : Any ->
                             /* defer **/{
                              PS.Android.Widget.Module.setText
@@ -93,6 +144,11 @@ object Module  {
                                    PS.Android.Widget.Module.isTextViewButton))
                                .app(btn)
                                .app("fetch")
+                               .appRun();
+                             PS.Data.Function.Module.apply
+                               .app(PS.Android.Widget.Module.updateRecyclerView
+                                      .app(rv))
+                               .app(PS.Main.Module.lines.app(str))
                                .appRun();
                              PS.Effect.Console.Module.log.app(str).appRun();
                            }

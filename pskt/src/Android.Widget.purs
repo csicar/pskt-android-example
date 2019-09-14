@@ -7,6 +7,7 @@ import Global (readFloat)
 import Data.Int (floor)
 import Unsafe.Coerce (unsafeCoerce)
 import Prelude
+import Data.Tuple (Tuple(..))
 
 foreign import data Context :: Type
 
@@ -118,3 +119,19 @@ foreign import _setTextTextView :: EffectFn2 TextView String Unit
 instance isSetTextTextView :: IsTextView a => IsSetText a where
     setText a = runEffectFn2 _setTextTextView (toTextView a)
 
+
+--
+--
+-- RecyclerView
+--
+--
+foreign import data RecyclerView :: Type -> Type
+
+instance isViewRecyclerView :: IsView (RecyclerView a) where toView = unsafeCoerce
+
+foreign import _recyclerView :: ∀a. EffectFn3 Context (Array a) (Context -> Effect (Tuple View (Int -> a -> Effect Unit))) (RecyclerView a)
+recyclerView = runEffectFn3 _recyclerView
+
+foreign import _updateRecyclerView :: ∀a. EffectFn2 (RecyclerView a) (Array a) Unit
+updateRecyclerView :: ∀a. (RecyclerView a) -> (Array a) -> Effect Unit
+updateRecyclerView = runEffectFn2 _updateRecyclerView

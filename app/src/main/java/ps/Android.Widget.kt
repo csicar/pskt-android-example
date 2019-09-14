@@ -16,6 +16,8 @@ object Module  {
   val __addTab = Foreign.Android.Widget.__addTab;
   val __getText = Foreign.Android.Widget.__getText;
   val __setTextTextView = Foreign.Android.Widget.__setTextTextView;
+  val __recyclerView = Foreign.Android.Widget.__recyclerView;
+  val __updateRecyclerView = Foreign.Android.Widget.__updateRecyclerView;
   @JvmField
   val IsViewGroup = { toViewGroup : Any ->
      mapOf(("toViewGroup" to toViewGroup))
@@ -38,6 +40,10 @@ object Module  {
   @JvmField
   val verticalLayout = PS.Effect.Uncurried.Module.runEffectFn1
                          .app(PS.Android.Widget.Module.__verticalLayout);
+  @JvmField
+  val updateRecyclerView = PS.Effect.Uncurried.Module.runEffectFn2
+                             .app(PS.Android.Widget.Module.__updateRecyclerView
+  );
   @JvmField
   val toViewGroup = { dict : Any ->
      (dict as Map<String, Any>)["toViewGroup"]!!
@@ -70,6 +76,9 @@ object Module  {
   val scrollView = PS.Effect.Uncurried.Module.runEffectFn1
                      .app(PS.Android.Widget.Module.__scrollView);
   @JvmField
+  val recyclerView = PS.Effect.Uncurried.Module.runEffectFn3
+                       .app(PS.Android.Widget.Module.__recyclerView);
+  @JvmField
   val onClick = { dictIsView : Any ->
      { a : Any ->
        PS.Effect.Uncurried.Module.runEffectFn2
@@ -80,6 +89,9 @@ object Module  {
   @JvmField
   val layoutView = PS.Android.Widget.Module.IsView
                      .app(PS.Unsafe.Coerce.Module.unsafeCoerce);
+  @JvmField
+  val isViewRecyclerView = PS.Android.Widget.Module.IsView
+                             .app(PS.Unsafe.Coerce.Module.unsafeCoerce);
   @JvmField
   val isViewEditText = PS.Android.Widget.Module.IsView
                          .app(PS.Unsafe.Coerce.Module.unsafeCoerce);

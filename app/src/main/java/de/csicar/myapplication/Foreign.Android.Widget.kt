@@ -1,10 +1,13 @@
 package Foreign.Android.Widget
 
+import PS.Data.Tuple.Module
 import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import org.jetbrains.anko.sdk27.coroutines.onClick
 
@@ -87,4 +90,42 @@ val __tabLayout  = {ctx: Any ->
 val __addTab = {tabLayout: Any, tabName: Any ->
     tabLayout as TabLayout; tabName as String
     tabLayout.addTab(tabLayout.newTab().setText(tabName))
+}
+
+class PsRecyclerViewAdapter(var myDataset: List<Any>, private val createViewHolder: (Context) -> (() -> Any)) :
+    RecyclerView.Adapter<PsRecyclerViewAdapter.PsBinderViewHolder>() {
+
+    class PsBinderViewHolder(val view: View, val binder: ((Int) -> ((Any) -> (() -> Unit)))): RecyclerView.ViewHolder(view)
+
+
+    override fun onCreateViewHolder(parent: ViewGroup,
+                                    viewType: Int): PsRecyclerViewAdapter.PsBinderViewHolder {
+        val (vh, binder) = createViewHolder(parent.context)() as Module._Type_Tuple.Tuple
+        return PsBinderViewHolder(vh as View, binder as ((Int) -> ((Any) -> (() -> Unit))))
+    }
+
+    override fun onBindViewHolder(holder: PsBinderViewHolder, position: Int) {
+        holder.binder(position)(myDataset[position])()
+    }
+
+    override fun getItemCount() = myDataset.size
+}
+
+
+val __recyclerView = {ctx: Any, dataset: Any, createViewHolder: Any ->
+    ctx as Context; createViewHolder as ((Context) -> (() -> Any)); dataset as List<Any>
+
+
+
+    RecyclerView(ctx).apply {
+        layoutManager = LinearLayoutManager(ctx)
+        adapter = PsRecyclerViewAdapter(dataset, createViewHolder)
+    }
+}
+
+val __updateRecyclerView = {view: Any, newVal: Any ->
+    view as RecyclerView; newVal as List<Any>
+    val adapter = view.adapter as PsRecyclerViewAdapter
+    adapter.myDataset = newVal
+    adapter.notifyDataSetChanged()
 }
