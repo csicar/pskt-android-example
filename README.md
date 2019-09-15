@@ -11,11 +11,11 @@ Build
 
 ```bash
 # get ffi files
-$ git clone https://github.com/csicar/pskt-foreigns pskt-foreigns
+$ git clone https://github.com/csicar/pskt-foreigns app/src/main/java/foreigns
 
 # build PS
 cd pskt
-spago build -- --codegen corefn && pskt  -o ../app/src/main/java/ps -f "../pskt-foreigns/*.kt"
+spago build -- --codegen corefn && pskt
 ```
 
 now you can build for android project in android studio

@@ -33,6 +33,7 @@ dependencies {
     implementation "org.jetbrains.anko:anko:0.10.8"
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     implementation "org.jetbrains.anko:anko-recyclerview-v7:0.10.8"
+    implementation 'org.jsoup:jsoup:1.12.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
