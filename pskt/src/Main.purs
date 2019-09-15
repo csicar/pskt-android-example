@@ -10,6 +10,7 @@ import Data.Int (floor)
 import Unsafe.Coerce (unsafeCoerce)
 import Android.Widget
 import Android.IO
+import Android.Content
 import Data.Tuple (Tuple(..))
 
 main :: Context -> Effect Unit
@@ -18,8 +19,8 @@ main ctx = do
   vl <- verticalLayout ctx
 
   tabView <- tabLayout ctx
-  addTab tabView "Fetch HTML 1"
-  addTab tabView "Test 2"
+  addTab tabView "Pursuit Search"
+  addTab tabView "Tab Test"
   vl `addView` tabView
 
   urlBar <- editText ctx "Applicative"
@@ -36,7 +37,13 @@ main ctx = do
 
   rv <- recyclerView ctx ([]) $ \ctx' -> do
     tv <- textView ctx' ""
-    pure $ Tuple (toView tv) (\pos (Result name modName url) -> setText tv (show name <> "link: " <> show url))
+    pure $ Tuple (toView tv) $ \pos (Result name modName url) -> do
+        setText tv (show name )
+        onClick tv $ do
+            intent <- intentUrl url
+            startIntent ctx intent
+
+
   contentScroll `addView` rv
   log "3"
   addContentView ctx vl

@@ -20,4 +20,11 @@ spago build -- --codegen corefn && pskt
 
 now you can build for android project in android studio
 
+What is does
+============
+
+The app searches pursuit for the provided query and displays the results. Clicking on one of them opens the pursuit page in the browser
+
+The example program searches pursuit for the given search term and displays the results
+
 ![](./screenshot.png)
