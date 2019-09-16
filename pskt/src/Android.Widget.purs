@@ -49,6 +49,12 @@ foreign import _onClick :: EffectFn2 View (Effect Unit) Unit
 onClick :: forall a. IsView a => a -> Effect Unit -> Effect Unit
 onClick a = runEffectFn2 _onClick (toView a)
 
+foreign import data ImageView :: Type
+instance imageViewView :: IsView ImageView where toView = unsafeCoerce
+
+foreign import _imageView :: EffectFn2 Context Int ImageView
+imageView = runEffectFn2 _imageView
+
 --
 --
 -- ViewGroup
@@ -63,13 +69,14 @@ foreign import _addView :: EffectFn2 ViewGroup View Unit
 addView :: forall a b. IsViewGroup a => IsView b => a -> b -> Effect Unit
 addView vg v = runEffectFn2 _addView (toViewGroup vg) (toView v)
 
-foreign import data VerticalLayout :: Type
+foreign import data LinearLayout :: Type
 
-foreign import _verticalLayout :: EffectFn1 Context VerticalLayout
-verticalLayout = runEffectFn1 _verticalLayout
+foreign import _linearLayout :: EffectFn2 Context Boolean LinearLayout
+verticalLayout ctx = runEffectFn2 _linearLayout ctx true
+horizonalLayout ctx = runEffectFn2 _linearLayout ctx false
 
-instance viewGroupVerticalLayout :: IsViewGroup VerticalLayout where toViewGroup = unsafeCoerce
-instance layoutView :: IsView VerticalLayout where toView = unsafeCoerce
+instance viewGroupLinearLayout :: IsViewGroup LinearLayout where toViewGroup = unsafeCoerce
+instance layoutView :: IsView LinearLayout where toView = unsafeCoerce
 
 foreign import data ScrollView :: Type
 
@@ -105,7 +112,8 @@ foreign import _getText :: EffectFn1 TextView String
 getText :: ∀a. IsTextView a => a -> Effect String
 getText tv = runEffectFn1 _getText (toTextView tv)
 
-
+foreign import _setTextSize :: EffectFn2 TextView Number Unit
+setTextSize = runEffectFn2 _setTextSize
 
 --
 --
